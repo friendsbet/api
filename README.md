@@ -1,3 +1,36 @@
-# FriendsBetAPI
+# Friends Bet API
 
-a [Sails](http://sailsjs.org) application
+Friends Bet is an application that allows you and your friends to bet on sport results.
+
+## INSTALLATION
+
+**With [node](http://nodejs.org) installed:**
+```sh
+# Get the latest stable release of Sails
+$ sudo npm install sails -g
+
+# Clone the repo
+$ git clone https://github.com/FriendsBet/API.git FriendsBetAPI
+
+# cd into the new folder
+$ cd FriendsBetAPI
+
+# Install dependencies
+$ npm install
+```
+
+## LAUNCHING
+
+**Run MongoDB:**
+```sh
+# Run your MongoDB server
+$ mongod
+```
+
+**Lift Sails:**
+```sh
+# Fire up the server
+$ sails lift
+```
+
+The API is now running on port 1337.
