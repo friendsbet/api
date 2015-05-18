@@ -38,10 +38,10 @@ module.exports = {
 
     // The Games list associated with this Team
     // References to Game objects
-    games: {
-      collection: 'game',
-      via: 'teams'
-    }
+    // games: {
+    //   collection: 'game',
+    //   via: 'teams'
+    // }
 
   }
 };
