@@ -15,7 +15,7 @@ module.exports = {
     // The first Team
     // A reference to the Team object
     teamA: {
-      model: 'team'
+      model: 'team',
       notEmpty: true,
       required: true
     },
@@ -23,7 +23,7 @@ module.exports = {
     // The second Team
     // A another reference to the other Team object
     teamB: {
-      model: 'team'
+      model: 'team',
       notEmpty: true,
       required: true
     },
