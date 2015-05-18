@@ -24,7 +24,7 @@ module.exports = {
     score: {
       type: 'integer',
       defaultsTo: 0
-    }
+    },
 
     // Everything you need to know about this group
     // e.g 'The group of Friends Bet developers'
