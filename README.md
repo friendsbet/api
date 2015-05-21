@@ -1,4 +1,5 @@
 # Friends Bet API
+[![Build Status](https://travis-ci.org/FriendsBet/API.svg?branch=master)](https://travis-ci.org/FriendsBet/API)
 
 Friends Bet is an application that allows you and your friends to bet on sport results.
 
@@ -34,3 +35,11 @@ $ sails lift
 ```
 
 The API is now running on port 1337.
+
+## TESTING
+
+**With the MongoDB server running:**
+```sh
+# Launch the tests
+$ npm test
+```
