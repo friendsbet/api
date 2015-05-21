@@ -19,7 +19,7 @@ module.exports = {
     },
 
     // The cumulative score of this Group
-    // Updated at the end of a Game
+    // Updated at the end of a Match
     // e.g 1024
     score: {
       type: 'integer',

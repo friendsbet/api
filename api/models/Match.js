@@ -1,6 +1,6 @@
-// Game.js
+// Match.js
 //
-// @description :: A Game between two teams (team A and team B)
+// @description :: A Match between two teams (team A and team B)
 //                 at a defined date and time (kickOffAt).
 //                 It also has a location, a pool and an
 //                 importance coefficient.
@@ -65,7 +65,7 @@ module.exports = {
 
     // The team A score
     // By default, its value is 0
-    // It will be updated during the Game
+    // It will be updated during the Match
     // e.g 15
     scoreTeamA: {
       type: 'integer',

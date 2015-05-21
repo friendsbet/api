@@ -36,12 +36,19 @@ module.exports = {
       type: 'text'
     },
 
-    // The Games list associated with this Team
-    // References to Game objects
-    // games: {
-    //   collection: 'game',
-    //   via: 'teams'
-    // }
+    // The Matches list associated with this Team as teamA
+    // References to Match objects
+    matchesAsTeamA: {
+      collection: 'match',
+      via: 'teamA'
+    },
+
+    // Same thing as teamB
+    // References to Match objects
+    matchesAsTeamB: {
+      collection: 'match',
+      via: 'teamB'
+    }
 
   }
 };

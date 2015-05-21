@@ -1,6 +1,6 @@
 // Bet.js
 //
-// @description :: A Bet is done by a User for a Game.
+// @description :: A Bet is done by a User for a Match.
 //                 It requires a score (a number) for each team.
 // @docs        :: http://sailsjs.org/#!documentation/models
 
@@ -26,10 +26,10 @@ module.exports = {
       required: true
     },
 
-    // The Game concerned
-    // It's a reference to the Game object
-    game: {
-      model: 'game',
+    // The Match concerned
+    // It's a reference to the Match object
+    match: {
+      model: 'match',
       notEmpty: true,
       required: true
     },
