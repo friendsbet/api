@@ -36,6 +36,15 @@ module.exports.connections = {
     // user: 'username',
     // password: 'password',
     database: 'friendsbet_dev'
+  },
+
+  mongoTest: {
+    adapter: 'sails-mongo',
+    host: 'localhost',
+    port: 27017,
+    // user: 'username',
+    // password: 'password',
+    database: 'friendsbet_test'
   }
 
 };
