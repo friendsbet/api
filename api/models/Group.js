@@ -35,7 +35,8 @@ module.exports = {
     // The admin of the Group
     // It's a reference to a User
     admin: {
-      model: 'user'
+      model: 'user',
+      required: true
     },
 
     // The list of members
