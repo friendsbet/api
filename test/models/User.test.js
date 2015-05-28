@@ -208,6 +208,8 @@ describe('UserModel', function() {
 
   });
 
+
+
   describe('#find()', function() {
 
     it('should return an array containing the user', function (done) {
@@ -231,6 +233,8 @@ describe('UserModel', function() {
     });
 
   });
+
+
 
   describe('#findOne()', function() {
 
@@ -322,6 +326,8 @@ describe('UserModel', function() {
     });
 
   });
+
+
 
   describe('#destroy()', function() {
     it('should return an empty array when providing an unknown id', function (done) {

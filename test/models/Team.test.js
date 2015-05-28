@@ -112,6 +112,8 @@ describe('TeamModel', function() {
 
   });
 
+
+
   describe('#find()', function() {
 
     it('should return an array containing the team', function (done) {
@@ -135,6 +137,8 @@ describe('TeamModel', function() {
     });
 
   });
+
+
 
   describe('#findOne()', function() {
 
