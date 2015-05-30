@@ -9,16 +9,26 @@ ToDo
 ## Resources
 
 **Find records:**
- - *GET /matches*: Get the matches list (limited to 30 elements)
- - *GET /matches?pool=A*: Get the pool A matches list
- - *GET /matches?where={"venue":{"contains":"Twickenham"}}*: Get a matches list that take place at Twickenham
- - *GET /matches?where={"kickOffAt":{">":2015-09-30}}*: Get the matches that happen after September 30
- - *GET /matches?sort=kickOffAt%20DESC*: Get the matches in descending order
- - *GET /matches?limit=10*: Just get a list of 10 matches
- - *GET /matches?skip=10*: Skip 10 matches
- - *GET /matches?populate=[teamA]*: Get the matches with more informations about one of the Team
- - *GET /matches/<id>*: Get a precise match
- - *GET /matches/<id>/teamB*: Get a Team in a match
+ - *GET /matches*
+   * Get the matches list (limited to 30 elements)
+ - *GET /matches?pool=A*
+   * Get the pool A matches list
+ - *GET /matches?where={"venue":{"contains":"Twickenham"}}*
+   * Get a matches list that take place at Twickenham
+ - *GET /matches?where={"kickOffAt":{">":2015-09-30}}*
+   * Get the matches that happen after September 30
+ - *GET /matches?sort=kickOffAt%20DESC*
+   * Get the matches in descending order
+ - *GET /matches?limit=10*
+   * Just get a list of 10 matches
+ - *GET /matches?skip=10*
+   * Skip 10 matches
+ - *GET /matches?populate=[teamA]*
+   * Get the matches with more informations about one of the Team
+ - *GET /matches/<id>*
+   * Get a precise match
+ - *GET /matches/<id>/teamB*
+   * Get a Team in a match
 
 You can find more informations on [Sails docs](http://sailsjs.org/#!/documentation/reference/blueprint-api).
 
