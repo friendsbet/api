@@ -49,7 +49,7 @@ module.exports = {
       via: 'user'
     },
 
-    // The Group in which the User participate
+    // The Groups in which the User participates
     // References to Group objects
     groups: {
       collection: 'group',
