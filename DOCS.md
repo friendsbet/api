@@ -139,8 +139,8 @@ Get a list of users.
 
 | Name        | Description                          | Type   | Example             | Default | Required | Unique |
 |-------------|--------------------------------------|--------|---------------------|---------|----------|--------|
-| email       | The email adress of the User         | string | "john@snow.com"     |         | Yes      | Yes    |
-| firstName   | The first name of the User           | string | "John"              |         | Yes      | No     |
+| email       | The email adress of the User         | string | "jon@snow.com"     |         | Yes      | Yes    |
+| firstName   | The first name of the User           | string | "Jon"              |         | Yes      | No     |
 | lastName    | His/Her last name                    | string | "Snow"              |         | Yes      | No     |
 | description | Everything the User want you to know | string | "King of the North" |         | No       | No     |
 
