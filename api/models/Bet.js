@@ -12,7 +12,7 @@
 // @param score integer
 // @return boolean isScorePossible
 function checkRugbyScore(score) {
-  return score > 4 || score === 3;
+  return score > 4 || score === 3 || score === 0;
 }
 
 // Check if this Football score is possible
