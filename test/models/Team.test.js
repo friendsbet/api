@@ -10,7 +10,8 @@ describe('TeamModel', function() {
 
     it('should return an empty array', function (done) {
 
-      Team.find()
+      Team
+        .find()
         .exec(function(err, results) {
           should(err).be.null;
 
@@ -31,7 +32,8 @@ describe('TeamModel', function() {
 
     it('should return an error when no field is provided', function (done) {
 
-      Team.create({ })
+      Team
+        .create({ })
         .exec(function(err) {
           should(err).not.be.null;
 
@@ -50,7 +52,8 @@ describe('TeamModel', function() {
 
     it('should return an error when only name is provided', function (done) {
 
-      Team.create({
+      Team
+        .create({
           name: 'England'
         })
         .exec(function(err) {
@@ -71,7 +74,8 @@ describe('TeamModel', function() {
 
     it('should return an error when only slug is provided', function (done) {
 
-      Team.create({
+      Team
+        .create({
           slug: 'eng'
         })
         .exec(function(err) {
@@ -92,7 +96,8 @@ describe('TeamModel', function() {
 
     it('should succeed when all fields are well fullfilled', function (done) {
 
-      Team.create({
+      Team
+        .create({
           name: 'England',
           slug: 'eng'
         })
@@ -118,7 +123,8 @@ describe('TeamModel', function() {
 
     it('should return an array containing the team', function (done) {
 
-      Team.find()
+      Team
+        .find()
         .exec(function(err, results) {
           should(err).be.null;
 
@@ -144,7 +150,8 @@ describe('TeamModel', function() {
 
     it('should return an undefined result when giving an unnexisting id', function (done) {
 
-      Team.findOne(123)
+      Team
+        .findOne(123)
         .exec(function(err, result) {
           should(err).be.null;
 
@@ -157,7 +164,8 @@ describe('TeamModel', function() {
 
     it('should return undefined result when giving an unnexisting attribute value', function (done) {
 
-      Team.findOne({
+      Team
+        .findOne({
           name: 'Fake'
         })
         .exec(function(err, result) {
@@ -172,7 +180,8 @@ describe('TeamModel', function() {
 
     it('should succeed when giving a real team id', function (done) {
 
-      Team.findOne(id)
+      Team
+        .findOne(id)
         .exec(function(err, result) {
           should(err).be.null;
 
@@ -193,7 +202,8 @@ describe('TeamModel', function() {
 
     it('should return an empty array when providing an unnexisting id', function (done) {
 
-      Team.update(123, { description: '...muspI meroL' })
+      Team
+        .update(123, { description: '...muspI meroL' })
         .exec(function(err, results) {
           should(err).be.null;
 
@@ -210,7 +220,8 @@ describe('TeamModel', function() {
 
       var newDescription = '...muspI meroL';
 
-      Team.update(id, { description: newDescription })
+      Team
+        .update(id, { description: newDescription })
         .exec(function(err, results) {
           should(err).be.null;
 
@@ -236,7 +247,8 @@ describe('TeamModel', function() {
   describe('#destroy()', function() {
     it('should return an empty array when providing an unknown id', function (done) {
 
-      Team.destroy(123)
+      Team
+        .destroy(123)
         .exec(function(err, results) {
           should(err).be.null;
 
@@ -251,7 +263,8 @@ describe('TeamModel', function() {
 
     it('should destroy the user when giving a real id', function (done) {
 
-      Team.destroy(id)
+      Team
+        .destroy(id)
         .exec(function(err, results) {
           should(err).be.null;
 

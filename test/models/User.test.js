@@ -10,7 +10,8 @@ describe('UserModel', function() {
 
     it('should return an empty array', function (done) {
 
-      User.find()
+      User
+        .find()
         .exec(function(err, results) {
           should(err).be.null;
 
@@ -31,7 +32,8 @@ describe('UserModel', function() {
 
     it('should return an error when no field is provided', function (done) {
 
-      User.create({ })
+      User
+        .create({ })
         .exec(function(err) {
           should(err).not.be.null;
 
@@ -51,7 +53,8 @@ describe('UserModel', function() {
 
     it('should return an error when only email is provided', function (done) {
 
-      User.create({
+      User
+        .create({
           email: 'demo@demo.com'
         })
         .exec(function(err) {
@@ -73,7 +76,8 @@ describe('UserModel', function() {
 
     it('should return an error when only first name is provided', function (done) {
 
-      User.create({
+      User
+        .create({
           firstName: 'Demo'
         })
         .exec(function(err) {
@@ -95,7 +99,8 @@ describe('UserModel', function() {
 
     it('should return an error when only last name is provided', function (done) {
 
-      User.create({
+      User
+        .create({
           lastName: 'User'
         })
         .exec(function(err) {
@@ -117,7 +122,8 @@ describe('UserModel', function() {
 
     it('should return an error when email and first name are provided', function (done) {
 
-      User.create({
+      User
+        .create({
           email: 'demo@demo.com',
           firstName: 'Demo'
         })
@@ -140,7 +146,8 @@ describe('UserModel', function() {
 
     it('should return an error when email and last name are provided', function (done) {
 
-      User.create({
+      User
+        .create({
           email: 'demo@demo.com',
           lastName: 'User'
         })
@@ -163,7 +170,8 @@ describe('UserModel', function() {
 
     it('should return an error when first and last names are provided', function (done) {
 
-      User.create({
+      User
+        .create({
           firstName: 'Demo',
           lastName: 'User'
         })
@@ -186,7 +194,8 @@ describe('UserModel', function() {
 
     it('should succeed when all fields are well fullfilled', function (done) {
 
-      User.create({
+      User
+        .create({
           email: 'demo@demo.com',
           firstName: 'Demo',
           lastName: 'User',
@@ -214,7 +223,8 @@ describe('UserModel', function() {
 
     it('should return an array containing the user', function (done) {
 
-      User.find()
+      User
+        .find()
         .exec(function(err, results) {
           should(err).be.null;
 
@@ -240,7 +250,8 @@ describe('UserModel', function() {
 
     it('should return an undefined result when giving an unnexisting id', function (done) {
 
-      User.findOne(123)
+      User
+        .findOne(123)
         .exec(function(err, result) {
           should(err).be.null;
 
@@ -253,7 +264,8 @@ describe('UserModel', function() {
 
     it('should return undefined result when giving an unnexisting attribute value', function (done) {
 
-      User.findOne({
+      User
+        .findOne({
           firstName: 'Fake'
         })
         .exec(function(err, result) {
@@ -268,7 +280,8 @@ describe('UserModel', function() {
 
     it('should succeed when giving a real user id', function (done) {
 
-      User.findOne(id)
+      User
+        .findOne(id)
         .exec(function(err, result) {
           should(err).be.null;
 
@@ -289,7 +302,8 @@ describe('UserModel', function() {
 
     it('should return an empty array when providing an unnexisting id', function (done) {
 
-      User.update(123, { description: '...muspI meroL' })
+      User
+        .update(123, { description: '...muspI meroL' })
         .exec(function(err, results) {
           should(err).be.null;
 
@@ -306,7 +320,8 @@ describe('UserModel', function() {
 
       var newDescription = '...muspI meroL';
 
-      User.update(id, { description: newDescription })
+      User
+        .update(id, { description: newDescription })
         .exec(function(err, results) {
           should(err).be.null;
 
@@ -332,7 +347,8 @@ describe('UserModel', function() {
   describe('#destroy()', function() {
     it('should return an empty array when providing an unknown id', function (done) {
 
-      User.destroy(123)
+      User
+        .destroy(123)
         .exec(function(err, results) {
           should(err).be.null;
 
@@ -347,7 +363,8 @@ describe('UserModel', function() {
 
     it('should destroy the user when giving a real id', function (done) {
 
-      User.destroy(id)
+      User
+        .destroy(id)
         .exec(function(err, results) {
           should(err).be.null;
 
