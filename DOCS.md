@@ -72,10 +72,10 @@ Get a list of groups.
 
 **Associated resources**
 
-| Name    | Description            | Type     | Model | Required |
-|---------|------------------------|----------|-------|----------|
-| admin   | The admin of the Group | Instance | User  | Yes      |
-| members | The list of members    | List     | User  | No       |
+| Name        | Description                 | Type     | Model      | Required |
+|-------------|-----------------------------|----------|------------|----------|
+| admin       | The first User of the Group | Instance | User       | Yes      |
+| memberships | The list of members         | List     | Membership | No       |
 
 ### Match
 
@@ -103,6 +103,27 @@ Get a list of matches.
 |-------|-----------------|----------|-------|----------|
 | teamA | The first Team  | Instance | Team  | Yes      |
 | teamB | The second Team | Instance | Team  | Yes      |
+
+### Membership
+
+ - *GET /memberships*
+
+**Description**
+
+Get a list of memberships. A membership joins a user and a group. A user can have multiple groups and a group can have many users.
+
+**Attributes**
+
+| Name    | Description                         | Type    | Example | Default | Required | Unique |
+|---------|-------------------------------------|---------|---------|---------|----------|--------|
+| isAdmin | Is the User an admin of this Group? | boolean | true    | false   | No       | No     |
+
+**Associated resources**
+
+| Name  | Description                              | Type     | Model | Required |
+|-------|------------------------------------------|----------|-------|----------|
+| user  | The User in the Group                    | Instance | User  | Yes      |
+| group | The Group in which the User participates | Instance | Group | Yes      |
 
 ### Team
 
@@ -146,7 +167,7 @@ Get a list of users.
 
 **Associated resources**
 
-| Name   | Description                               | Type | Model | Required |
-|--------|-------------------------------------------|------|-------|----------|
-| bets   | The collection of the User Bets           | List | Bet   | No       |
-| groups | The Groups in which the User participates | List | Group | No       |
+| Name        | Description                               | Type | Model      | Required |
+|-------------|-------------------------------------------|------|------------|----------|
+| bets        | The collection of the User Bets           | List | Bet        | No       |
+| memberships | The Groups in which the User participates | List | Membership | No       |
