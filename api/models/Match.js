@@ -86,6 +86,10 @@ module.exports = {
       type: 'text'
     },
 
+    bets: {
+      collection: 'bet',
+      via: 'match'
+    }
+
   }
 };
-
