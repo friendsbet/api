@@ -26,6 +26,13 @@ module.exports = {
       required: true
     },
 
+    // The points earned with this bet
+    // e.g 157
+    score: {
+      type: 'integer',
+      defaultsTo: 0
+    }
+
     // The Match concerned
     // It's a reference to the Match object
     match: {
@@ -59,4 +66,3 @@ module.exports = {
   }
 
 };
-
