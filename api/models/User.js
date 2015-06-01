@@ -37,8 +37,7 @@ module.exports = {
     },
 
     // The cumulative score of this User
-    // Updated at the end of a Match
-    // e.g 256
+    // Updated at the end of a Match    // e.g 256
     score: {
       type: 'integer',
       defaultsTo: 0
