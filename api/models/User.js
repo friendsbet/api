@@ -36,6 +36,14 @@ module.exports = {
       required: true
     },
 
+    // The cumulative score of this User
+    // Updated at the end of a Match
+    // e.g 256
+    score: {
+      type: 'integer',
+      defaultsTo: 0
+    },
+
     // Everything the User want you to know
     // e.g 'The founder of Friends Bet'
     description: {
