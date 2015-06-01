@@ -32,7 +32,7 @@ module.exports = {
       type: 'text'
     },
 
-    // The admin of the Group
+    // The first admin of the Group
     // It's a reference to a User
     admin: {
       model: 'user',
@@ -40,10 +40,10 @@ module.exports = {
     },
 
     // The list of members
-    // References to User objects
-    members: {
-      collection: 'user',
-      via: 'groups'
+    // References to Membership objects
+    memberships: {
+      collection: 'membership',
+      via: 'group'
     }
 
   }

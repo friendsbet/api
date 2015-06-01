@@ -58,10 +58,10 @@ module.exports = {
     },
 
     // The Groups in which the User participates
-    // References to Group objects
-    groups: {
-      collection: 'group',
-      via: 'members'
+    // References to Membership objects
+    memberships: {
+      collection: 'membership',
+      via: 'user'
     }
 
   }
