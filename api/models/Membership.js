@@ -24,7 +24,7 @@ module.exports = {
       required: true
     },
 
-    // The Groups in which the User participates
+    // The Group in which the User participates
     // References to Group objects
     group: {
       model: 'group',
