@@ -7,8 +7,8 @@ node_js:
 - iojs-v1.0.4
 services:
 - mongodb
-script: "npm run test-travis"
-after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+script: npm run test-travis
+after_script: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 notifications:
   slack:
-    secure: NiKZh2wicxt4qLUWTUKlPHiLuQjN1yIB6f8T3f1zvQf9cFakpGeKNlFnGVgKTjROIecxu5q2X09jHQtj5b9VlFoXUFA6Shg4P9VXUnw6Tk7UJTY69catzOn5QBw9blsqgoxQX7at3yMqHULCs8bu1OyWUIa+FSiCQUknwNPNqDo=
+    secure: eKiNuomt+K0pLUPZAdevvfvAdGPAKszvaPRAMmpid1XS244/pCk4ORQ9e6XcHO0m/uZXB+WzWybUwpjyy8EKjFtkN+411UQqb7Ym57K81U5EbBVdZibw15gVjPKsz3n+WocBSuVbYpt2l71TuFquS+tX13U/WPL89tPuZOs5dJE=
