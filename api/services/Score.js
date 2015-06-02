@@ -249,7 +249,7 @@ module.exports = {
 
         return next(null, score);
       },
-      function updateUser(score, next) {
+      function updateGroup(score, next) {
         group.score = score;
 
         group
