@@ -62,7 +62,7 @@ module.exports = {
       return;
     });
 
-    return cb((err)? err: null);
+    return cb((err.length)? err: null);
   }
 
 };
