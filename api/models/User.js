@@ -63,6 +63,32 @@ module.exports = {
       via: 'user'
     }
 
+  },
+
+  // Remove user's bets and memberships
+  afterDestroy: function destroyAssociations(values, cb) {
+    var err = [];
+
+    async.parallel([
+
+      function destroyBets(next) {
+        Bet
+          .destroy({ user: values.id })
+          .exec(function (err) {
+            return next((err.length)? err: null);
+        });
+      },
+
+      function destroyMemberships(next) {
+        Membership
+          .destroy({ user: values.id })
+          .exec(function (err) {
+            return next((err.length)? err: null);
+        });
+      },
+
+    ], function (err) {
+      return cb((err.length)? err: null);
+    });
   }
 };
-
