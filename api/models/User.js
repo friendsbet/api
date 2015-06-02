@@ -75,7 +75,7 @@ module.exports = {
         Bet
           .destroy({ user: values.id })
           .exec(function (err) {
-            return next((err.length)? err: null);
+            return next((err)? err: null);
         });
       },
 
@@ -83,12 +83,12 @@ module.exports = {
         Membership
           .destroy({ user: values.id })
           .exec(function (err) {
-            return next((err.length)? err: null);
+            return next((err)? err: null);
         });
       },
 
     ], function (err) {
-      return cb((err.length)? err: null);
+      return cb((err)? err: null);
     });
   }
 };
