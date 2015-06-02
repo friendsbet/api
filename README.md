@@ -1,5 +1,5 @@
 # Friends Bet API
-[![Build Status](https://travis-ci.org/FriendsBet/API.svg?branch=master)](https://travis-ci.org/FriendsBet/API)
+[![Build Status](https://travis-ci.org/FriendsBet/API.svg?branch=master)](https://travis-ci.org/FriendsBet/API) [![Coverage Status](https://coveralls.io/repos/FriendsBet/API/badge.svg?branch=master)](https://coveralls.io/r/FriendsBet/API?branch=master)
 
 Friends Bet is an application that allows you and your friends to bet on sport results.
 
