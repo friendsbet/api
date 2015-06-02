@@ -102,6 +102,88 @@ module.exports = {
     ], function (err) {
       return cb((err)? err: null);
     });
+  },
+
+  // computeUser
+  // 
+  // @description :: Compute a user score attribute from his bets
+  // @param       :: userId (required): the user concerned
+  //                 cb (required): the function called when it's done or an error occured
+  computeUser: function (userId, cb) {
+    var bets = [],
+        user = {};
+
+    if(!userId || !cb)
+      throw new Error('Missing param');
+    if(!userId.length || typeof cb !== 'function')
+      throw new Error('Invalid param');
+
+    // 1. In parallel,
+    //    - Find all bets related to this userId
+    //    - Get this user informations (to check he exists)
+    // 2. Sum his bets' scores
+    // 3. Save it
+    async.waterfall([
+      function findBetsAndGetUser(next) {
+        async.parallel([
+          function findBets(next2) {
+            Bet
+              .find({ user: userId }, { fields: ['score'] })
+              .limit(0)
+              .exec(function (err, instances) {
+                if(err)
+                  return next2(err);
+
+                if(!instances)
+                  return next2('Error trying to find bets with userId "' + userId + '"');
+
+                bets = instances;
+
+                return next2();
+            });
+          },
+          function getUser(next2) {
+            User
+              .findOne(userId, { fields: ['id', 'score'] })
+              .exec(function (err, instance) {
+                if(err)
+                  return next2(err);
+
+                if(!instance)
+                  return next2('Error trying to find user "' + userId + '"');
+
+                user = instance;
+
+                return next2();
+            });
+          }
+        ], function (err) {
+          return next((err)? err: null);
+        });
+      },
+      function sumBetsScores(next) {
+        var score = _.sum(_.pluck(bets, 'score'));
+
+        return next(null, score);
+      },
+      function updateUser(score, next) {
+        user.score = score;
+
+        user
+          .save()
+          .exec(function (err, instance) {
+            if(err)
+              return next(err);
+
+            if(!instance)
+              return next('Error trying to update user "' + userId + '" with score "' + score + '"');
+        
+            return next();
+        });
+      }
+    ], function (err) {
+      return cb((err)? err: null);
+    });
   }
 
 };
