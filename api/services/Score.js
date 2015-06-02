@@ -184,6 +184,89 @@ module.exports = {
     ], function (err) {
       return cb((err)? err: null);
     });
+  },
+
+  // computeGroup
+  // 
+  // @description :: Compute a group score attribute from its users score
+  // @param       :: groupId (required): the group concerned
+  //                 cb (required): the function called when it's done or an error occured
+  computeGroup: function (groupId, cb) {
+    var users = [],
+        group = {};
+
+    if(!groupId || !cb)
+      throw new Error('Missing param');
+    if(!groupId.length || typeof cb !== 'function')
+      throw new Error('Invalid param');
+
+    // 1. In parallel,
+    //    - Find all users related to this groupId
+    //    - Get this group informations (to check it exists)
+    // 2. Sum the users' scores
+    // 3. Save it
+    async.waterfall([
+      function findUsersAndGetGroup(next) {
+        async.parallel([
+          function findUsers(next2) {
+            Membership
+              .find({ group: groupId }, { fields: ['id'] })
+              .populate('user')
+              .limit(0)
+              .exec(function (err, instances) {
+                if(err)
+                  return next2(err);
+
+                if(!instances)
+                  return next2('Error trying to find memberships with groupId "' + groupId + '"');
+
+                users = _.pluck(instances, 'user');
+
+                return next2();
+            });
+          },
+          function getGroup(next2) {
+            Group
+              .findOne(groupId, { fields: ['id', 'score'] })
+              .exec(function (err, instance) {
+                if(err)
+                  return next2(err);
+
+                if(!instance)
+                  return next2('Error trying to find gruop "' + gruopId + '"');
+
+                group = instance;
+
+                return next2();
+            });
+          }
+        ], function (err) {
+          return next((err)? err: null);
+        });
+      },
+      function sumUsersScores(next) {
+        var score = _.sum(_.pluck(users, 'score'));
+
+        return next(null, score);
+      },
+      function updateUser(score, next) {
+        group.score = score;
+
+        group
+          .save()
+          .exec(function (err, instance) {
+            if(err)
+              return next(err);
+
+            if(!instance)
+              return next('Error trying to update group "' + groupId + '" with score "' + score + '"');
+        
+            return next();
+        });
+      }
+    ], function (err) {
+      return cb((err)? err: null);
+    });
   }
 
 };
