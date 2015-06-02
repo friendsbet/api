@@ -27,7 +27,8 @@
   "scripts": {
     "start": "node app.js",
     "debug": "node debug app.js",
-    "test": "PORT=9999 NODE_ENV=test mocha"
+    "test": "PORT=9999 NODE_ENV=test mocha",
+    "test-travis": "PORT=9999 NODE_ENV=test ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/"
   },
   "main": "app.js",
   "repository": {
@@ -37,6 +38,8 @@
   "author": "Yann Bertrand (yann@bertrand.com)",
   "license": "MIT",
   "devDependencies": {
+    "coveralls": "^2.11.2",
+    "istanbul": "^0.3.14",
     "mocha": "^2.2.4",
     "should": "^6.0.1",
     "supertest": "^0.15.0"
