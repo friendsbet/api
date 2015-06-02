@@ -86,46 +86,12 @@ module.exports = {
       type: 'text'
     },
 
+    // The Bets associated to this Match
+    // References to Bet objects
     bets: {
       collection: 'bet',
       via: 'match'
     }
 
-  },
-
-  afterUpdate: function updateScores(values, cb) {
-    // The Match just has updated non-score related informations
-    if(values.scoreTeamA === 0 && values.scoreTeamB === 0)
-      return cb();
-
-    Bet
-      .find({ match: values.id })
-      .exec(function (err, instances) {
-        if(err) return cb(err);
-        if(!instances) return cb(new Error('Error trying to find bets with match id "' + values.id + '"'));
-
-        var scoreA = values.scoreTeamA,
-            scoreB = values.scoreTeamB,
-            importance = values.importance,
-            score = 0;
-
-        // Update score of each bet
-        async.each(instances, function calculateBet(instance, next) {
-          score = Score.calculate(importance, instance.scoreTeamA, instance.scoreTeamB, scoreA, scoreB);
-
-          if(score !== instance.score) return next();
-
-          Bet
-            .update(instance.id, { score: score })
-            .exec(function (err, newInstance) {
-              if(err) return next(err);
-              if(!newInstance) return next(new Error('Error trying to update bet "' + instance.id + '" with score value "' + score + '"'));
-          
-              return next();
-          });
-        }, function (err) {
-          return cb((err)? err: null);
-        });
-    });
   }
 };

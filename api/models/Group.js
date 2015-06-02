@@ -46,6 +46,9 @@ module.exports = {
       via: 'group'
     }
 
+  },
+
+  afterDestroy: function (req, res) {
+
   }
 };
-
