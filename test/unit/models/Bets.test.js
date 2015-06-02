@@ -41,8 +41,6 @@ describe('BetModel', function() {
           err.should.be.an.Array;
           err.should.have.lengthOf(2);
 
-          console.log(err);
-
           return done();
       });
 
@@ -59,8 +57,6 @@ describe('BetModel', function() {
           err.should.be.an.Array;
           err.should.have.lengthOf(1);
 
-          console.log(err);
-
           return done();
       });
 
@@ -76,8 +72,6 @@ describe('BetModel', function() {
 
           err.should.be.an.Array;
           err.should.have.lengthOf(1);
-
-          console.log(err);
 
           return done();
       });
