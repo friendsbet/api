@@ -31,7 +31,7 @@ module.exports = {
     score: {
       type: 'integer',
       defaultsTo: 0
-    }
+    },
 
     // The Match concerned
     // It's a reference to the Match object
