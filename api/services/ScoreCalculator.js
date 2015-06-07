@@ -261,9 +261,6 @@ module.exports = {
   // @param       :: usersIds (required): the users concerned
   //                 cb (required): the function called when it's done or an error occured
   computeUsers: function (usersIds, cb) {
-    var bets = [],
-        user = {};
-
     if(!usersIds || !cb)
       throw new Error('Missing param');
     if(!usersIds.length || typeof cb !== 'function')
@@ -279,10 +276,7 @@ module.exports = {
   // @description :: Compute a list of groups' score attribute from its users score
   // @param       :: groupsIds (required): the groups concerned
   //                 cb (required): the function called when it's done or an error occured
-  computeUsers: function (groupsIds, cb) {
-    var bets = [],
-        user = {};
-
+  computeGroups: function (groupsIds, cb) {
     if(!groupsIds || !cb)
       throw new Error('Missing param');
     if(!groupsIds.length || typeof cb !== 'function')
