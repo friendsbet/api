@@ -48,7 +48,12 @@ module.exports = {
 
   },
 
-  afterDestroy: function (req, res) {
-
+  // Remove group's memberships
+  afterDestroy: function destroyAssociations(values, cb) {
+    Membership
+      .destroy({ group: values.id })
+      .exec(function (err) {
+        return cb((err)? err: null);
+    });
   }
 };
