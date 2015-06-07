@@ -272,6 +272,25 @@ module.exports = {
     async.each(usersIds, function (userId, next) {
       this.computeUser(userId, next);
     }, cb);
+  },
+
+  // computeGroups
+  // 
+  // @description :: Compute a list of groups' score attribute from its users score
+  // @param       :: groupsIds (required): the groups concerned
+  //                 cb (required): the function called when it's done or an error occured
+  computeUsers: function (groupsIds, cb) {
+    var bets = [],
+        user = {};
+
+    if(!groupsIds || !cb)
+      throw new Error('Missing param');
+    if(!groupsIds.length || typeof cb !== 'function')
+      throw new Error('Invalid param');
+
+    async.each(groupsIds, function (groupId, next) {
+      this.computeGroup(groupId, next);
+    }, cb);
   }
 
 };
