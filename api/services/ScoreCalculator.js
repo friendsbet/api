@@ -62,9 +62,7 @@ module.exports = {
                 return next2();
             });
           }
-        ], function (err) {
-          return next((err)? err: null);
-        });
+        ], next);
       },
       function updateEachBet(next) {
         var score = 0;
@@ -94,14 +92,10 @@ module.exports = {
                   return next2();
               });
             }
-          ], function (err) {
-            return nextBet((err)? err: null);
-          });
+          ], nextBet);
         }, next);
       }
-    ], function (err) {
-      return cb((err)? err: null);
-    });
+    ], cb);
   },
 
   // computeUser
@@ -157,9 +151,7 @@ module.exports = {
                 return next2();
             });
           }
-        ], function (err) {
-          return next((err)? err: null);
-        });
+        ], next);
       },
       function sumBetsScores(next) {
         var score = _.sum(_.pluck(bets, 'score'));
@@ -181,9 +173,7 @@ module.exports = {
             return next();
         });
       }
-    ], function (err) {
-      return cb((err)? err: null);
-    });
+    ], cb);
   },
 
   // computeGroup
@@ -240,9 +230,7 @@ module.exports = {
                 return next2();
             });
           }
-        ], function (err) {
-          return next((err)? err: null);
-        });
+        ], next);
       },
       function sumUsersScores(next) {
         var score = _.sum(_.pluck(users, 'score'));
@@ -264,9 +252,7 @@ module.exports = {
             return next();
         });
       }
-    ], function (err) {
-      return cb((err)? err: null);
-    });
+    ], cb);
   },
 
   // computeUsers
@@ -285,9 +271,7 @@ module.exports = {
 
     async.each(usersIds, function (userId, next) {
       this.computeUser(userId, next);
-    }, function (err) {
-      return cb((err)? err: null);
-    });
+    }, cb);
   }
 
 };
