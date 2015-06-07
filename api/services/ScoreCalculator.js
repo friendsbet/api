@@ -1,6 +1,6 @@
 // Score.js
 //
-// @description :: A service to manage scores of Bet, User and Group model
+// @description :: A service to manage scores of Bet, User and Group models
 
 module.exports = {
 
@@ -265,6 +265,27 @@ module.exports = {
         });
       }
     ], function (err) {
+      return cb((err)? err: null);
+    });
+  },
+
+  // computeUsers
+  // 
+  // @description :: Compute a list of users' score attribute from his bets
+  // @param       :: usersIds (required): the users concerned
+  //                 cb (required): the function called when it's done or an error occured
+  computeUsers: function (usersIds, cb) {
+    var bets = [],
+        user = {};
+
+    if(!usersIds || !cb)
+      throw new Error('Missing param');
+    if(!usersIds.length || typeof cb !== 'function')
+      throw new Error('Invalid param');
+
+    async.each(usersIds, function (userId, next) {
+      this.computeUser(userId, next);
+    }, function (err) {
       return cb((err)? err: null);
     });
   }
