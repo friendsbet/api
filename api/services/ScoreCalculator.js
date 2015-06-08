@@ -8,17 +8,20 @@ module.exports = {
   // 
   // @description :: Compute each bets score attribute of a single match
   // @param       :: matchId (required): the match concerned
-  //                 cb (required): the function called when it's done or an error occured
+  //                 cb (required): the function called when it's done or an
+  //                 error occured
   computeBets: function (matchId, cb) {
     var bets = [],
         scoreA = 0,
         scoreB = 0,
         importance = 1.0;
 
-    if(!matchId || !cb)
+    if(!matchId || !cb) {
       throw new Error('Missing param');
-    if(!matchId.length || typeof cb !== 'function')
+    }
+    if(!matchId.length || typeof cb !== 'function') {
       throw new Error('Invalid param');
+    }
 
     // 1. In parallel,
     //    - Find all bets related to this matchId
@@ -31,14 +34,20 @@ module.exports = {
         async.parallel([
           function findBets(next2) {
             Bet
-              .find({ match: matchId }, { fields: ['id', 'scoreTeamA', 'scoreTeamB', 'score'] })
+              .find({ match: matchId }, {
+                fields: ['id', 'scoreTeamA', 'scoreTeamB', 'score']
+              })
               .limit(0)
               .exec(function (err, instances) {
-                if(err)
+                if(err) {
                   return next2(err);
+                }
 
-                if(!instances)
-                  return next2('Error trying to find bets with matchId "' + matchId + '"');
+                if(!instances) {
+                  return next2(
+                    new Error('Error trying to find bets with matchId "'
+                      + matchId + '"'));
+                }
 
                 bets = instances;
 
@@ -47,13 +56,18 @@ module.exports = {
           },
           function getMatch(next2) {
             Match
-              .findOne(matchId, { fields: ['importance', 'scoreTeamA', 'scoreTeamB'] })
+              .findOne(matchId, {
+                fields: ['importance', 'scoreTeamA', 'scoreTeamB']
+              })
               .exec(function (err, instance) {
-                if(err)
+                if(err) {
                   return next2(err);
+                }
 
-                if(!instance)
-                  return next2('Error trying to find match "' + matchId + '"');
+                if(!instance) {
+                  return next2(
+                    new Error('Error trying to find match "' + matchId + '"'));
+                }
 
                 importance = instance.importance;
                 scoreA = instance.scoreTeamA;
@@ -83,11 +97,14 @@ module.exports = {
               bet
                 .save()
                 .exec(function (err, instance) {
-                  if(err)
+                  if(err) {
                     return next2(err);
+                  }
 
-                  if(!instance)
-                    return next2('Error trying to update bet "' + bet.id + '" with score "' + score + '"');
+                  if(!instance) {
+                    return next2(new Error('Error trying to update bet "'
+                      + bet.id + '" with score "' + score + '"'));
+                  }
               
                   return next2();
               });
@@ -102,15 +119,19 @@ module.exports = {
   // 
   // @description :: Compute a user score attribute from his bets
   // @param       :: userId (required): the user concerned
-  //                 cb (required): the function called when it's done or an error occured
+  //                 cb (required): the function called when it's done or an
+  //                 error occured
   computeUser: function (userId, cb) {
     var bets = [],
         user = {};
 
-    if(!userId || !cb)
+    if(!userId || !cb) {
       throw new Error('Missing param');
-    if(!userId.length || typeof cb !== 'function')
+    }
+
+    if(!userId.length || typeof cb !== 'function') {
       throw new Error('Invalid param');
+    }
 
     // 1. In parallel,
     //    - Find all bets related to this userId
@@ -125,11 +146,15 @@ module.exports = {
               .find({ user: userId }, { fields: ['score'] })
               .limit(0)
               .exec(function (err, instances) {
-                if(err)
+                if(err) {
                   return next2(err);
+                }
 
-                if(!instances)
-                  return next2('Error trying to find bets with userId "' + userId + '"');
+                if(!instances) {
+                  return next2(
+                    new Error('Error trying to find bets with userId "'
+                      + userId + '"'));
+                }
 
                 bets = instances;
 
@@ -140,11 +165,14 @@ module.exports = {
             User
               .findOne(userId, { fields: ['id', 'score'] })
               .exec(function (err, instance) {
-                if(err)
+                if(err) {
                   return next2(err);
+                }
 
-                if(!instance)
-                  return next2('Error trying to find user "' + userId + '"');
+                if(!instance) {
+                  return next2(
+                    new Error('Error trying to find user "' + userId + '"'));
+                }
 
                 user = instance;
 
@@ -164,11 +192,15 @@ module.exports = {
         user
           .save()
           .exec(function (err, instance) {
-            if(err)
+            if(err) {
               return next(err);
+            }
 
-            if(!instance)
-              return next('Error trying to update user "' + userId + '" with score "' + score + '"');
+            if(!instance) {
+              return next(
+                new Error('Error trying to update user "'
+                  + userId + '" with score "' + score + '"'));
+            }
         
             return next();
         });
@@ -180,15 +212,18 @@ module.exports = {
   // 
   // @description :: Compute a group score attribute from its users score
   // @param       :: groupId (required): the group concerned
-  //                 cb (required): the function called when it's done or an error occured
+  //                 cb (required): the function called when it's done or an
+  //                 error occured
   computeGroup: function (groupId, cb) {
     var users = [],
         group = {};
 
-    if(!groupId || !cb)
+    if(!groupId || !cb) {
       throw new Error('Missing param');
-    if(!groupId.length || typeof cb !== 'function')
+    }
+    if(!groupId.length || typeof cb !== 'function') {
       throw new Error('Invalid param');
+    }
 
     // 1. In parallel,
     //    - Find all users related to this groupId
@@ -204,11 +239,15 @@ module.exports = {
               .populate('user')
               .limit(0)
               .exec(function (err, instances) {
-                if(err)
+                if(err) {
                   return next2(err);
+                }
 
-                if(!instances)
-                  return next2('Error trying to find memberships with groupId "' + groupId + '"');
+                if(!instances) {
+                  return next2(
+                    new Error('Error trying to find memberships with groupId "'
+                      + groupId + '"'));
+                }
 
                 users = _.pluck(instances, 'user');
 
@@ -219,11 +258,13 @@ module.exports = {
             Group
               .findOne(groupId, { fields: ['id', 'score'] })
               .exec(function (err, instance) {
-                if(err)
+                if(err) {
                   return next2(err);
+                }
 
-                if(!instance)
-                  return next2('Error trying to find gruop "' + gruopId + '"');
+                if(!instance) {
+                  return next2('Error trying to find group "' + groupId + '"');
+                }
 
                 group = instance;
 
@@ -243,11 +284,15 @@ module.exports = {
         group
           .save()
           .exec(function (err, instance) {
-            if(err)
+            if(err) {
               return next(err);
+            }
 
-            if(!instance)
-              return next('Error trying to update group "' + groupId + '" with score "' + score + '"');
+            if(!instance) {
+              return next(
+                new Error('Error trying to update group "'
+                  + groupId + '" with score "' + score + '"'));
+            }
         
             return next();
         });
@@ -259,12 +304,15 @@ module.exports = {
   // 
   // @description :: Compute a list of users' score attribute from his bets
   // @param       :: usersIds (required): the users concerned
-  //                 cb (required): the function called when it's done or an error occured
+  //                 cb (required): the function called when it's done or
+  //                 an error occured
   computeUsers: function (usersIds, cb) {
-    if(!usersIds || !cb)
+    if(!usersIds || !cb) {
       throw new Error('Missing param');
-    if(!usersIds.length || typeof cb !== 'function')
+    }
+    if(!usersIds.length || typeof cb !== 'function') {
       throw new Error('Invalid param');
+    }
 
     async.each(usersIds, function (userId, next) {
       this.computeUser(userId, next);
@@ -273,14 +321,18 @@ module.exports = {
 
   // computeGroups
   // 
-  // @description :: Compute a list of groups' score attribute from its users score
+  // @description :: Compute a list of groups' score attribute from its users
+  //                 core
   // @param       :: groupsIds (required): the groups concerned
-  //                 cb (required): the function called when it's done or an error occured
+  //                 cb (required): the function called when it's done or an
+  //                 error occured
   computeGroups: function (groupsIds, cb) {
-    if(!groupsIds || !cb)
+    if(!groupsIds || !cb) {
       throw new Error('Missing param');
-    if(!groupsIds.length || typeof cb !== 'function')
+    }
+    if(!groupsIds.length || typeof cb !== 'function') {
       throw new Error('Invalid param');
+    }
 
     async.each(groupsIds, function (groupId, next) {
       this.computeGroup(groupId, next);
