@@ -6,6 +6,14 @@
 
 var CurrentSport = require('./sports/' + sails.config.currentSport);
 
+if(!CurrentSport) {
+  throw new Error(
+    'This sport ('
+    + sails.config.currentSport
+    + ') isn\'t implemented for the moment'
+  );
+}
+
 // Check if this score is possible
 //
 // @param score integer

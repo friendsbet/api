@@ -31,7 +31,8 @@ module.exports = {
     },
 
     // Everything you need to know about this team
-    // e.g 'The England national rugby union team represents England in rugby union.'
+    // e.g 'The England national rugby union team represents England in \
+    //      rugby union.'
     description: {
       type: 'text'
     },

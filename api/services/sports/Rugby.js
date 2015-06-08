@@ -4,7 +4,8 @@
 
 // Check if this Rugby score is possible
 //
-// See http://stackoverflow.com/questions/3464820/sum-of-numbers-making-a-sequence
+// See
+//  http://stackoverflow.com/questions/3464820/sum-of-numbers-making-a-sequence
 //  for more informations about the Frobenius coin problem
 //
 // @param score integer

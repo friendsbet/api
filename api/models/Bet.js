@@ -56,8 +56,12 @@ module.exports = {
     var err = [];
 
     _.forEach(['A', 'B'], function checkTeamScore(teamKey) {
-      if(!Sport.checkTeamScore(values['scoreTeam' + teamKey]))
-        err.push({ msg: 'Team ' + teamKey + ' score (' + values['scoreTeam' + teamKey] + ') is not a valid rugby score.', });
+      if(!Sport.checkTeamScore(values['scoreTeam' + teamKey])) {
+        err.push(
+          new Error('Team ' + teamKey + ' score ('
+            + values['scoreTeam'+ teamKey]
+            + ') is not a valid rugby score.'));
+      }
       
       return;
     });

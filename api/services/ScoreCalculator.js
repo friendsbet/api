@@ -45,8 +45,12 @@ module.exports = {
 
                 if(!instances) {
                   return next2(
-                    new Error('Error trying to find bets with matchId "'
-                      + matchId + '"'));
+                    new Error(
+                      'Error trying to find bets with matchId "'
+                      + matchId
+                      + '"'
+                    )
+                  );
                 }
 
                 bets = instances;
@@ -66,7 +70,10 @@ module.exports = {
 
                 if(!instance) {
                   return next2(
-                    new Error('Error trying to find match "' + matchId + '"'));
+                    new Error(
+                      'Error trying to find match "' + matchId + '"'
+                    )
+                  );
                 }
 
                 importance = instance.importance;
@@ -102,8 +109,15 @@ module.exports = {
                   }
 
                   if(!instance) {
-                    return next2(new Error('Error trying to update bet "'
-                      + bet.id + '" with score "' + score + '"'));
+                    return next2(
+                      new Error(
+                        'Error trying to update bet "'
+                        + bet.id
+                        + '" with score "'
+                        + score
+                        + '"'
+                      )
+                    );
                   }
               
                   return next2();
@@ -152,8 +166,12 @@ module.exports = {
 
                 if(!instances) {
                   return next2(
-                    new Error('Error trying to find bets with userId "'
-                      + userId + '"'));
+                    new Error(
+                      'Error trying to find bets with userId "'
+                      + userId
+                      + '"'
+                    )
+                  );
                 }
 
                 bets = instances;
@@ -171,7 +189,12 @@ module.exports = {
 
                 if(!instance) {
                   return next2(
-                    new Error('Error trying to find user "' + userId + '"'));
+                    new Error(
+                      'Error trying to find user "'
+                      + userId
+                      + '"'
+                    )
+                  );
                 }
 
                 user = instance;
@@ -198,8 +221,14 @@ module.exports = {
 
             if(!instance) {
               return next(
-                new Error('Error trying to update user "'
-                  + userId + '" with score "' + score + '"'));
+                new Error(
+                  'Error trying to update user "'
+                  + userId
+                  + '" with score "'
+                  + score
+                  + '"'
+                )
+              );
             }
         
             return next();
@@ -245,8 +274,12 @@ module.exports = {
 
                 if(!instances) {
                   return next2(
-                    new Error('Error trying to find memberships with groupId "'
-                      + groupId + '"'));
+                    new Error(
+                      'Error trying to find memberships with groupId "'
+                      + groupId
+                      + '"'
+                    )
+                  );
                 }
 
                 users = _.pluck(instances, 'user');
@@ -263,7 +296,13 @@ module.exports = {
                 }
 
                 if(!instance) {
-                  return next2('Error trying to find group "' + groupId + '"');
+                  return next2(
+                    new Error(
+                      'Error trying to find group "'
+                      + groupId
+                      + '"'
+                    )
+                  );
                 }
 
                 group = instance;
@@ -290,8 +329,14 @@ module.exports = {
 
             if(!instance) {
               return next(
-                new Error('Error trying to update group "'
-                  + groupId + '" with score "' + score + '"'));
+                new Error(
+                  'Error trying to update group "'
+                  + groupId
+                  + '" with score "'
+                  + score
+                  + '"'
+                )
+              );
             }
         
             return next();
@@ -315,7 +360,7 @@ module.exports = {
     }
 
     async.each(usersIds, function (userId, next) {
-      this.computeUser(userId, next);
+      return this.computeUser(userId, next);
     }, cb);
   },
 
@@ -335,7 +380,7 @@ module.exports = {
     }
 
     async.each(groupsIds, function (groupId, next) {
-      this.computeGroup(groupId, next);
+      return this.computeGroup(groupId, next);
     }, cb);
   }
 
