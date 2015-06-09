@@ -2,129 +2,115 @@
 //
 // @description :: A service to manage scores of Bet, User and Group models
 
-module.exports = {
+function checkParams(params) {
+  var invalidParam = false;
 
-  // computeBets
-  // 
-  // @description :: Compute each bets score attribute of a single match
-  // @param       :: matchId (required): the match concerned
-  //                 cb (required): the function called when it's done or an
-  //                 error occured
-  computeBets: function (matchId, cb) {
-    var bets = [],
-        scoreA = 0,
-        scoreB = 0,
-        importance = 1.0;
-
-    if(!matchId || !cb) {
+  _.each(params, function (param) {
+    if(!param.value) {
       throw new Error('Missing param');
     }
-    if(!matchId.length || typeof cb !== 'function') {
-      throw new Error('Invalid param');
+
+    switch(param.type) {
+      case 'string':
+      case 'function':
+        if(typeof param.value !== param.type) {
+          invalidParam = true;
+        }
+      case 'array':
+        if(param.value.constructor !== Array) {
+          invalidParam = true;
+        }
+      default:
+        throw new Error('Not implemented yet');
     }
 
-    // 1. In parallel,
-    //    - Find all bets related to this matchId
-    //    - Get this match informations
-    // 2. For each bet
-    //    1. Compute its score
-    //    2. Save it
-    async.series([
-      function findBetsAndGetMatch(next) {
-        async.parallel([
-          function findBets(next2) {
-            Bet
-              .find({ match: matchId }, {
-                fields: ['id', 'scoreTeamA', 'scoreTeamB', 'score']
-              })
-              .limit(0)
-              .exec(function (err, instances) {
-                if(err) {
-                  return next2(err);
-                }
+    if(invalidParam) {
+      throw new Error(
+        'Invalid param "'
+        + param.value +
+        '". It\'s supposed to be a "'
+        + param.type
+        + '"'
+      );
+    }
+  });
+}
 
-                if(!instances) {
-                  return next2(
-                    new Error(
-                      'Error trying to find bets with matchId "'
-                      + matchId
-                      + '"'
-                    )
-                  );
-                }
+module.exports = {
 
-                bets = instances;
-
-                return next2();
-            });
-          },
-          function getMatch(next2) {
-            Match
-              .findOne(matchId, {
-                fields: ['importance', 'scoreTeamA', 'scoreTeamB']
-              })
-              .exec(function (err, instance) {
-                if(err) {
-                  return next2(err);
-                }
-
-                if(!instance) {
-                  return next2(
-                    new Error(
-                      'Error trying to find match "' + matchId + '"'
-                    )
-                  );
-                }
-
-                importance = instance.importance;
-                scoreA = instance.scoreTeamA;
-                scoreB = instance.scoreTeamB;
-
-                return next2();
-            });
-          }
-        ], next);
+  // computeBet
+  // 
+  // @description :: Compute the bet score attribute from a its id
+  // @param       :: betId (required): the bet concerned
+  //                 cb (required): the function called when it's done or an
+  //                 error occured
+  computeBet: function (betId, cb) {
+    // Check the params
+    checkParams([
+      {
+        value: betId,
+        type: 'string'
       },
-      function updateEachBet(next) {
-        var score = 0;
+      {
+        value: cb,
+        type: 'function'
+      }
+    ]);
 
-        async.each(bets, function (bet, nextBet) {
-          score = 0;
-
-          async.waterfall([
-            function computeBetScore(next2) {
-              // ToDo
-              score = 10;
-
-              return next2();
-            },
-            function updateBet(score, next2) {
-              bet.score = score;
-
-              bet
-                .save()
-                .exec(function (err, instance) {
-                  if(err) {
-                    return next2(err);
-                  }
-
-                  if(!instance) {
-                    return next2(
-                      new Error(
-                        'Error trying to update bet "'
-                        + bet.id
-                        + '" with score "'
-                        + score
-                        + '"'
-                      )
-                    );
-                  }
-              
-                  return next2();
-              });
+    // 1. Find the bet details
+    // 2. Compute the score
+    // 3. Update the score
+    async.waterfall([
+      function getBet(next) {
+        Bet
+          .findOne(betId)
+          .populate('match')
+          .exec(function (err, instance) {
+            if(err) {
+              return next(err);
             }
-          ], nextBet);
-        }, next);
+
+            if(!instance) {
+              return next(
+                new Error(
+                  'Error trying to find bet with betId "'
+                  + betId
+                  + '"'
+                )
+              );
+            }
+
+            return next(null, instance);
+        });
+      },
+      function computeBetScore(bet, next) {
+        // bet.match.importance
+        // bet.match.scoreTeamA
+        // bet.match.scoreTeamB
+        // bet.scoreTeamA
+        // bet.scoreTeamB
+        bet.score = 0; // ToDo
+
+        return next(null, bet);
+      },
+      function updateBet(bet, next) {
+        bet
+          .save()
+          .exec(function (err, newInstance) {
+            if(err) {
+              return next(err);
+            }
+
+            if(!newInstance) {
+              return next(
+                new Error(
+                  'Error trying to update bet with betId "'
+                  + betId
+                  + '"'
+                )
+              );
+            }
+        });
       }
     ], cb);
   },
@@ -139,13 +125,17 @@ module.exports = {
     var bets = [],
         user = {};
 
-    if(!userId || !cb) {
-      throw new Error('Missing param');
-    }
-
-    if(!userId.length || typeof cb !== 'function') {
-      throw new Error('Invalid param');
-    }
+    // Check params
+    checkParams([
+      {
+        value: userId,
+        type: 'string'
+      },
+      {
+        value: cb,
+        type: 'function'
+      }
+    ]);
 
     // 1. In parallel,
     //    - Find all bets related to this userId
@@ -247,12 +237,17 @@ module.exports = {
     var users = [],
         group = {};
 
-    if(!groupId || !cb) {
-      throw new Error('Missing param');
-    }
-    if(!groupId.length || typeof cb !== 'function') {
-      throw new Error('Invalid param');
-    }
+    // Check params
+    checkParams([
+      {
+        value: groupId,
+        type: 'string'
+      },
+      {
+        value: cb,
+        type: 'function'
+      }
+    ]);
 
     // 1. In parallel,
     //    - Find all users related to this groupId
@@ -295,6 +290,8 @@ module.exports = {
                   return next2(err);
                 }
 
+                // Group not found
+                // Is that an error?
                 if(!instance) {
                   return next2(
                     new Error(
@@ -345,43 +342,211 @@ module.exports = {
     ], cb);
   },
 
+  // computeBets
+  // 
+  // @description :: Compute each bets score attribute from a list of bets
+  // @param       :: betsIds (required): the bets concerned
+  //                 cb (required): the function called when it's done or an
+  //                 error occured
+  computeBets: function (betsIds, cb) {
+    // Check the params
+    checkParams([
+      {
+        value: betsIds,
+        type: 'array'
+      },
+      {
+        value: cb,
+        type: 'function'
+      }
+    ]);
+
+    // Compute each bet
+    async.each(betsIds, function (betId, next) {
+      this.computeBet(betId, next);
+    });
+  },
+
   // computeUsers
   // 
-  // @description :: Compute a list of users' score attribute from his bets
+  // @description :: Compute a list of users' score attribute from its bets
   // @param       :: usersIds (required): the users concerned
   //                 cb (required): the function called when it's done or
   //                 an error occured
   computeUsers: function (usersIds, cb) {
-    if(!usersIds || !cb) {
-      throw new Error('Missing param');
-    }
-    if(!usersIds.length || typeof cb !== 'function') {
-      throw new Error('Invalid param');
-    }
+    // Check params
+    checkParams([
+      {
+        value: usersIds,
+        type: 'array'
+      },
+      {
+        value: cb,
+        type: 'function'
+      }
+    ]);
 
+    // Compute each user score
     async.each(usersIds, function (userId, next) {
-      return this.computeUser(userId, next);
+      this.computeUser(userId, next);
     }, cb);
   },
 
   // computeGroups
   // 
-  // @description :: Compute a list of groups' score attribute from its users
-  //                 core
+  // @description :: Compute a list of groups' score attribute from its users'
+  //                 scores attributes
   // @param       :: groupsIds (required): the groups concerned
   //                 cb (required): the function called when it's done or an
   //                 error occured
   computeGroups: function (groupsIds, cb) {
-    if(!groupsIds || !cb) {
-      throw new Error('Missing param');
-    }
-    if(!groupsIds.length || typeof cb !== 'function') {
-      throw new Error('Invalid param');
-    }
+    // Check params
+    checkParams([
+      {
+        value: groupsIds,
+        type: 'array'
+      },
+      {
+        value: cb,
+        type: 'function'
+      }
+    ]);
 
+    // Compte each group score
     async.each(groupsIds, function (groupId, next) {
-      return this.computeGroup(groupId, next);
+      this.computeGroup(groupId, next);
     }, cb);
+  },
+
+  // computeBetsFromMatch
+  // 
+  // @description :: Compute each bets score attribute of a single match
+  // @param       :: matchId (required): the match concerned
+  //                 cb (required): the function called when it's done or an
+  //                 error occured
+  computeBetsFromMatch: function (matchId, cb) {
+    checkParams([
+      {
+        value: matchId,
+        type: 'string'
+      },
+      {
+        value: cb,
+        type: 'function'
+      }
+    ]);
+
+    // Find all bets related to this matchId
+    Bet
+      .find({ match: matchId }, { fields: ['id'] })
+      .exec(function (err, instances) {
+        if(err) {
+          return cb(err);
+        }
+
+        if(!instances) {
+          return next(
+            new Error(
+              'Error trying to find bets with matchId "'
+              + matchId
+              + '"'
+            )
+          );
+        }
+
+        var bets = _.pluck(instances, 'id');
+
+        // Then compute all the bets
+        this.computeBets(bets, cb);
+    });
+  },
+
+  // computeUsersFromMatch
+  // 
+  // @description :: Compute a list of users' score attribute from a match
+  // @param       :: matchId (required): the match concerned
+  //                 cb (required): the function called when it's done or
+  //                 an error occured
+  computeUsersFromMatch: function (matchId, cb) {
+    // Check params
+    checkParams([
+      {
+        value: matchId,
+        type: 'array'
+      },
+      {
+        value: cb,
+        type: 'function'
+      }
+    ]);
+
+    throw new Error('ToDo');
+  },
+
+  // computeGroupsFromUser
+  // 
+  // @description :: Compute a list of groups' score attribute from a user
+  // @param       :: userId (required): the user concerned
+  //                 cb (required): the function called when it's done or an
+  //                 error occured
+  function computeGroupsFromUser: function (userId, cb) {
+    // Check params
+    checkParams([
+      {
+        value: userId,
+        type: 'string'
+      },
+      {
+        value: cb,
+        type: 'function'
+      }
+    ]);
+
+    Membership
+      .find({ user: userId }, { fields: ['group'] })
+      .populate('group')
+      .limit(0)
+      .exec(function (err, instances) {
+        if(err) {
+          return cb(err);
+        }
+
+        if(!instances) {
+          return cb(
+            new Error(
+              'Error trying to find user "'
+              + userId
+              + '"\'s groups'
+            );
+          );
+        }
+
+        var groupsIds = _.pluck(_.pluck(instances, 'group'), 'id');
+
+        this.computeGroups(groupsIds);
+    });
+  }
+
+  // computeGroupsFromMatch
+  // 
+  // @description :: Compute a list of groups' score attribute from a match
+  // @param       :: matchId (required): the match concerned
+  //                 cb (required): the function called when it's done or an
+  //                 error occured
+  function computeGroupsFromMatch: function (matchId, cb) {
+    // Check params
+    checkParams([
+      {
+        value: matchId,
+        type: 'string'
+      },
+      {
+        value: cb,
+        type: 'function'
+      }
+    ]);
+
+    throw new Error('ToDo');
   }
 
 };
