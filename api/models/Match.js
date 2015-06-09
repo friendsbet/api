@@ -93,5 +93,29 @@ module.exports = {
       via: 'match'
     }
 
+  },
+
+  // Update all the bets made on this match
+  afterUpdate: function updateBetsScores(values, cb) {
+    async.series([
+      function calculateBets(next) {
+        ScoreCalculator.computeBetsFromMatch(values.id, next);
+      },
+      function calculateUser(next) {
+        ScoreCalculator.computeUserFromMatch(values.id, next);
+      },
+      function calculateGroup(next) {
+        ScoreCalculator.computeGroupFromMatch(values.id, next);
+      },
+    ], cb);
+  },
+
+  // Destroy the bets concerning this match
+  // (all the scores will be computed in the Bet, and User models)
+  afterDestroy: function destroyBets(values, cb) {
+    Bet
+      .destroy({ match: values.id })
+      .limit(0)
+      .exec(cb);
   }
 };

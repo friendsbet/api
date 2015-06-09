@@ -68,25 +68,16 @@ module.exports = {
   // Remove user's bets and memberships
   afterDestroy: function destroyAssociations(values, cb) {
     async.parallel([
-
       function destroyBets(next) {
         Bet
           .destroy({ user: values.id })
-          .exec(function (err) {
-            return next((err)? err: null);
-        });
+          .exec(next);
       },
-
       function destroyMemberships(next) {
         Membership
           .destroy({ user: values.id })
-          .exec(function (err) {
-            return next((err)? err: null);
-        });
+          .exec(next);
       },
-
-    ], function (err) {
-      return cb((err)? err: null);
-    });
+    ], cb);
   }
 };

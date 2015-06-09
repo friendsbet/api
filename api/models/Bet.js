@@ -69,22 +69,14 @@ module.exports = {
     return cb((err.length)? err: null);
   },
 
-  // Re calculate user and groups score
+  // Recalculate user and groups score
   afterDestroy: function computeScores(values, cb) {
     async.waterfall([
       function calculateUserScore(next) {
         ScoreCalculator.computeUser(values.user, next);
       },
-      function getUserGroups(next) {
-        Membership
-          .find({ user: values.user }, { fields: ['group'] })
-          .populate('group')
-          .exec(next);
-      },
-      function calculateGroupsScore(memberships, next) {
-        var groupsIds = _.pluck(_.pluck(memberships, 'group'), 'id');
-
-        ScoreCalculator.computeGroups(groupsIds, next);
+      function calculateGroupsScore(next) {
+        ScoreCalculator.computeGroupsFromUser(values.user, next);
       }
     ], cb);
   }
