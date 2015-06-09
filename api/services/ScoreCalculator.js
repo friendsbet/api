@@ -489,7 +489,7 @@ module.exports = {
   // @param       :: userId (required): the user concerned
   //                 cb (required): the function called when it's done or an
   //                 error occured
-  function computeGroupsFromUser: function (userId, cb) {
+  computeGroupsFromUser: function (userId, cb) {
     // Check params
     checkParams([
       {
@@ -517,7 +517,7 @@ module.exports = {
               'Error trying to find user "'
               + userId
               + '"\'s groups'
-            );
+            )
           );
         }
 
@@ -525,7 +525,7 @@ module.exports = {
 
         this.computeGroups(groupsIds);
     });
-  }
+  },
 
   // computeGroupsFromMatch
   // 
@@ -533,7 +533,7 @@ module.exports = {
   // @param       :: matchId (required): the match concerned
   //                 cb (required): the function called when it's done or an
   //                 error occured
-  function computeGroupsFromMatch: function (matchId, cb) {
+  computeGroupsFromMatch: function (matchId, cb) {
     // Check params
     checkParams([
       {
