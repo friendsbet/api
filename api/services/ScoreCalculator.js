@@ -16,21 +16,23 @@ function checkParams(params) {
         if(typeof param.value !== param.type) {
           invalidParam = true;
         }
+        break;
       case 'array':
         if(param.value.constructor !== Array) {
           invalidParam = true;
         }
+        break;
       default:
         throw new Error('Not implemented yet');
     }
 
     if(invalidParam) {
       throw new Error(
-        'Invalid param "'
-        + param.value +
-        '". It\'s supposed to be a "'
-        + param.type
-        + '"'
+        'Invalid param "' +
+        param.value +
+        '". It\'s supposed to be a "' +
+        param.type +
+        '"'
       );
     }
   });
@@ -73,9 +75,9 @@ module.exports = {
             if(!instance) {
               return next(
                 new Error(
-                  'Error trying to find bet with betId "'
-                  + betId
-                  + '"'
+                  'Error trying to find bet with betId "' +
+                  betId +
+                  '"'
                 )
               );
             }
@@ -104,9 +106,9 @@ module.exports = {
             if(!newInstance) {
               return next(
                 new Error(
-                  'Error trying to update bet with betId "'
-                  + betId
-                  + '"'
+                  'Error trying to update bet with betId "' +
+                  betId +
+                  '"'
                 )
               );
             }
@@ -157,9 +159,9 @@ module.exports = {
                 if(!instances) {
                   return next2(
                     new Error(
-                      'Error trying to find bets with userId "'
-                      + userId
-                      + '"'
+                      'Error trying to find bets with userId "' +
+                      userId +
+                      '"'
                     )
                   );
                 }
@@ -180,9 +182,9 @@ module.exports = {
                 if(!instance) {
                   return next2(
                     new Error(
-                      'Error trying to find user "'
-                      + userId
-                      + '"'
+                      'Error trying to find user "' +
+                      userId +
+                      '"'
                     )
                   );
                 }
@@ -212,11 +214,11 @@ module.exports = {
             if(!instance) {
               return next(
                 new Error(
-                  'Error trying to update user "'
-                  + userId
-                  + '" with score "'
-                  + score
-                  + '"'
+                  'Error trying to update user "' +
+                  userId +
+                  '" with score "' +
+                  score +
+                  '"'
                 )
               );
             }
@@ -270,9 +272,9 @@ module.exports = {
                 if(!instances) {
                   return next2(
                     new Error(
-                      'Error trying to find memberships with groupId "'
-                      + groupId
-                      + '"'
+                      'Error trying to find memberships with groupId "' +
+                      groupId +
+                      '"'
                     )
                   );
                 }
@@ -295,9 +297,9 @@ module.exports = {
                 if(!instance) {
                   return next2(
                     new Error(
-                      'Error trying to find group "'
-                      + groupId
-                      + '"'
+                      'Error trying to find group "' +
+                      groupId +
+                      '"'
                     )
                   );
                 }
@@ -327,11 +329,11 @@ module.exports = {
             if(!instance) {
               return next(
                 new Error(
-                  'Error trying to update group "'
-                  + groupId
-                  + '" with score "'
-                  + score
-                  + '"'
+                  'Error trying to update group "' +
+                  groupId +
+                  '" with score "' +
+                  score +
+                  '"'
                 )
               );
             }
@@ -447,9 +449,9 @@ module.exports = {
         if(!instances) {
           return next(
             new Error(
-              'Error trying to find bets with matchId "'
-              + matchId
-              + '"'
+              'Error trying to find bets with matchId "' +
+              matchId +
+              '"'
             )
           );
         }
@@ -514,9 +516,9 @@ module.exports = {
         if(!instances) {
           return cb(
             new Error(
-              'Error trying to find user "'
-              + userId
-              + '"\'s groups'
+              'Error trying to find user "' +
+              userId +
+              '"\'s groups'
             )
           );
         }
