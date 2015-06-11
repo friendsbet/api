@@ -34,8 +34,8 @@ module.exports = {
   },
 
   // Recalculate user and groups score when destroying a membership
-  afterDestroy: function computeScores(values, cb) {
-    ScoreCalculator.computeUser(values.user);
-    ScoreCalculator.computeGroup(values.group);
-  }
+  // afterDestroy: function computeScores(values, cb) {
+  //   ScoreCalculator.computeUser(values.user);
+  //   ScoreCalculator.computeGroup(values.group);
+  // }
 };

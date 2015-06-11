@@ -70,15 +70,16 @@ module.exports = {
   },
 
   // Recalculate user and groups score
-  afterDestroy: function computeScores(values, cb) {
-    async.waterfall([
-      function calculateUserScore(next) {
-        ScoreCalculator.computeUser(values.user, next);
-      },
-      function calculateGroupsScore(next) {
-        ScoreCalculator.computeGroupsFromUser(values.user, next);
-      }
-    ], cb);
-  }
+  // afterDestroy: function computeScores(values, cb) {
+  //   console.log(values);
+  //   async.waterfall([
+  //     function calculateUserScore(next) {
+  //       ScoreCalculator.computeUserFromBet(values.id, next);
+  //     },
+  //     function calculateGroupsScore(next) {
+  //       ScoreCalculator.computeGroupsFromBet(values.id, next);
+  //     }
+  //   ], cb);
+  // }
 
 };
