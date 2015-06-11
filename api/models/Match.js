@@ -94,7 +94,7 @@ module.exports = {
     },
 
     isEnded: {
-      type: boolean,
+      type: 'boolean',
       defaultsTo: false
     }
 
