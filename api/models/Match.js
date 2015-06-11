@@ -91,9 +91,21 @@ module.exports = {
     bets: {
       collection: 'bet',
       via: 'match'
+    },
+
+    isEnded: {
+      type: boolean,
+      defaultsTo: false
     }
 
   },
+
+  // Update all the bets made on this match
+  afterUpdate: function updateScores(values, cb) {
+    if(!values.isEnded) return cb();
+
+    ScoreCalculator.computeAllScoresFromMatch(values.id, cb);
+  }
 
   // Update all the bets made on this match
   // afterUpdate: function updateBetsScores(values, cb) {
