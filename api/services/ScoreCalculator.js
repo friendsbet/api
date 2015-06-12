@@ -2,48 +2,90 @@
 //
 // @description :: A service to manage scores of Bet, User and Group models
 
-function getMatch(matchId, cb) {
+function getMatch(matchId, cb, checkExistence) {
   Match
     .findOne(matchId)
-    .exec(cb);
+    .exec(function (err, match) {
+      if(err) {
+        return cb(err);
+      }
+
+      if(checkExistence && !match) {
+        return cb(new Error('No match for id "' + matchId + '"'));
+      }
+
+      return cb(null, match);
+  });
 }
 
-function getUser(userId, cb) {
+function getUser(userId, cb, checkExistence) {
   User
     .findOne(userId)
-    .exec(cb);
+    .exec(function (err, user) {
+      if(err) {
+        return cb(err);
+      }
+      
+      if(checkExistence && !user) {
+        return cb(new Error('No user for id "' + userId + '"'));
+      }
+
+      return cb(null, user);
+  });
 }
 
 
-function getGroups(groupsIds, cb) {
+function getGroups(groupsIds, cb, checkExistence) {
   Group
     .find(groupsIds)
     .limit(0)
-    .exec(cb);
-}
+    .exec(function (err, groups) {
+      if(err) {
+        return cb(err);
+      }
+      
+      if(checkExistence && !groups) {
+        return cb(new Error('No groups for ids "' + groupsIds + '"'));
+      }
 
-
-
-function getBetsFromMatch(matchId, cb) {
-  Bet
-    .find({ match: matchId })
-    .populate('user')
-    .limit(0)
-    .exec(function (err, bets) {
-      return cb(err, bets);
+      return cb(null, groups);
   });
 }
 
 
 
-function getUserGroups(userId, cb) {
+function getBetsFromMatch(matchId, cb, checkExistence) {
+  Bet
+    .find({ match: matchId })
+    .populate('user')
+    .limit(0)
+    .exec(function (err, bets) {
+      if(err) {
+        return cb(err);
+      }
+      
+      if(checkExistence && !bets) {
+        return cb(new Error('No bets for match "' + matchId + '"'));
+      }
+
+      return cb(null, bets);
+  });
+}
+
+
+
+function getUserGroups(userId, cb, checkExistence) {
   Membership
     .find({ user: userId })
     .populate('group')
     .limit(0)
     .exec(function (err, memberships) {
-      if(err || !memberships) {
+      if(err) {
         return cb(err);
+      }
+
+      if(checkExistence && !memberships) {
+        return cb(new Error('No membership found for user "' + userId + '"'));
       }
       
       getGroups(_.pluck(_.pluck(memberships, 'group'), 'id'), cb);
@@ -76,7 +118,7 @@ function increaseGroupsScore(group, betScore, cb) {
 
 function updateUserScoreFromBet(userId, betScore, cb) {
   getUser(userId, function (err, user) {
-    if(err || !user) {
+    if(err) {
       return cb(err);
     }
 
@@ -88,7 +130,7 @@ function updateUserScoreFromBet(userId, betScore, cb) {
 
 function updateGroupsScores(groups, betScore, cb) {
   async.each(groups, function (group, next) {
-    increaseGroupsScore(group, betScore, cb);
+    increaseGroupsScore(group, betScore, next);
   }, cb);
 }
 
@@ -100,7 +142,7 @@ function updateGroupsScoresFromBet(userId, betScore, cb) {
     }
 
     updateGroupsScores(groups, betScore, cb);
-  })
+  });
 }
 
 
@@ -116,7 +158,7 @@ function updateUsersAndGroupsScoresFromBet(bet, cb) {
   ], cb);
 }
 
-function updateScores(match, bets) {
+function updateScores(match, bets, cb) {
   async.each(bets, function (bet, next) {
     updateBetScore(match, bet, function (err, newBet) {
       if(err || !newBet) {
@@ -139,11 +181,11 @@ module.exports = {
   computeAllScoresFromMatch: function (matchId, cb) {
     // Check params
     if(!matchId || !cb) {
-      throw new Error('Missing param');
+      return cb(new Error('Missing param'));
     }
 
     if(typeof cb !== 'function') {
-      throw new Error('Invalid param');
+      return cb(new Error('Invalid param'));
     }
 
     // 1. Get the match informations
@@ -153,9 +195,7 @@ module.exports = {
     // 5. Update users' groups' scores
     async.waterfall([
       function (next) {
-        getMatch(matchId, function (err, match) {
-          return next(err, match);
-        });
+        getMatch(matchId, next);
       },
       function (match, next) {
         getBetsFromMatch(matchId, function (err, bets) {
@@ -163,9 +203,7 @@ module.exports = {
         });
       },
       function (match, bets, next) {
-        updateScores(match, bets, function (err) {
-          return next(err);
-        });
+        updateScores(match, bets, next);
       }
     ], cb);
   }
