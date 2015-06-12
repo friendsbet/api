@@ -67,19 +67,6 @@ module.exports = {
     });
 
     return cb((err.length)? err: null);
-  },
-
-  // Recalculate user and groups score
-  // afterDestroy: function computeScores(values, cb) {
-  //   console.log(values);
-  //   async.waterfall([
-  //     function calculateUserScore(next) {
-  //       ScoreCalculator.computeUserFromBet(values.id, next);
-  //     },
-  //     function calculateGroupsScore(next) {
-  //       ScoreCalculator.computeGroupsFromBet(values.id, next);
-  //     }
-  //   ], cb);
-  // }
-
+  }
+  
 };
