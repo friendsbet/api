@@ -2,6 +2,14 @@
 //
 // @description :: A service to manage scores of Bet, User and Group models
 
+// getMatch
+// 
+// @description :: Get a match from its id
+// @param       :: matchId (required): the match's id concerned
+//                 cb (required): the function called when it's done or an
+//                 error occured
+//                 checkExistence: does it need to throw an error if no instance
+//                 found
 function getMatch(matchId, cb, checkExistence) {
   Match
     .findOne(matchId)
@@ -18,6 +26,14 @@ function getMatch(matchId, cb, checkExistence) {
   });
 }
 
+// getUser
+// 
+// @description :: Get a user from its id
+// @param       :: userId (required): the user's id concerned
+//                 cb (required): the function called when it's done or an
+//                 error occured
+//                 checkExistence: does it need to throw an error if no instance
+//                 found
 function getUser(userId, cb, checkExistence) {
   User
     .findOne(userId)
@@ -35,6 +51,14 @@ function getUser(userId, cb, checkExistence) {
 }
 
 
+// getGroups
+// 
+// @description :: Get all the groups from a list of ids
+// @param       :: groupsIds (required): the groups' ids concerned
+//                 cb (required): the function called when it's done or an
+//                 error occured
+//                 checkExistence: does it need to throw an error if no instance
+//                 found
 function getGroups(groupsIds, cb, checkExistence) {
   Group
     .find(groupsIds)
@@ -54,6 +78,14 @@ function getGroups(groupsIds, cb, checkExistence) {
 
 
 
+// getBetsFromMatch
+// 
+// @description :: Find all the bets of a single match
+// @param       :: matchId (required): the match concerned
+//                 cb (required): the function called when it's done or an
+//                 error occured
+//                 checkExistence: does it need to throw an error if no instance
+//                 found
 function getBetsFromMatch(matchId, cb, checkExistence) {
   Bet
     .find({ match: matchId })
@@ -74,6 +106,14 @@ function getBetsFromMatch(matchId, cb, checkExistence) {
 
 
 
+// getUserGroups
+// 
+// @description :: Find all the groups of a single user
+// @param       :: userId (required): the user concerned
+//                 cb (required): the function called when it's done or an
+//                 error occured
+//                 checkExistence: does it need to throw an error if no instance
+//                 found
 function getUserGroups(userId, cb, checkExistence) {
   Membership
     .find({ user: userId })
@@ -93,7 +133,13 @@ function getUserGroups(userId, cb, checkExistence) {
 }
 
 
-
+// updateBetScore
+// 
+// @description :: Update a bet's score attribute in db
+// @param       :: match (required): the match to update
+//                 bet (required): the single bet concerned
+//                 cb (required): the function called when it's done or an
+//                 error occured
 function updateBetScore(match, bet, cb) {
   bet.score = match.importance; // ToDo
 
@@ -101,13 +147,26 @@ function updateBetScore(match, bet, cb) {
 }
 
 
-
+// increaseUserScore
+// 
+// @description :: Update a user's score attribute in db
+// @param       :: user (required): the user to update
+//                 betScore (required): the single bet score value
+//                 cb (required): the function called when it's done or an
+//                 error occured
 function increaseUserScore(user, betScore, cb) {
   user.score += betScore;
 
   user.save(cb);
 }
 
+// increaseGroupsScore
+// 
+// @description :: Update a group's score attribute in db
+// @param       :: group (required): the group to update
+//                 betScore (required): the single bet score value
+//                 cb (required): the function called when it's done or an
+//                 error occured
 function increaseGroupsScore(group, betScore, cb) {
   group.score += betScore;
 
@@ -116,6 +175,13 @@ function increaseGroupsScore(group, betScore, cb) {
 
 
 
+// updateUserScoreFromBet
+// 
+// @description :: Increment a user's score attribute
+// @param       :: userId (required): the user concerned
+//                 betScore (required): the single bet score value
+//                 cb (required): the function called when it's done or an
+//                 error occured
 function updateUserScoreFromBet(userId, betScore, cb) {
   getUser(userId, function (err, user) {
     if(err) {
@@ -128,6 +194,13 @@ function updateUserScoreFromBet(userId, betScore, cb) {
 
 
 
+// updateGroupsScores
+// 
+// @description :: Increment each groups score attribute
+// @param       :: groups (required): the list of groups to update
+//                 betScore (required): the single bet score value
+//                 cb (required): the function called when it's done or an
+//                 error occured
 function updateGroupsScores(groups, betScore, cb) {
   async.each(groups, function (group, next) {
     increaseGroupsScore(group, betScore, next);
@@ -135,6 +208,13 @@ function updateGroupsScores(groups, betScore, cb) {
 }
 
 
+// updateGroupsScoresFromBet
+// 
+// @description :: Update each groups scores attributes from a user
+// @param       :: userId (required): the user concerned
+//                 betScore (required): the single bet score value
+//                 cb (required): the function called when it's done or an
+//                 error occured
 function updateGroupsScoresFromBet(userId, betScore, cb) {
   getUserGroups(userId, function (err, groups) {
     if(err) {
@@ -147,6 +227,13 @@ function updateGroupsScoresFromBet(userId, betScore, cb) {
 
 
 
+
+// updateUsersAndGroupsScoresFromBet
+// 
+// @description :: Update the scores attributes from a bet
+// @param       :: bet (required): a single bet
+//                 cb (required): the function called when it's done or an
+//                 error occured
 function updateUsersAndGroupsScoresFromBet(bet, cb) {
   async.parallel([
     function (next) {
@@ -158,6 +245,13 @@ function updateUsersAndGroupsScoresFromBet(bet, cb) {
   ], cb);
 }
 
+// updateScores
+// 
+// @description :: Update all the scores attributes
+// @param       :: match (required): the match concerned
+//                 bets (required): the list of bets to update
+//                 cb (required): the function called when it's done or an
+//                 error occured
 function updateScores(match, bets, cb) {
   async.each(bets, function (bet, next) {
     updateBetScore(match, bet, function (err, newBet) {
