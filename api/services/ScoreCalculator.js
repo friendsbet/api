@@ -141,6 +141,39 @@ function getUserGroups(userId, cb, checkExistence) {
 //                 cb (required): the function called when it's done or an
 //                 error occured
 function updateBetScore(match, bet, cb) {
+  var score = 0;
+
+  var goodWinner =
+    (match.scoreTeamA >= match.scoreTeamB &&
+    bet.scoreTeamA >= bet.scoreTeamB) ||
+    (match.scoreTeamA < match.scoreTeamB &&
+    bet.scoreTeamA < match.scoreTeamB);
+
+  if(goodWinner) {
+    score += 100;
+  }
+
+  var teams = ['A', 'B'];
+  var perfectScore = 0;
+  _.each(teams, function (team) {
+    perfectScore = (match['scoreTeam' + team] === bet['scoreTeam' + team]);
+    
+    if(perfectScore === 1) {
+      score += 50;
+    } else if (perfectScore === 2) {
+      score += 25;
+    } else if (perfectScore === 3) {
+      score += 10;
+    }
+  });
+
+  var scoreDifference =
+    (bet.scoreTeamA / bet.scoreTeamB) -
+    (match.scoreTeamA / match.scoreTeamB); 
+
+  score *= match.importance;
+  score = intval(score); // ?
+
   bet.score = match.importance; // ToDo
 
   bet.save(cb);
