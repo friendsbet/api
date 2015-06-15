@@ -13,11 +13,10 @@ module.exports = {
     // Each User has an unique information
     // e.g 'yann@example.com'
     email: {
-      type: 'text',
+      type: 'email',
       notEmpty: true,
       required: true,
-      unique: true,
-      email: true
+      unique: true
     },
 
     // The first name of the User
