@@ -3,6 +3,11 @@
 
 Friends Bet is an application that allows you and your friends to bet on sport results.
 
+The API uses:
+
+* Sails.js, a Node.js MVC framework
+* MongoDB
+
 ## INSTALLATION
 
 **With [node](http://nodejs.org) installed:**
@@ -20,7 +25,7 @@ $ cd FriendsBetAPI
 $ npm install
 ```
 
-## LAUNCHING
+## DEV LAUNCHING
 
 **Run MongoDB:**
 ```sh
