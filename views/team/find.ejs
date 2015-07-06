@@ -23,7 +23,7 @@
                     <% if(data.length) { %>
                         <% _.each(data, function (team) { %>
                         <tr>
-                            <td><%= team.id %></td>
+                            <td><a href="/<%= _.first(paths).url %>/<%= team.id %>"><%= team.id %></a></td>
                             <td><%= team.name %></td>
                             <td><%= team.slug %></td>
                         </tr>

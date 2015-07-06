@@ -5,7 +5,7 @@ var pages = {
 };
 
 if(paths.length) {
-    pages[paths[0].url].isActive = true;
+    pages[_.first(paths).url].isActive = true;
 } else {
     pages['home'].isActive = true;
 }
