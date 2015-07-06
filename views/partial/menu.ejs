@@ -1,0 +1,25 @@
+<%
+var pages = {
+    'home': { name: 'Home', url: '/' },
+    'teams': { name: 'Teams', url: '/teams' }
+};
+
+if(paths.length) {
+    pages[paths[0].url].isActive = true;
+} else {
+    pages['home'].isActive = true;
+}
+%>
+
+<ul class="nav nav-pills nav-stacked">
+    <% _.each(pages, function (page) { %>
+        <li
+        <% if(page.isActive) { %>
+         class="active"
+        <% } %>
+        >
+            <a href="<%= page.url %>"><%= page.name %></a>
+        </li>
+    <% }); %>
+  </li>
+</ul>

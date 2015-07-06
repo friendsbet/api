@@ -1,0 +1,13 @@
+<ol class="breadcrumb">
+    <% if(paths.length) { %>
+        <li><a href="/">Home</a></li>
+        <% var url = '/'; %>
+        <% _.each(_.initial(paths), function (path) { %>
+            <% url += path.url + '/'; %>
+            <li><a href="<%= url %>"><%= path.name %></a></li>
+        <% }); %>
+        <li class="active"><%= paths[paths.length-1].name %></li>
+    <% } else { %>
+        <li class="active">Home</li>
+    <% } %>
+</ol>
