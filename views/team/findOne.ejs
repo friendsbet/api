@@ -12,6 +12,7 @@
             <%- partial('../partial/breadcrumb', partialData) %>
 
             <form id="update" class="form-horizontal">
+                <input type="hidden" name="_csrf" value="<%= _csrf %>">
                 <div class="form-group">
                     <label for="id" class="col-sm-2 control-label">Id</label>
                     <div class="col-sm-10">
