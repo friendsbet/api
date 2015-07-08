@@ -34,7 +34,8 @@ module.exports = {
     // e.g 'The England national rugby union team represents England in \
     //      rugby union.'
     description: {
-      type: 'text'
+      type: 'text',
+      defaultsTo: ''
     },
 
     // The Matches list associated with this Team as teamA

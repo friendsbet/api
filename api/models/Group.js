@@ -29,7 +29,8 @@ module.exports = {
     // Everything you need to know about this group
     // e.g 'The group of Friends Bet developers'
     description: {
-      type: 'text'
+      type: 'text',
+      defaultsTo: ''
     },
 
     // The first admin of the Group

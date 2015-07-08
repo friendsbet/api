@@ -45,7 +45,8 @@ module.exports = {
     // Everything the User want you to know
     // e.g 'The founder of Friends Bet'
     description: {
-      type: 'text'
+      type: 'text',
+      defaultsTo: ''
     },
 
     // The collection of the User Bets

@@ -83,7 +83,8 @@ module.exports = {
     // The pool name during the group stage
     // e.g 'A'
     pool: {
-      type: 'text'
+      type: 'text',
+      defaultsTo: ''
     },
 
     // The Bets associated to this Match
