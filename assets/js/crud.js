@@ -1,6 +1,51 @@
 $(function() {
   var url = window.location.href;
 
+  function create(event) {
+    // Do not send the form
+    event.preventDefault();
+
+    var creationUrl = url.substring(0, url.search('new') - 1);
+    // Get the inputs list and remove the submit button
+    var inputs = $(this).find('input, select, textarea');
+
+    // Map the inputs values
+    var values = {};
+    _.forEach(inputs, function (input) {
+      values[input.name] = input.value;
+    });
+
+    // Prepare the request
+    var request = $.ajax({
+      method: 'POST',
+      url: creationUrl, // Current URL (new page)
+      data: values
+    });
+
+    request.done(function (message) {
+      var title = 'Success!';
+      var text = 'The instance has been created!\n' + 
+                  'You will be redirected as soon as you click "OK"';
+      var type = 'success';
+
+      swal({
+        title: title,
+        text: text,
+        type: type
+      }, function () {
+        window.location.href = creationUrl;
+      });
+    });
+
+    request.fail(function (message) {
+      var title = 'Fail';
+      var text = 'The instance coulnd\'t be created';
+      var type = 'error';
+      
+      swal(title, text, type);
+    });
+  }
+
   function update(event) {
     // Do not send the form
     event.preventDefault();
@@ -98,6 +143,7 @@ $(function() {
     });
   }
 
+  $('form#create').on('submit', create);
   $('form#update').on('submit', update);
   $('form#update button#delete').on('click', destroy);
 });
