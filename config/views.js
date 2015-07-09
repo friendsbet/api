@@ -89,7 +89,28 @@ module.exports.views = {
   *                                                                           *
   ****************************************************************************/
 
-  partials: false
+  partials: false,
 
+  /****************************************************************************
+  *                                                                           *
+  * Variables that should be provided by default to all views                 *
+  *                                                                           *
+  ****************************************************************************/
+
+  locals: {
+
+    abbreviate: function (longHash) {
+      return longHash.substring(18, 24);
+    },
+
+    printDate: function (rawDate) {
+      return rawDate.toLocaleString();
+    },
+
+    printBoolean: function (rawBoolean) {
+      return (rawBoolean)? '✓': '✗';
+    }
+
+  }
 
 };
