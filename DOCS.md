@@ -40,6 +40,10 @@ ToDo
 
 You can find more informations on [Sails docs](http://sailsjs.org/#!/documentation/reference/blueprint-api).
 
+### Modeling
+
+![Class model](../modeling/class_API)
+
 ### Bet
 
  - *GET /bets*
