@@ -80,10 +80,10 @@ Get a list of groups.
 
 **Associated resources**
 
-| Name        | Description                 | Type     | Model      | Required |
-|-------------|-----------------------------|----------|------------|----------|
-| admin       | The first User of the Group | Instance | User       | Yes      |
-| memberships | The list of members         | List     | Membership | No       |
+| Name           | Description                 | Type     | Model      | Required |
+|----------------|-----------------------------|----------|------------|----------|
+| technicalAdmin | The first User of the Group | Instance | User       | Yes      |
+| memberships    | The list of members         | List     | Membership | No       |
 
 ### Match
 

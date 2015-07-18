@@ -35,7 +35,7 @@ module.exports = {
 
     // The first admin of the Group
     // It's a reference to a User
-    admin: {
+    technicalAdmin: {
       model: 'user',
       required: true
     },
