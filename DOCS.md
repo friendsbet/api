@@ -103,7 +103,8 @@ Get a list of matches.
 | importance | The importance coefficient           | float    | 1.5                        | 1.0     | No       | No     |
 | scoreTeamA | The team A score                     | integer  | 15                         | 0       | No       | No     |
 | scoreTeamB | The team B score                     | integer  | 7                          | 0       | No       | No     |
-| pool       | The pool name during the group stage | string   | "A"                        |         | No       | No     |
+| pool       | The pool name during the group stage | string   | "A"                        | ''      | No       | No     |
+| isEnded    | Is the match ended?                  | boolean  | true                       | false   | No       | No     |
 
 **Associated resources**
 

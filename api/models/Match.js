@@ -87,16 +87,18 @@ module.exports = {
       defaultsTo: ''
     },
 
+    // Is the match ended?
+    // e.g false
+    isEnded: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
     // The Bets associated to this Match
     // References to Bet objects
     bets: {
       collection: 'bet',
       via: 'match'
-    },
-
-    isEnded: {
-      type: 'boolean',
-      defaultsTo: false
     }
 
   },
