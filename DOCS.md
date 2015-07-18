@@ -25,10 +25,18 @@ ToDo
    * Skip 10 matches
  - *GET /matches?populate=[teamA]*
    * Get the matches with more informations about one of the Team
- - *GET /matches/<id>*
+ - *GET /matches/:id*
    * Get a precise match
- - *GET /matches/<id>/teamB*
+ - *GET /matches/:id/teamB*
    * Get a Team in a match
+
+**Play with instances**
+ - *POST /matches*
+   * Create a match instance
+ - *PUT /matches/:id*
+   * Update a match instance
+ - *DELETE /matches/:id*
+   * Destroy a match instance
 
 You can find more informations on [Sails docs](http://sailsjs.org/#!/documentation/reference/blueprint-api).
 
