@@ -42,7 +42,7 @@ You can find more informations on [Sails docs](http://sailsjs.org/#!/documentati
 
 ### Modeling
 
-![Class model](../modeling/class_API)
+![Class model](./modeling/class_API.png)
 
 ### Bet
 
