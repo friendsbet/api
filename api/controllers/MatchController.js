@@ -67,7 +67,7 @@ module.exports = {
       .exec(function (err, instances) {
         if(err) return res.negotiate(err);
 
-        return cb({ teams: instances }, 'matches/new');
+        return res.ok({ teams: instances }, 'matches/new');
     });
   }
 
