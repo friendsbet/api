@@ -32,11 +32,13 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
+  'GET /': {
     view: 'homepage'
   },
 
-  '/teams/new': { view: 'team/new' }
+  'GET /teams': 'TeamController.boFind',
+  'GET /teams/new': 'TeamController.boNew',
+  'GET /teams/:id': 'TeamController.boFindOne'
 
   /***************************************************************************
   *                                                                          *
