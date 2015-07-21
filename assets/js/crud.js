@@ -1,11 +1,14 @@
 $(function() {
-  var url = window.location.href;
+  var url = window.location.pathname;
+  var baseUrl = window.location.origin;
 
   function create(event) {
     // Do not send the form
     event.preventDefault();
 
-    var creationUrl = url.substring(0, url.search('new') - 1);
+    var creationUrl = baseUrl + '/api' + url.substring(0, url.search('new') - 1);
+    var redirectUrl = baseUrl + url.substring(0, url.search('new') - 1);
+    
     // Get the inputs list and remove the submit button
     var inputs = $(this).find('input, select, textarea');
 
@@ -22,7 +25,7 @@ $(function() {
       data: values
     });
 
-    request.done(function (message) {
+    request.done(function (data) {
       var title = 'Success!';
       var text = 'The instance has been created!\n' + 
                   'You will be redirected as soon as you click "OK"';
@@ -33,7 +36,7 @@ $(function() {
         text: text,
         type: type
       }, function () {
-        window.location.href = creationUrl;
+        window.location.href = redirectUrl + '/' + data.id;
       });
     });
 
@@ -53,6 +56,9 @@ $(function() {
     // Get the inputs list and remove the submit button
     var inputs = $(this).find('input, select, textarea');
 
+    var updateUrl = baseUrl + '/api' + url;
+    var redirectUrl = baseUrl + '/' + url.split('/')[1];
+
     // Map the inputs values
     var values = {};
     _.forEach(inputs, function (input) {
@@ -62,7 +68,7 @@ $(function() {
     // Prepare the request
     var request = $.ajax({
       method: 'PUT',
-      url: url, // Current URL (findOne page)
+      url: updateUrl, // Current URL (findOne page)
       data: values
     });
 
@@ -77,7 +83,7 @@ $(function() {
         text: text,
         type: type
       }, function () {
-        window.location.href = url.substring(0, url.search(values.id) - 1);
+        window.location.href = redirectUrl;
       });
     });
 
@@ -108,10 +114,13 @@ $(function() {
           _csrf: $form.find('input#_csrf')[0].value
         };
 
+        var deleteUrl = baseUrl + '/api' + url;
+        var redirectUrl = baseUrl + '/' + url.split('/')[1];
+
         // Prepare the request
         var request = $.ajax({
           method: 'DELETE',
-          url: url, // Current URL (findOne page)
+          url: deleteUrl, // Current URL (findOne page)
           data: data
         });
 
@@ -126,7 +135,7 @@ $(function() {
             text: text,
             type: type
           }, function () {
-            window.location.href = url.substring(0, url.search(id) - 1);
+            window.location.href = redirectUrl;
           });
         });
 
