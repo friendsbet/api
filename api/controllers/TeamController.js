@@ -11,7 +11,7 @@ module.exports = {
       .exec(function (err, instances) {
         if(err) return res.negotiate(err);
 
-        return res.ok(instances, 'teams/find.ejs');
+        return res.ok({ teams: instances }, 'teams/find.ejs');
     });
   },
 
@@ -22,7 +22,7 @@ module.exports = {
         if(err) return res.negotiate(err);
         if(!instance) return res.notFound(req.param('id'));
 
-        return res.ok(instance, 'teams/findOne');
+        return res.ok({ team: instance }, 'teams/findOne');
     });
   },
 
