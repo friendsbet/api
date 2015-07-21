@@ -1,4 +1,4 @@
-<% var paths = [{ name: 'Teams', url: 'teams' }, { name: data.name, url: data.slug }]; %>
+<% var paths = [{ name: 'Teams', url: 'teams' }, { name: data.team.name, url: data.team.slug }]; %>
 <% var partialData = { paths: paths }; %>
 
 <%- partial('../partial/navbar') %>
@@ -19,7 +19,7 @@
                         Id
                     </label>
                     <div class="col-sm-10">
-                        <input type="string" class="form-control" id="id" name="id" value="<%= data.id %>" disabled>
+                        <input type="string" class="form-control" id="id" name="id" value="<%= data.team.id %>" disabled>
                     </div>
                 </div>
 
@@ -28,7 +28,7 @@
                         Name
                     </label>
                     <div class="col-sm-10">
-                        <input type="string" class="form-control" id="name" name="name" value="<%= data.name %>">
+                        <input type="string" class="form-control" id="name" name="name" value="<%= data.team.name %>">
                     </div>
                 </div>
 
@@ -37,7 +37,7 @@
                         Slug
                     </label>
                     <div class="col-sm-10">
-                        <input type="string" class="form-control" id="slug" name="slug" value="<%= data.slug %>">
+                        <input type="string" class="form-control" id="slug" name="slug" value="<%= data.team.slug %>">
                     </div>
                 </div>
 
@@ -46,7 +46,7 @@
                         Description
                     </label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" rows="3" id="description" name="description"><%= data.description %></textarea>
+                        <textarea class="form-control" rows="3" id="description" name="description"><%= data.team.description %></textarea>
                     </div>
                 </div>
 

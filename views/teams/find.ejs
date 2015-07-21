@@ -22,8 +22,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% if(data.length) { %>
-                        <% _.each(data, function (team) { %>
+                    <% if(data.teams.length) { %>
+                        <% _.each(data.teams, function (team) { %>
                         <tr>
                             <td>
                                 <a href="/teams/<%= team.id %>">
