@@ -61,6 +61,10 @@ module.exports = {
     memberships: {
       collection: 'membership',
       via: 'user'
+    },
+
+    name: function () {
+      return this.firstName + ' ' + this.lastName;
     }
 
   },
