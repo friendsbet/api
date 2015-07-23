@@ -42,7 +42,11 @@ module.exports.routes = {
 
   'GET /matches': 'MatchController.boFind',
   'GET /matches/new': 'MatchController.boNew',
-  'GET /matches/:id': 'MatchController.boFindOne'
+  'GET /matches/:id': 'MatchController.boFindOne',
+
+  'GET /users': 'UserController.boFind',
+  'GET /users/new': 'UserController.boNew',
+  'GET /users/:id': 'UserController.boFindOne'
 
   /***************************************************************************
   *                                                                          *
