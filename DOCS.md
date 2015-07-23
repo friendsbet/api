@@ -44,50 +44,28 @@ You can find more informations on [Sails docs](http://sailsjs.org/#!/documentati
 
 ![Class model](./modeling/class_API.png)
 
-### Bet
+### Team
 
- - *GET /bets*
-
-**Description**
-
-Get a list of bets.
-
-**Attributes**
-
-| Name       | Description             | Type    | Example | Default | Required | Unique |
-|------------|-------------------------|---------|---------|---------|----------|--------|
-| scoreTeamA | The score bet on Team A | integer | 15      |         | Yes      | No     |
-| scoreTeamB | The score bet on Team B | integer | 7       |         | Yes      | No     |
-
-**Associated resources**
-
-| Name  | Description                 | Type     | Model | Required |
-|-------|-----------------------------|----------|-------|----------|
-| match | The Match concerned         | Instance | Match | Yes      |
-| user  | The User who's done the Bet | Instance | User  | Yes      |
-
-### Group
-
- - *GET /groups*
+ - *GET /teams*
 
 **Description**
 
-Get a list of groups.
+Get a list of teams.
 
 **Attributes**
 
-| Name        | Description                                  | Type    | Example                                                                    | Default | Required | Unique |
-|-------------|----------------------------------------------|---------|----------------------------------------------------------------------------|---------|----------|--------|
-| name        | The Group name                               | string  | "The Friends Bet group"                                                    |         | Yes      | Yes    |
-| score       | The cumulative score of this Group           | integer | 1024                                                                       | 0       | No       | No     |
-| description | Everything you need to know about this group | string  | "The England national rugby union team represents England in rugby union." |         | No       | No     |
+| Name        | Description                                 | Type   | Example                                                                    | Default | Required | Unique |
+|-------------|---------------------------------------------|--------|----------------------------------------------------------------------------|---------|----------|--------|
+| name        | The complete name of the Team               | string | "England"                                                                  |         | Yes      | Yes    |
+| slug        | A slug is a short name given to a Team      | string | "eng"                                                                      |         | Yes      | Yes    |
+| description | Everything you need to know about this team | string | "The England national rugby union team represents England in rugby union." |         | No       | No     |
 
 **Associated resources**
 
-| Name           | Description                 | Type     | Model      | Required |
-|----------------|-----------------------------|----------|------------|----------|
-| technicalAdmin | The first User of the Group | Instance | User       | Yes      |
-| memberships    | The list of members         | List     | Membership | No       |
+| Name           | Description                                         | Type | Model | Required |
+|----------------|-----------------------------------------------------|------|-------|----------|
+| matchesAsTeamA | The Matches list associated with this Team as teamA | List | Match | No       |
+| matchesAsTeamB | Same thing as teamB                                 | List | Match | No       |
 
 ### Match
 
@@ -117,49 +95,27 @@ Get a list of matches.
 | teamA | The first Team  | Instance | Team  | Yes      |
 | teamB | The second Team | Instance | Team  | Yes      |
 
-### Membership
+### Bet
 
- - *GET /memberships*
-
-**Description**
-
-Get a list of memberships. A membership joins a user and a group. A user can have multiple groups and a group can have many users.
-
-**Attributes**
-
-| Name    | Description                         | Type    | Example | Default | Required | Unique |
-|---------|-------------------------------------|---------|---------|---------|----------|--------|
-| isAdmin | Is the User an admin of this Group? | boolean | true    | false   | No       | No     |
-
-**Associated resources**
-
-| Name  | Description                              | Type     | Model | Required |
-|-------|------------------------------------------|----------|-------|----------|
-| user  | The User in the Group                    | Instance | User  | Yes      |
-| group | The Group in which the User participates | Instance | Group | Yes      |
-
-### Team
-
- - *GET /teams*
+ - *GET /bets*
 
 **Description**
 
-Get a list of teams.
+Get a list of bets.
 
 **Attributes**
 
-| Name        | Description                                 | Type   | Example                                                                    | Default | Required | Unique |
-|-------------|---------------------------------------------|--------|----------------------------------------------------------------------------|---------|----------|--------|
-| name        | The complete name of the Team               | string | "England"                                                                  |         | Yes      | Yes    |
-| slug        | A slug is a short name given to a Team      | string | "eng"                                                                      |         | Yes      | Yes    |
-| description | Everything you need to know about this team | string | "The England national rugby union team represents England in rugby union." |         | No       | No     |
+| Name       | Description             | Type    | Example | Default | Required | Unique |
+|------------|-------------------------|---------|---------|---------|----------|--------|
+| scoreTeamA | The score bet on Team A | integer | 15      |         | Yes      | No     |
+| scoreTeamB | The score bet on Team B | integer | 7       |         | Yes      | No     |
 
 **Associated resources**
 
-| Name           | Description                                         | Type | Model | Required |
-|----------------|-----------------------------------------------------|------|-------|----------|
-| matchesAsTeamA | The Matches list associated with this Team as teamA | List | Match | No       |
-| matchesAsTeamB | Same thing as teamB                                 | List | Match | No       |
+| Name  | Description                 | Type     | Model | Required |
+|-------|-----------------------------|----------|-------|----------|
+| match | The Match concerned         | Instance | Match | Yes      |
+| user  | The User who's done the Bet | Instance | User  | Yes      |
 
 ### User
 
@@ -185,3 +141,47 @@ Get a list of users.
 |-------------|-------------------------------------------|------|------------|----------|
 | bets        | The collection of the User Bets           | List | Bet        | No       |
 | memberships | The Groups in which the User participates | List | Membership | No       |
+
+### Membership
+
+ - *GET /memberships*
+
+**Description**
+
+Get a list of memberships. A membership joins a user and a group. A user can have multiple groups and a group can have many users.
+
+**Attributes**
+
+| Name    | Description                         | Type    | Example | Default | Required | Unique |
+|---------|-------------------------------------|---------|---------|---------|----------|--------|
+| isAdmin | Is the User an admin of this Group? | boolean | true    | false   | No       | No     |
+
+**Associated resources**
+
+| Name  | Description                              | Type     | Model | Required |
+|-------|------------------------------------------|----------|-------|----------|
+| user  | The User in the Group                    | Instance | User  | Yes      |
+| group | The Group in which the User participates | Instance | Group | Yes      |
+
+### Group
+
+ - *GET /groups*
+
+**Description**
+
+Get a list of groups.
+
+**Attributes**
+
+| Name        | Description                                  | Type    | Example                                                                    | Default | Required | Unique |
+|-------------|----------------------------------------------|---------|----------------------------------------------------------------------------|---------|----------|--------|
+| name        | The Group name                               | string  | "The Friends Bet group"                                                    |         | Yes      | Yes    |
+| score       | The cumulative score of this Group           | integer | 1024                                                                       | 0       | No       | No     |
+| description | Everything you need to know about this group | string  | "The England national rugby union team represents England in rugby union." |         | No       | No     |
+
+**Associated resources**
+
+| Name           | Description                 | Type     | Model      | Required |
+|----------------|-----------------------------|----------|------------|----------|
+| technicalAdmin | The first User of the Group | Instance | User       | Yes      |
+| memberships    | The list of members         | List     | Membership | No       |
