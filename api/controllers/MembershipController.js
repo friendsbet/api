@@ -18,11 +18,25 @@ module.exports = {
   },
 
   boFindOne: function (req, res) {
+    var membership = {};
     var users = [];
     var groups = [];
-    var membership = {};
 
     async.parallel([
+
+      function getMembership(next) {
+        Membership
+          .findOne(req.param('id'))
+          .populate('user')
+          .populate('group')
+          .exec(function (err, instance) {
+            if(err) return next(err);
+
+            membership = instance;
+
+            return next();
+        });
+      },
 
       function getUsers(next) {
         User
@@ -48,25 +62,11 @@ module.exports = {
 
             return next();
         });
-      },
-
-      function getMembership(next) {
-        Membership
-          .findOne(req.param('id'))
-          .populate('user')
-          .populate('group')
-          .exec(function (err, instance) {
-            if(err) return next(err);
-
-            membership = instance;
-
-            return next();
-        });
       }
 
     ], function (err) {
       if(err) return res.negotiate(err);
-      if(!membership) return res.notFound();
+      if(!membership) return res.notFound(req.param('id'));
 
       return res.ok({ users: users, groups: groups, membership: membership }, 'memberships/findOne');
     });

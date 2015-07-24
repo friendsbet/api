@@ -18,23 +18,20 @@ module.exports = {
   },
 
   boFindOne: function (req, res) {
-    var data = {
-      match: null,
-      teams: null
-    };
+    var match = {};
+    var teams = [];
 
     async.parallel([
 
-      function getMatches(next) {
+      function getMatch(next) {
         Match
           .findOne(req.param('id'))
           .populate('teamA')
           .populate('teamB')
           .exec(function (err, instance) {
             if(err) return next(err);
-            if(!instance) return next(404);
 
-            data.match = instance;
+            match = instance;
 
             return next();
         });
@@ -47,7 +44,7 @@ module.exports = {
           .exec(function (err, instances) {
             if(err) return next(err);
             
-            data.teams = instances;
+            teams = instances;
 
             return next();
         });
@@ -55,8 +52,9 @@ module.exports = {
 
     ], function (err) {
       if(err) return res.negotiate(err);
+      if(!match) return res.notFound(req.param('id'));
 
-      return res.ok(data, 'matches/findOne')
+      return res.ok({ match: match, teams: teams }, 'matches/findOne');
     });
   },
 

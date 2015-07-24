@@ -12,8 +12,11 @@ module.exports = {
       .exec(function (err, instances) {
         if(err) return res.negotiate(err);
 
+        if(!instances.length)
+          return res.ok({ bets: [] }, 'bets/find');
+
         Match
-          .find({ id: _.uniq(_.pluck(instances, 'match')) })//, ['id', 'teamA', 'teamB'])
+          .find({ id: _.uniq(_.pluck(instances, 'match')) })
           .populate('teamA')
           .populate('teamB')
           .exec(function (err, matches) {
@@ -31,11 +34,25 @@ module.exports = {
   },
 
   boFindOne: function (req, res) {
+    var bet = {};
     var users = [];
     var matches = [];
-    var bet = {};
 
     async.parallel([
+
+      function getBet(next) {
+        Bet
+          .findOne(req.param('id'))
+          .populate('user')
+          .populate('match')
+          .exec(function (err, instance) {
+            if(err) return next(err);
+
+            bet = instance;
+
+            return next();
+        });
+      },
 
       function getUsers(next) {
         User
@@ -63,26 +80,13 @@ module.exports = {
 
             return next();
         });
-      },
-
-      function getBet(next) {
-        Bet
-          .findOne(req.param('id'))
-          .populate('user')
-          .populate('match')
-          .exec(function (err, instance) {
-            if(err) return next(err);
-
-            bet = instance;
-
-            return next();
-        });
       }
 
     ], function (err) {
       if(err) return res.negotiate(err);
+      if(!bet) return res.notFound(req.param('id'));
 
-      return res.ok({ users: users, matches: matches, bet: bet }, 'bets/findOne');
+      return res.ok({ bet: bet, users: users, matches: matches }, 'bets/findOne');
     });
   },
 
