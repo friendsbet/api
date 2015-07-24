@@ -46,7 +46,11 @@ module.exports.routes = {
 
   'GET /users': 'UserController.boFind',
   'GET /users/new': 'UserController.boNew',
-  'GET /users/:id': 'UserController.boFindOne'
+  'GET /users/:id': 'UserController.boFindOne',
+
+  'GET /bets': 'BetController.boFind',
+  'GET /bets/new': 'BetController.boNew',
+  'GET /bets/:id': 'BetController.boFindOne'
 
   /***************************************************************************
   *                                                                          *
