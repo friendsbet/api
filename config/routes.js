@@ -44,13 +44,17 @@ module.exports.routes = {
   'GET /matches/new': 'MatchController.boNew',
   'GET /matches/:id': 'MatchController.boFindOne',
 
+  'GET /bets': 'BetController.boFind',
+  'GET /bets/new': 'BetController.boNew',
+  'GET /bets/:id': 'BetController.boFindOne',
+
   'GET /users': 'UserController.boFind',
   'GET /users/new': 'UserController.boNew',
   'GET /users/:id': 'UserController.boFindOne',
 
-  'GET /bets': 'BetController.boFind',
-  'GET /bets/new': 'BetController.boNew',
-  'GET /bets/:id': 'BetController.boFindOne'
+  'GET /groups': 'GroupController.boFind',
+  'GET /groups/new': 'GroupController.boNew',
+  'GET /groups/:id': 'GroupController.boFindOne'
 
   /***************************************************************************
   *                                                                          *
