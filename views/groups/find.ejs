@@ -1,0 +1,52 @@
+<% var paths = [{ name: 'Groups', url: 'groups' }]; %>
+<% var partialData = { paths: paths }; %>
+
+<%- partial('../partial/navbar') %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3 col-md-2">
+            <%- partial('../partial/menu', partialData) %>
+        </div>
+        <div class="col-sm-9 col-md-10">
+            <%- partial('../partial/breadcrumb', partialData) %>
+
+            <a href="/groups/new" class="btn btn-default">Create a group</a>
+
+            <table class="table table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Technical admin</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(data.groups.length) { %>
+                        <% _.each(data.groups, function (group) { %>
+                        <tr>
+                            <td>
+                                <a href="/groups/<%= group.id %>">
+                                    <%= abbreviate(group.id) %>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/users/<%= group.technicalAdmin.id %>">
+                                    <%= group.technicalAdmin.name() %>
+                                </a>
+                            </td>
+                            <td><%= group.name %></td>
+                            <td><%= group.score %></td>
+                        </tr>
+                        <% }); %>
+                    <% } else { %>
+                    <tr>
+                        <td colspan="4">No group for the moment</td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

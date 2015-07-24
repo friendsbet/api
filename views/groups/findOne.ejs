@@ -1,0 +1,81 @@
+<% var paths = [{ name: 'Groups', url: 'groups' }, { name: data.group.name, url: data.group.id }]; %>
+<% var partialData = { paths: paths }; %>
+
+<%- partial('../partial/navbar') %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3 col-md-2">
+            <%- partial('../partial/menu', partialData) %>
+        </div>
+        <div class="col-sm-9 col-md-10">
+            <%- partial('../partial/breadcrumb', partialData) %>
+
+            <form id="update" class="form-horizontal">
+                <input id="_csrf" type="hidden" name="_csrf" value="<%= _csrf %>">
+
+                <div class="form-group">
+                    <label for="id" class="col-sm-2 control-label">
+                        Id
+                    </label>
+                    <div class="col-sm-10">
+                        <input type="string" class="form-control" id="id" name="id" value="<%= data.group.id %>" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">
+                        Name
+                    </label>
+                    <div class="col-sm-10">
+                        <input type="string" class="form-control" id="name" name="name" value="<%= data.group.name %>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="technicalAdmin" class="col-sm-2 control-label">
+                        Technical admin
+                    </label>
+                    <div class="col-sm-10">
+                        <select id="technicalAdmin" name="technicalAdmin" class="form-control">
+                            <% _.each(data.users, function (user) { %>
+                            <option value="<%= user.id %>"<% if(user.id === data.group.technicalAdmin.id) { %> selected<% } %>>
+                                <%= user.name() %>
+                            </option>
+                            <% }); %>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description" class="col-sm-2 control-label">
+                        Description
+                    </label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="3" id="description" name="description"><%= data.group.description %></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="score" class="col-sm-2 control-label">
+                        Score
+                    </label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="score" name="score" value="<%= data.group.score %>" min="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">
+                            Update
+                        </button>
+                        <button id="delete" type="button" class="btn btn-danger">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
