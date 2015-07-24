@@ -99,6 +99,15 @@ module.exports = {
     bets: {
       collection: 'bet',
       via: 'match'
+    },
+
+    name: function () {
+      if(typeof this.teamA === 'object' &&
+         typeof this.teamB === 'object') {
+          return this.teamA.name + ' vs. ' + this.teamB.name;
+      }
+
+      return this.teamA + ' vs. ' + this.teamB;
     }
 
   },
