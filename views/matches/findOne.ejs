@@ -1,7 +1,7 @@
 <%
 var paths = [
     { name: 'Matches', url: 'matches' },
-    { name: data.match.id, url: data.match.id }
+    { name: data.match.name(), url: data.match.id }
 ]; %>
 <% var partialData = { paths: paths }; %>
 
@@ -61,7 +61,15 @@ var paths = [
                         Kick-off at
                     </label>
                     <div class="col-sm-10">
-                        <input id="kickOffAt" name="kickOffAt" type="datetime" value="<%= data.match.kickOffAt.toJSON() %>" />
+                        <!-- <input id="kickOffAt" name="kickOffAt" type="datetime" value="<%= data.match.kickOffAt.toJSON() %>" /> -->
+                        <div class="form-group">
+                            <div class="input-group date" id="kickOffAt">
+                                <input type="text" class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
