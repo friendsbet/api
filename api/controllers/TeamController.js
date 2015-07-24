@@ -11,7 +11,7 @@ module.exports = {
       .exec(function (err, instances) {
         if(err) return res.negotiate(err);
 
-        return res.ok({ teams: instances }, 'teams/find.ejs');
+        return res.ok({ teams: instances }, 'teams/find');
     });
   },
 
