@@ -11,6 +11,11 @@
         <div class="col-sm-9 col-md-10">
             <%- partial('../partial/breadcrumb', partialData) %>
 
+            <% if(data.somethingIsMissing) { %>
+                <% if(data.noUsers) { %>
+                Please <a href="/users/new">create a user</a> first.
+                <% } %>
+            <% } else { %>
             <form id="create" class="form-horizontal">
                 <input id="_csrf" type="hidden" name="_csrf" value="<%= _csrf %>">
 
@@ -64,6 +69,7 @@
                     </div>
                 </div>
             </form>
+            <% } %>
         </div>
     </div>
 </div>
