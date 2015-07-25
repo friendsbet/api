@@ -16,9 +16,8 @@ module.exports = {
   },
 
   boFindOne: function (req, res) {
-    User
-      .findOne(req.param('id'))
-      .exec(function (err, instance) {
+    BackOffice
+      .getAUser(req.param('id'), function (err, instance) {
         if(err) return res.negotiate(err);
         if(!instance) return res.notFound(req.param('id'));
 

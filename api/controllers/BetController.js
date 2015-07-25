@@ -41,11 +41,8 @@ module.exports = {
     async.parallel([
 
       function getBet(next) {
-        Bet
-          .findOne(req.param('id'))
-          .populate('user')
-          .populate('match')
-          .exec(function (err, instance) {
+        BackOffice
+          .getABet(req.param('id'), function (err, instance) {
             if(err) return next(err);
 
             bet = instance;
@@ -55,10 +52,8 @@ module.exports = {
       },
 
       function getUsers(next) {
-        User
-          .find()
-          .limit(0)
-          .exec(function (err, instances) {
+        BackOffice
+          .getAllUsers(function (err, instances) {
             if(err) return next(err);
 
             users = instances;
@@ -68,12 +63,8 @@ module.exports = {
       },
 
       function getMatches(next) {
-        Match
-          .find()
-          .limit(0)
-          .populate('teamA')
-          .populate('teamB')
-          .exec(function (err, instances) {
+        BackOffice
+          .getAllMatches(function (err, instances) {
             if(err) return next(err);
 
             matches = instances;
@@ -97,10 +88,8 @@ module.exports = {
     async.parallel([
 
       function getUsers(next) {
-        User
-          .find()
-          .limit(0)
-          .exec(function (err, instances) {
+        BackOffice
+          .getAllUsers(function (err, instances) {
             if(err) return next(err);
 
             users = instances;
@@ -110,12 +99,8 @@ module.exports = {
       },
 
       function getMatches(next) {
-        Match
-          .find()
-          .limit(0)
-          .populate('teamA')
-          .populate('teamB')
-          .exec(function (err, instances) {
+        BackOffice
+          .getAllMatches(function (err, instances) {
             if(err) return next(err);
 
             matches = instances;

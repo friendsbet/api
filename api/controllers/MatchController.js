@@ -24,11 +24,8 @@ module.exports = {
     async.parallel([
 
       function getMatch(next) {
-        Match
-          .findOne(req.param('id'))
-          .populate('teamA')
-          .populate('teamB')
-          .exec(function (err, instance) {
+        BackOffice
+          .getAMatch(req.param('id'), function (err, instance) {
             if(err) return next(err);
 
             match = instance;
@@ -38,10 +35,8 @@ module.exports = {
       },
 
       function getTeams(next) {
-        Team
-          .find()
-          .limit(0)
-          .exec(function (err, instances) {
+        BackOffice
+          .getAllTeams(function (err, instances) {
             if(err) return next(err);
             
             teams = instances;
@@ -59,10 +54,8 @@ module.exports = {
   },
 
   boNew: function (req, res) {
-    Team
-      .find()
-      .limit(0)
-      .exec(function (err, teams) {
+    BackOffice
+      .getAllTeams(function (err, teams) {
         if(err) return res.negotiate(err);
 
         var data = {

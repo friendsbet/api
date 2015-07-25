@@ -23,10 +23,8 @@ module.exports = {
     async.parallel([
 
       function getGroup(next) {
-        Group
-          .findOne(req.param('id'))
-          .populate('technicalAdmin')
-          .exec(function (err, instance) {
+        BackOffice
+          .getAGroup(req.param('id'), function (err, instance) {
             if(err) return next(err);
             
             group = instance;
@@ -36,10 +34,8 @@ module.exports = {
       },
 
       function getUsers(next) {
-        User
-          .find()
-          .limit(0)
-          .exec(function (err, instances) {
+        BackOffice
+          .getAllUsers(function (err, instances) {
             if(err) return next(err);
 
             users = instances;
@@ -57,10 +53,8 @@ module.exports = {
   },
 
   boNew: function (req, res) {
-    User
-      .find()
-      .limit(0)
-      .exec(function (err, users) {
+    BackOffice
+      .getAllUsers(function (err, users) {
         if(err) return res.negotiate(err);
 
         var data = {

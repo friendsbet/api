@@ -25,11 +25,8 @@ module.exports = {
     async.parallel([
 
       function getMembership(next) {
-        Membership
-          .findOne(req.param('id'))
-          .populate('user')
-          .populate('group')
-          .exec(function (err, instance) {
+        BackOffice
+          .getAMembership(req.param('id'), function (err, instance) {
             if(err) return next(err);
 
             membership = instance;
@@ -39,10 +36,8 @@ module.exports = {
       },
 
       function getUsers(next) {
-        User
-          .find()
-          .limit(0)
-          .exec(function (err, instances) {
+        BackOffice
+          .getAllUsers(function (err, instances) {
             if(err) return next(err);
 
             users = instances;
@@ -52,10 +47,8 @@ module.exports = {
       },
 
       function getGroups(next) {
-        Group
-          .find()
-          .limit(0)
-          .exec(function (err, instances) {
+        BackOffice
+          .getAllGroups(function (err, instances) {
             if(err) return next(err);
 
             groups = instances;
@@ -79,10 +72,8 @@ module.exports = {
     async.parallel([
 
       function getUsers(next) {
-        User
-          .find()
-          .limit(0)
-          .exec(function (err, instances) {
+        BackOffice
+          .getAllUsers(function (err, instances) {
             if(err) return next(err);
 
             users = instances;
@@ -92,10 +83,8 @@ module.exports = {
       },
 
       function getGroups(next) {
-        Group
-          .find()
-          .limit(0)
-          .exec(function (err, instances) {
+        BackOffice
+          .getAllGroups(function (err, instances) {
             if(err) return next(err);
 
             groups = instances;
