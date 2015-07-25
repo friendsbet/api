@@ -1,75 +1,56 @@
 // Data instance
-module.exports.getATeam = function (id, cb) {
-  Team
+function getAnInstance(Model, id, cb) {
+  Model
     .findOne(id)
     .populateAll()
     .exec(cb);
+}
+
+module.exports.getATeam = function (id, cb) {
+  getAnInstance(Team, id, cb);
 };
 
 module.exports.getAMatch = function (id, cb) {
-  Match
-    .findOne(id)
-    .populateAll()
-    .exec(cb);
+  getAnInstance(Match, id, cb);
 };
 
 module.exports.getABet = function (id, cb) {
-  Bet
-    .findOne(id)
-    .populateAll()
-    .exec(cb);
+  getAnInstance(Bet, id, cb);
 };
 
 module.exports.getAUser = function (id, cb) {
-  User
-    .findOne(id)
-    .populateAll()
-    .exec(cb);
+  getAnInstance(User, id, cb);
 };
 
 module.exports.getAMembership = function (id, cb) {
-  Membership
-    .findOne(id)
-    .populateAll()
-    .exec(cb);
+  getAnInstance(Membership, id, cb);
 };
 
 module.exports.getAGroup = function (id, cb) {
-  Group
-    .findOne(id)
-    .populateAll()
-    .exec(cb);
+  getAnInstance(Group, id, cb);
 };
 
 // Data list
-module.exports.getAllTeams = function (cb) {
-  Team
+function getAllInstances(Model, cb) {
+  Model
     .find()
     .limit(0)
     .populateAll()
     .exec(cb);
+}
+
+module.exports.getAllTeams = function (cb) {
+  getAllInstances(Team, cb);
 };
 
 module.exports.getAllMatches = function (cb) {
-  Match
-    .find()
-    .limit(0)
-    .populateAll()
-    .exec(cb);
+  getAllInstances(Match, cb);
 };
 
 module.exports.getAllUsers = function (cb) {
-  User
-    .find()
-    .limit(0)
-    .populateAll()
-    .exec(cb);
+  getAllInstances(User, cb);
 };
 
 module.exports.getAllGroups = function (cb) {
-  Group
-    .find()
-    .limit(0)
-    .populateAll()
-    .exec(cb);
+  getAllInstances(Group, cb);
 };
