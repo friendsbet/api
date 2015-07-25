@@ -1,83 +1,74 @@
 <% var paths = [{ name: 'Memberships', url: 'memberships' }, { name: 'Create', url: 'new' }]; %>
 <% var partialData = { paths: paths }; %>
 
-<%- partial('../partials/navbar') %>
+<%- partial('../partials/heading', { partialData: partialData}) %>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-3 col-md-2">
-            <%- partial('../partials/menu', partialData) %>
-        </div>
-        <div class="col-sm-9 col-md-10">
-            <%- partial('../partials/breadcrumb', partialData) %>
+<% if(data.somethingIsMissing) { %>
+    <% if(data.everythingIsMissing) { %>
+    Please <a href="/users/new">create a user</a> and <a href="/groups/new">a group</a> first.
+    <% } else { %>
+        <% if(data.noUsers) { %>
+        Please <a href="/users/new">create a user</a> first.
+        <% } else if(data.noGroups) { %>
+        Please <a href="/groups/new">create a group</a> first.
+        <% } %>
+    <% } %>
+<% } else { %>
+<form id="create" class="form-horizontal">
+    <input id="_csrf" name="_csrf" type="hidden" value="<%= _csrf %>">
 
-            <% if(data.somethingIsMissing) { %>
-                <% if(data.everythingIsMissing) { %>
-                Please <a href="/users/new">create a user</a> and <a href="/groups/new">a group</a> first.
-                <% } else { %>
-                    <% if(data.noUsers) { %>
-                    Please <a href="/users/new">create a user</a> first.
-                    <% } else if(data.noGroups) { %>
-                    Please <a href="/groups/new">create a group</a> first.
-                    <% } %>
-                <% } %>
-            <% } else { %>
-            <form id="create" class="form-horizontal">
-                <input id="_csrf" name="_csrf" type="hidden" value="<%= _csrf %>">
-
-                <div class="form-group">
-                    <label for="user" class="col-sm-2 control-label">
-                        User
-                    </label>
-                    <div class="col-sm-10">
-                        <select id="user" name="user" class="form-control" required>
-                            <% _.each(data.users, function (user) { %>
-                            <option value="<%= user.id %>">
-                                <%= user.name() %>
-                            </option>
-                            <% }); %>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="group" class="col-sm-2 control-label">
-                        Group
-                    </label>
-                    <div class="col-sm-10">
-                        <select id="group" name="group" class="form-control" required>
-                            <% _.each(data.groups, function (group) { %>
-                            <option value="<%= group.id %>">
-                                <%= group.name %>
-                            </option>
-                            <% }); %>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="isAdmin" class="col-sm-2 control-label">
-                        Is admin?
-                    </label>
-                    <div class="col-sm-10">
-                        <select id="isAdmin" name="isAdmin" class="form-control">
-                            <option value="true">
-                                ✓
-                            </option>
-                            <option value="false" selected>
-                                ✗
-                            </option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary">Create</button>
-                    </div>
-                </div>
-            </form>
-            <% } %>
+    <div class="form-group">
+        <label for="user" class="col-sm-2 control-label">
+            User
+        </label>
+        <div class="col-sm-10">
+            <select id="user" name="user" class="form-control" required>
+                <% _.each(data.users, function (user) { %>
+                <option value="<%= user.id %>">
+                    <%= user.name() %>
+                </option>
+                <% }); %>
+            </select>
         </div>
     </div>
-</div>
+
+    <div class="form-group">
+        <label for="group" class="col-sm-2 control-label">
+            Group
+        </label>
+        <div class="col-sm-10">
+            <select id="group" name="group" class="form-control" required>
+                <% _.each(data.groups, function (group) { %>
+                <option value="<%= group.id %>">
+                    <%= group.name %>
+                </option>
+                <% }); %>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="isAdmin" class="col-sm-2 control-label">
+            Is admin?
+        </label>
+        <div class="col-sm-10">
+            <select id="isAdmin" name="isAdmin" class="form-control">
+                <option value="true">
+                    ✓
+                </option>
+                <option value="false" selected>
+                    ✗
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+</form>
+<% } %>
+
+<%- partial('../partials/footer') %>

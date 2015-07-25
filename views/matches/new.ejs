@@ -1,116 +1,107 @@
 <% var paths = [{ name: 'Matches', url: 'matches' }, { name: 'Create', url: 'new' }]; %>
 <% var partialData = { paths: paths }; %>
 
-<%- partial('../partials/navbar') %>
+<%- partial('../partials/heading', { partialData: partialData}) %>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-3 col-md-2">
-            <%- partial('../partials/menu', partialData) %>
-        </div>
-        <div class="col-sm-9 col-md-10">
-            <%- partial('../partials/breadcrumb', partialData) %>
+<% if(data.somethingIsMissing) { %>
+    <% if(data.noTeams) { %>
+    Please <a href="/teams/new">create at least 2 teams</a> first.
+    <% } %>
+<% } else { %>
+<form id="create" class="form-horizontal">
+    <input id="_csrf" name="_csrf" type="hidden" value="<%= _csrf %>">
 
-            <% if(data.somethingIsMissing) { %>
-                <% if(data.noTeams) { %>
-                Please <a href="/teams/new">create at least 2 teams</a> first.
-                <% } %>
-            <% } else { %>
-            <form id="create" class="form-horizontal">
-                <input id="_csrf" name="_csrf" type="hidden" value="<%= _csrf %>">
-
-                <div class="form-group">
-                    <label for="teamA" class="col-sm-2 control-label">
-                        Team A
-                    </label>
-                    <div class="col-sm-10">
-                        <select id="teamA" name="teamA" class="form-control" required>
-                            <% _.each(data.teams, function (team) { %>
-                            <option value="<%= team.id %>">
-                                <%= team.name %>
-                            </option>
-                            <% }); %>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="teamB" class="col-sm-2 control-label">
-                        Team B
-                    </label>
-                    <div class="col-sm-10">
-                        <select id="teamB" name="teamB" class="form-control" required>
-                            <% _.each(data.teams, function (team) { %>
-                            <option value="<%= team.id %>">
-                                <%= team.name %>
-                            </option>
-                            <% }); %>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="kickOffAt" class="col-sm-2 control-label">
-                        Kick-off at
-                    </label>
-                    <div class="col-sm-10">
-                        <div class="input-group date" id="kickOffAt">
-                            <input type="text" class="form-control" name="kickOffAt" required>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="stopBetsAt" class="col-sm-2 control-label">
-                        Stop bets at
-                    </label>
-                    <div class="col-sm-10">
-                        <div class="input-group date" id="stopBetsAt">
-                            <input type="text" class="form-control" name="stopBetsAt" required>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="venue" class="col-sm-2 control-label">
-                        Venue
-                    </label>
-                    <div class="col-sm-10">
-                        <input type="string" class="form-control" id="venue" name="venue">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="importance" class="col-sm-2 control-label">
-                        Importance
-                    </label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="importance" name="importance" value="1.0" step="0.1" min="1.0" max="2.0">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="pool" class="col-sm-2 control-label">
-                        Pool
-                    </label>
-                    <div class="col-sm-10">
-                        <input type="string" class="form-control" id="pool" name="pool" maxlength="1">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary">Create</button>
-                    </div>
-                </div>
-            </form>
-            <% } %>
+    <div class="form-group">
+        <label for="teamA" class="col-sm-2 control-label">
+            Team A
+        </label>
+        <div class="col-sm-10">
+            <select id="teamA" name="teamA" class="form-control" required>
+                <% _.each(data.teams, function (team) { %>
+                <option value="<%= team.id %>">
+                    <%= team.name %>
+                </option>
+                <% }); %>
+            </select>
         </div>
     </div>
-</div>
+
+    <div class="form-group">
+        <label for="teamB" class="col-sm-2 control-label">
+            Team B
+        </label>
+        <div class="col-sm-10">
+            <select id="teamB" name="teamB" class="form-control" required>
+                <% _.each(data.teams, function (team) { %>
+                <option value="<%= team.id %>">
+                    <%= team.name %>
+                </option>
+                <% }); %>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="kickOffAt" class="col-sm-2 control-label">
+            Kick-off at
+        </label>
+        <div class="col-sm-10">
+            <div class="input-group date" id="kickOffAt">
+                <input type="text" class="form-control" name="kickOffAt" required>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="stopBetsAt" class="col-sm-2 control-label">
+            Stop bets at
+        </label>
+        <div class="col-sm-10">
+            <div class="input-group date" id="stopBetsAt">
+                <input type="text" class="form-control" name="stopBetsAt" required>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="venue" class="col-sm-2 control-label">
+            Venue
+        </label>
+        <div class="col-sm-10">
+            <input type="string" class="form-control" id="venue" name="venue">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="importance" class="col-sm-2 control-label">
+            Importance
+        </label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="importance" name="importance" value="1.0" step="0.1" min="1.0" max="2.0">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="pool" class="col-sm-2 control-label">
+            Pool
+        </label>
+        <div class="col-sm-10">
+            <input type="string" class="form-control" id="pool" name="pool" maxlength="1">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+</form>
+<% } %>
+
+<%- partial('../partials/footer') %>

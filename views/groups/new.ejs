@@ -1,75 +1,66 @@
 <% var paths = [{ name: 'Groups', url: 'groups' }, { name: 'Create', url: 'new' }]; %>
 <% var partialData = { paths: paths }; %>
 
-<%- partial('../partials/navbar') %>
+<%- partial('../partials/heading', { partialData: partialData}) %>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-3 col-md-2">
-            <%- partial('../partials/menu', partialData) %>
-        </div>
-        <div class="col-sm-9 col-md-10">
-            <%- partial('../partials/breadcrumb', partialData) %>
+<% if(data.somethingIsMissing) { %>
+    <% if(data.noUsers) { %>
+    Please <a href="/users/new">create a user</a> first.
+    <% } %>
+<% } else { %>
+<form id="create" class="form-horizontal">
+    <input id="_csrf" type="hidden" name="_csrf" value="<%= _csrf %>">
 
-            <% if(data.somethingIsMissing) { %>
-                <% if(data.noUsers) { %>
-                Please <a href="/users/new">create a user</a> first.
-                <% } %>
-            <% } else { %>
-            <form id="create" class="form-horizontal">
-                <input id="_csrf" type="hidden" name="_csrf" value="<%= _csrf %>">
-
-                <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label">
-                        Name
-                    </label>
-                    <div class="col-sm-10">
-                        <input type="string" class="form-control" id="name" name="name" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="technicalAdmin" class="col-sm-2 control-label">
-                        Technical admin
-                    </label>
-                    <div class="col-sm-10">
-                        <select id="technicalAdmin" name="technicalAdmin" class="form-control" required>
-                            <% _.each(data.users, function (user) { %>
-                            <option value="<%= user.id %>">
-                                <%= user.name() %>
-                            </option>
-                            <% }); %>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="description" class="col-sm-2 control-label">
-                        Description
-                    </label>
-                    <div class="col-sm-10">
-                        <textarea class="form-control" rows="3" id="description" name="description"></textarea>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="score" class="col-sm-2 control-label">
-                        Score
-                    </label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="score" name="score" min="0" value="0">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary">
-                            Create
-                        </button>
-                    </div>
-                </div>
-            </form>
-            <% } %>
+    <div class="form-group">
+        <label for="name" class="col-sm-2 control-label">
+            Name
+        </label>
+        <div class="col-sm-10">
+            <input type="string" class="form-control" id="name" name="name" required>
         </div>
     </div>
-</div>
+
+    <div class="form-group">
+        <label for="technicalAdmin" class="col-sm-2 control-label">
+            Technical admin
+        </label>
+        <div class="col-sm-10">
+            <select id="technicalAdmin" name="technicalAdmin" class="form-control" required>
+                <% _.each(data.users, function (user) { %>
+                <option value="<%= user.id %>">
+                    <%= user.name() %>
+                </option>
+                <% }); %>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="description" class="col-sm-2 control-label">
+            Description
+        </label>
+        <div class="col-sm-10">
+            <textarea class="form-control" rows="3" id="description" name="description"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="score" class="col-sm-2 control-label">
+            Score
+        </label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="score" name="score" min="0" value="0">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">
+                Create
+            </button>
+        </div>
+    </div>
+</form>
+<% } %>
+
+<%- partial('../partials/footer') %>
