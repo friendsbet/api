@@ -60,10 +60,21 @@ module.exports = {
     User
       .find()
       .limit(0)
-      .exec(function (err, instances) {
+      .exec(function (err, users) {
         if(err) return res.negotiate(err);
 
-        return res.ok({ users: instances }, 'groups/new');
+        var data = {
+          noUsers: true
+        };
+
+        if(users.length) {
+          data.users = users;
+          data.noUsers = false;
+        } else {
+          data.somethingIsMissing = true;
+        }
+
+        return res.ok(data, 'groups/new');
     });
   }
 

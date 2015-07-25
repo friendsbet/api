@@ -62,10 +62,21 @@ module.exports = {
     Team
       .find()
       .limit(0)
-      .exec(function (err, instances) {
+      .exec(function (err, teams) {
         if(err) return res.negotiate(err);
 
-        return res.ok({ teams: instances }, 'matches/new');
+        var data = {
+          noTeams: true
+        };
+
+        if(teams.length > 1) {
+          data.teams = teams;
+          data.noTeams = false;
+        } else {
+          data.somethingIsMissing = true;
+        }
+
+        return res.ok(data, 'matches/new');
     });
   }
 

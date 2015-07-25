@@ -127,7 +127,28 @@ module.exports = {
     ], function (err) {
       if(err) return res.negotiate(err);
 
-      return res.ok({ users: users, matches: matches }, 'bets/new');
+      var data = {
+        noUsers: true,
+        noMatches: true
+      };
+
+      if(users.length) {
+        data.users = users;
+        data.noUsers = false;
+      }
+
+      if(matches.length) {
+        data.matches = matches;
+        data.noMatches = false;
+      }
+
+      if(data.noUsers || data.noMatches)
+        data.somethingIsMissing = true;
+
+      if(data.noUsers && data.noMatches)
+        data.everythingIsMissing = true;
+
+      return res.ok(data, 'bets/new');
     });
   }
 

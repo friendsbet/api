@@ -107,7 +107,28 @@ module.exports = {
     ], function (err) {
       if(err) return res.negotiate(err);
 
-      return res.ok({ users: users, groups: groups }, 'memberships/new');
+      var data = {
+        noUsers: true,
+        noGroups: true
+      };
+
+      if(users.length) {
+        data.users = users;
+        data.noUsers = false;
+      }
+
+      if(groups.length) {
+        data.groups = groups;
+        data.noGroups = false;
+      }
+
+      if(data.noUsers || data.noGroups)
+        data.somethingIsMissing = true;
+
+      if(data.noUsers && data.noGroups)
+        data.everythingIsMissing = true;
+
+      return res.ok(data, 'memberships/new');
     });
   },
 
