@@ -6,6 +6,7 @@
 module.exports = {
 	
   boFind: function (req, res) {
+    // Get the list of bets
     Bet
       .find()
       .populate('user')
@@ -15,6 +16,7 @@ module.exports = {
         if(!instances.length)
           return res.ok({ bets: [] }, 'bets/find');
 
+        // Populate the match teams
         Match
           .find({ id: _.uniq(_.pluck(instances, 'match')) })
           .populate('teamA')
@@ -22,6 +24,7 @@ module.exports = {
           .exec(function (err, matches) {
             if(err) return res.negotiate(err);
 
+            // Map the teams to the bets matches
             _.forEach(instances, function (bet) {
               bet.match = _.find(matches, function (match) {
                 return bet.match === match.id;
