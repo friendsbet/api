@@ -133,6 +133,85 @@ function getUserGroups(userId, cb, checkExistence) {
 }
 
 
+
+// isGoodWinner
+//
+// @description :: return true if has bet on the good winner (or tie)
+// @param       :: match (required): the match instance
+//                 bet (require): the bet concerned
+function isGoodWinner(match, bet) {
+  var teamAWins = match.scoreTeamA > match.scoreTeamB;
+  var teamBWins = match.scoreTeamA < match.scoreTeamB;
+  var equality = match.scoreTeamA === match.scoreTeamB;
+  
+  var betOnTeamA = bet.scoreTeamA > bet.scoreTeamB;
+  var betOnTeamB = bet.scoreTeamA < bet.scoreTeamB;
+  var betEquality = bet.scoreTeamA === bet.scoreTeamB;
+
+  return ((teamAWins && betOnTeamA) ||
+        (equality && betEquality) ||
+        (teamBWins && betOnTeamB));
+}
+
+// computeScoreDifference
+//
+// @description :: return the difference between bet team score and match team score
+// @param       :: teamName (required): the name of the team
+//                 match (required): the match instance
+//                 bet (require): the bet concerned
+function computeScoreDifference(teamName, match, bet) {
+  // ToDo test
+  var scoreDifference = 0;
+
+  for(var scoreDifference = 0; scoreDifference < 3 ; scoreDifference++) {
+    if((match['scoreTeam' + teamName] ===
+        bet['scoreTeam' + teamName] + scoreDifference) ||
+        (match['scoreTeam' + teamName] ===
+        bet['scoreTeam' + teamName] - scoreDifference)) {
+          break;
+    }
+  }
+
+  return scoreDifference;
+}
+
+
+// computeBetScore
+//
+// @description :: Calculate a bet score
+//                 This method is the heart of Friends Bet
+// @param       :: match (required): the match instance
+//                 bet (require): the bet concerned
+function computeBetScore(match, bet) {
+  var score = 0;
+
+  // 1. 
+  if(isGoodWinner(match, bet)) {
+    score += sails.config.FriendsBet.score.isGoodWinner;
+  }
+
+ // 2.
+  _.each(['A', 'B'], function (teamName) {
+    switch(computeScoreDifference(teamName, match, bet)) {
+      case 0:
+        score += 50;
+      case 1:
+        score += 25;
+      case 2:
+        score += 10;
+    };
+  });
+
+  // 3. ToDo
+
+
+  // 4.
+  score *= match.importance;
+
+  return intval(score);
+}
+
+
 // updateBetScore
 // 
 // @description :: Update a bet's score attribute in db
@@ -141,40 +220,7 @@ function getUserGroups(userId, cb, checkExistence) {
 //                 cb (required): the function called when it's done or an
 //                 error occured
 function updateBetScore(match, bet, cb) {
-  var score = 0;
-
-  var goodWinner =
-    (match.scoreTeamA >= match.scoreTeamB &&
-    bet.scoreTeamA >= bet.scoreTeamB) ||
-    (match.scoreTeamA < match.scoreTeamB &&
-    bet.scoreTeamA < match.scoreTeamB);
-
-  if(goodWinner) {
-    score += 100;
-  }
-
-  var teams = ['A', 'B'];
-  var perfectScore = 0;
-  _.each(teams, function (team) {
-    perfectScore = (match['scoreTeam' + team] === bet['scoreTeam' + team]);
-    
-    if(perfectScore === 1) {
-      score += 50;
-    } else if (perfectScore === 2) {
-      score += 25;
-    } else if (perfectScore === 3) {
-      score += 10;
-    }
-  });
-
-  var scoreDifference =
-    (bet.scoreTeamA / bet.scoreTeamB) -
-    (match.scoreTeamA / match.scoreTeamB); 
-
-  score *= match.importance;
-  score = intval(score); // ?
-
-  bet.score = match.importance; // ToDo
+  bet.score = computeBetScore(match, bet);
 
   bet.save(cb);
 }
@@ -308,10 +354,18 @@ module.exports = {
   computeAllScoresFromMatch: function (matchId, cb) {
     // Check params
     if(!matchId || !cb) {
+      sails.log.error('ScoreCalculator.computeAllScoresFromMatch')
+      sails.log.error('need 2 params: ');
+      sails.log.error('* matchId: the match concerned');
+      sails.log.error('* cb: the callback');
+
       return cb(new Error('Missing param'));
     }
 
     if(typeof cb !== 'function') {
+      sails.log.error('ScoreCalculator.computeAllScoresFromMatch')
+      sails.log.error('2nd argument must be a function');
+
       return cb(new Error('Invalid param'));
     }
 
@@ -336,3 +390,10 @@ module.exports = {
   }
 
 };
+
+
+if(process.env.NODE_ENV === 'test') {
+  module.exports.isGoodWinner = isGoodWinner;
+  module.exports.computeScoreDifference = computeScoreDifference;
+  module.exports.computeBetScore = computeBetScore;
+}

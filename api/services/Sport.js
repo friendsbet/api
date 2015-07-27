@@ -4,7 +4,7 @@
 //                 simplify basic functionalities concerning
 //                 the sport
 
-var CurrentSport = require('./sports/' + sails.config.currentSport);
+var CurrentSport = require('./sports/' + sails.config.FriendsBet.currentSport);
 
 if(!CurrentSport) {
   throw new Error(
