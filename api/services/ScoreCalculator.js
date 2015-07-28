@@ -184,8 +184,8 @@ function computeBetScore(match, bet) {
   var score = 0;
 
   // 1. 
-  if(isGoodWinner(match, bet)) {
-    score += sails.config.FriendsBet.score.isGoodWinner;
+  if(betWinnerIsMatchWinner(match, bet)) {
+    score += sails.config.FriendsBet.score.betWinnerIsMatchWinner;
   }
 
  // 2.
