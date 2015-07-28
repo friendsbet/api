@@ -4,7 +4,7 @@ describe('ScoreCalculator', function() {
   this.slow(5);
   this.timeout(100);
 
-  describe('#isGoodWinner()', function () {
+  describe('#betWinnerIsMatchWinner()', function () {
 
     it('should return false if match has equality and bet doesn\'t', function () {
       //
@@ -21,13 +21,13 @@ describe('ScoreCalculator', function() {
         scoreTeamB: 0
       };
 
-      ScoreCalculator.isGoodWinner(match, bet).should.be.false;
+      ScoreCalculator.betWinnerIsMatchWinner(match, bet).should.be.false;
 
       // Bet team B wins
       bet.scoreTeamA = 0;
       bet.scoreTeamB = 1;
 
-      ScoreCalculator.isGoodWinner(match, bet).should.be.false;
+      ScoreCalculator.betWinnerIsMatchWinner(match, bet).should.be.false;
     });
 
     it('should return false if teamA won and bet doesn\'t', function () {
@@ -45,13 +45,13 @@ describe('ScoreCalculator', function() {
         scoreTeamB: 0
       };
 
-      ScoreCalculator.isGoodWinner(match, bet).should.be.false;
+      ScoreCalculator.betWinnerIsMatchWinner(match, bet).should.be.false;
 
       // Bet team A wins
       bet.scoreTeamA = 0;
       bet.scoreTeamB = 1;
 
-      ScoreCalculator.isGoodWinner(match, bet).should.be.false;
+      ScoreCalculator.betWinnerIsMatchWinner(match, bet).should.be.false;
     });
 
     it('should return false if teamB won and bet doesn\'t', function () {
@@ -69,13 +69,13 @@ describe('ScoreCalculator', function() {
         scoreTeamB: 0
       };
 
-      ScoreCalculator.isGoodWinner(match, bet).should.be.false;
+      ScoreCalculator.betWinnerIsMatchWinner(match, bet).should.be.false;
 
       // Bet team B wins
       bet.scoreTeamA = 1;
       bet.scoreTeamB = 0;
 
-      ScoreCalculator.isGoodWinner(match, bet).should.be.false;
+      ScoreCalculator.betWinnerIsMatchWinner(match, bet).should.be.false;
     });
 
     it('should return true if selected team won', function () {
@@ -93,13 +93,13 @@ describe('ScoreCalculator', function() {
         scoreTeamB: 0
       };
 
-      ScoreCalculator.isGoodWinner(match, bet).should.be.true;
+      ScoreCalculator.betWinnerIsMatchWinner(match, bet).should.be.true;
 
       // Bet equality with a different score
       bet.scoreTeamA = 1;
       bet.scoreTeamB = 1;
 
-      ScoreCalculator.isGoodWinner(match, bet).should.be.true;
+      ScoreCalculator.betWinnerIsMatchWinner(match, bet).should.be.true;
 
       //
       // Team A wins
@@ -111,19 +111,19 @@ describe('ScoreCalculator', function() {
       bet.scoreTeamA = 1;
       bet.scoreTeamB = 0;
 
-      ScoreCalculator.isGoodWinner(match, bet).should.be.true;
+      ScoreCalculator.betWinnerIsMatchWinner(match, bet).should.be.true;
 
       // Bet different score
       bet.scoreTeamA = 2;
       bet.scoreTeamB = 0;
 
-      ScoreCalculator.isGoodWinner(match, bet).should.be.true;
+      ScoreCalculator.betWinnerIsMatchWinner(match, bet).should.be.true;
 
       // Bet different score
       bet.scoreTeamA = 2;
       bet.scoreTeamB = 1;
 
-      ScoreCalculator.isGoodWinner(match, bet).should.be.true;
+      ScoreCalculator.betWinnerIsMatchWinner(match, bet).should.be.true;
 
       //
       // Team B wins

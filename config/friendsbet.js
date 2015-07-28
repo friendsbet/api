@@ -9,7 +9,7 @@ module.exports.FriendsBet = {
 
   // Points given per bet
   score: {
-    isGoodWinner: 100,
+    betWinnerIsMatchWinner: 100,
     perTeamScoreDifference: [50, 25, 10]
   }
 

@@ -134,23 +134,21 @@ function getUserGroups(userId, cb, checkExistence) {
 
 
 
-// isGoodWinner
+// betWinnerIsMatchWinner
 //
 // @description :: return true if has bet on the good winner (or tie)
 // @param       :: match (required): the match instance
 //                 bet (require): the bet concerned
-function isGoodWinner(match, bet) {
+function betWinnerIsMatchWinner(match, bet) {
   var teamAWins = match.scoreTeamA > match.scoreTeamB;
-  var teamBWins = match.scoreTeamA < match.scoreTeamB;
-  var equality = match.scoreTeamA === match.scoreTeamB;
+  var tie = match.scoreTeamA === match.scoreTeamB;
   
   var betOnTeamA = bet.scoreTeamA > bet.scoreTeamB;
-  var betOnTeamB = bet.scoreTeamA < bet.scoreTeamB;
-  var betEquality = bet.scoreTeamA === bet.scoreTeamB;
+  var betTie = bet.scoreTeamA === bet.scoreTeamB;
 
   return ((teamAWins && betOnTeamA) ||
-        (equality && betEquality) ||
-        (teamBWins && betOnTeamB));
+        (tie && betTie) ||
+        (!teamAWins && !betOnTeamA && !tie && !betTie));
 }
 
 // computeScoreDifference
@@ -393,7 +391,7 @@ module.exports = {
 
 
 if(process.env.NODE_ENV === 'test') {
-  module.exports.isGoodWinner = isGoodWinner;
+  module.exports.betWinnerIsMatchWinner = betWinnerIsMatchWinner;
   module.exports.computeScoreDifference = computeScoreDifference;
   module.exports.computeBetScore = computeBetScore;
 }
