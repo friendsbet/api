@@ -158,8 +158,12 @@ function betWinnerIsMatchWinner(match, bet) {
 //                 match (required): the match instance
 //                 bet (require): the bet concerned
 function computeScoreDifference(teamName, match, bet) {
-  // ToDo test
-  var scoreDifference = 0;
+  if(!match.hasOwnProperty('scoreTeam' + teamName) ||
+    !bet.hasOwnProperty('scoreTeam' + teamName)) {
+      sails.log.error('ScoreCalculator.computeScoreDifference()');
+      sails.log.error('first parameter is incorrect');
+      throw new Error('This team doesn\'t exist');
+  }
 
   for(var scoreDifference = 0; scoreDifference < 3 ; scoreDifference++) {
     if((match['scoreTeam' + teamName] ===
@@ -192,11 +196,11 @@ function computeBetScore(match, bet) {
   _.each(['A', 'B'], function (teamName) {
     switch(computeScoreDifference(teamName, match, bet)) {
       case 0:
-        score += 50;
+        score += sails.config.FriendsBet.score.perTeamScoreDifference[0];
       case 1:
-        score += 25;
+        score += sails.config.FriendsBet.score.perTeamScoreDifference[1];
       case 2:
-        score += 10;
+        score += sails.config.FriendsBet.score.perTeamScoreDifference[2];
     };
   });
 
