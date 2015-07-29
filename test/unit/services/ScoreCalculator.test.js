@@ -154,6 +154,24 @@ describe('ScoreCalculator', function() {
 
   describe('#computeScoreDifference()', function () {
 
+    it('should throw an error if argument problem', function () {
+      var match = {
+        scoreTeamA: 0,
+        scoreTeamB: 0
+      };
+
+      var bet = {
+        scoreTeamA: 0,
+        scoreTeamB: 0
+      };
+
+      ScoreCalculator
+        .computeScoreDifference
+        .bind(null, 'C', match, bet)
+        .should
+        .throw();
+    });
+
     it('should return 0 if betted team score and real team score are equal',
         function () {
       // Scores 0
@@ -177,14 +195,14 @@ describe('ScoreCalculator', function() {
     it('should return 1 if betted team score and real team score is different by 1',
         function () {
       var match = {
-        scoreTeamA: 0
+        scoreTeamB: 0
       };
 
       var bet = {
-        scoreTeamA: 1
+        scoreTeamB: 1
       };
 
-      ScoreCalculator.computeScoreDifference('A', match, bet).should.equal(1);
+      ScoreCalculator.computeScoreDifference('B', match, bet).should.equal(1);
 
       match.scoreTeamA = 6;
       bet.scoreTeamA = 5;
