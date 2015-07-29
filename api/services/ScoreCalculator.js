@@ -165,14 +165,9 @@ function computeScoreDifference(teamName, match, bet) {
       throw new Error('This team doesn\'t exist');
   }
 
-  for(var scoreDifference = 0; scoreDifference < 3 ; scoreDifference++) {
-    if((match['scoreTeam' + teamName] ===
-        bet['scoreTeam' + teamName] + scoreDifference) ||
-        (match['scoreTeam' + teamName] ===
-        bet['scoreTeam' + teamName] - scoreDifference)) {
-          break;
-    }
-  }
+  var scoreDifference = match['scoreTeam' + teamName] - bet['scoreTeam' + teamName];
+  if(scoreDifference < 0)
+    scoreDifference = bet['scoreTeam' + teamName] - match['scoreTeam' + teamName];
 
   return scoreDifference;
 }
@@ -192,16 +187,13 @@ function computeBetScore(match, bet) {
     score += sails.config.FriendsBet.score.betWinnerIsMatchWinner;
   }
 
- // 2.
+  // 2.
+  var scoreDifference = 0;
+  var factor = 0;
   _.each(['A', 'B'], function (teamName) {
-    switch(computeScoreDifference(teamName, match, bet)) {
-      case 0:
-        score += sails.config.FriendsBet.score.perTeamScoreDifference[0];
-      case 1:
-        score += sails.config.FriendsBet.score.perTeamScoreDifference[1];
-      case 2:
-        score += sails.config.FriendsBet.score.perTeamScoreDifference[2];
-    };
+    scoreDifference = computeScoreDifference(teamName, match, bet);
+    factor = (1 / (scoreDifference + 1));
+    score += factor * sails.config.FriendsBet.score.maximumPerTeamScoreDifference;
   });
 
   // 3. ToDo
