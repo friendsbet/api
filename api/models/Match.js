@@ -117,6 +117,15 @@ module.exports = {
     if(!values.isEnded) return cb();
 
     ScoreCalculator.computeAllScoresFromMatch(values.id, cb);
+  },
+
+  // Remove match's bets
+  afterDestroy: function destroyAssociations(instances, cb) {
+    async.each(instances, function (instance, next) {
+      Bet
+        .destroy({ match: instance.id })
+        .exec(next);
+    }, cb);
   }
   
 };

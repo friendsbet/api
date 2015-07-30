@@ -56,7 +56,7 @@ module.exports = {
 
   // Remove team's matches
   afterDestroy: function destroyAssociations(instances, cb) {
-    async.each(instances, function (instance) {
+    async.each(instances, function (instance, next) {
       Match
         .destroy({
           or: [
@@ -64,8 +64,8 @@ module.exports = {
             { teamB: instance.id }
           ]
         })
-        .exec(cb);
-    });
+        .exec(next);
+    }, cb);
   }
   
 };

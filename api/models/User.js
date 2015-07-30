@@ -70,19 +70,26 @@ module.exports = {
   },
 
   // Remove user's bets and memberships
-  afterDestroy: function destroyAssociations(values, cb) {
-    async.parallel([
-      function destroyBets(next) {
-        Bet
-          .destroy({ user: values.id })
-          .exec(next);
-      },
-      function destroyMemberships(next) {
-        Membership
-          .destroy({ user: values.id })
-          .exec(next);
-      },
-    ], cb);
+  afterDestroy: function destroyAssociations(instances, cb) {
+    async.each(instances, function (instance, nextInstance) {
+      async.parallel([
+        function destroyBets(nextFn) {
+          Bet
+            .destroy({ user: instance.id })
+            .exec(nextFn);
+        },
+        function destroyMemberships(nextFn) {
+          Membership
+            .destroy({ user: instance.id })
+            .exec(nextFn);
+        },
+        function destroyGroups(nextFn) {
+          Group
+            .destroy({ technicalAdmin: instance.id })
+            .exec(nextFn);
+        },
+      ], nextInstance);
+    }, cb);
   }
   
 };

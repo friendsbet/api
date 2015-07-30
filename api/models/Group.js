@@ -50,12 +50,12 @@ module.exports = {
   },
 
   // Remove group's memberships
-  afterDestroy: function destroyAssociations(values, cb) {
-    Membership
-      .destroy({ group: values.id })
-      .exec(function (err) {
-        return cb((err)? err: null);
-    });
+  afterDestroy: function destroyAssociations(instances, cb) {
+    async.each(instances, function (instance, next) {
+      Membership
+        .destroy({ group: instance.id })
+        .exec(next);
+    }, cb);
   }
   
 };
