@@ -52,6 +52,20 @@ module.exports = {
       via: 'teamB'
     }
 
+  },
+
+  // Remove team's matches
+  afterDestroy: function destroyAssociations(instances, cb) {
+    async.each(instances, function (instance) {
+      Match
+        .destroy({
+          or: [
+            { teamA: instance.id },
+            { teamB: instance.id }
+          ]
+        })
+        .exec(cb);
+    });
   }
   
 };
