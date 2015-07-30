@@ -160,14 +160,14 @@ function betWinnerIsMatchWinner(match, bet) {
 function computeScoreDifference(teamName, match, bet) {
   if(!match.hasOwnProperty('scoreTeam' + teamName) ||
     !bet.hasOwnProperty('scoreTeam' + teamName)) {
-      sails.log.error('ScoreCalculator.computeScoreDifference()');
+      sails.log.error('ScoreCalculator.computeScoreDifference("' + teamName + '", ...)');
       sails.log.error('first parameter is incorrect');
       throw new Error('This team doesn\'t exist');
   }
 
   var scoreDifference = match['scoreTeam' + teamName] - bet['scoreTeam' + teamName];
   if(scoreDifference < 0)
-    scoreDifference = bet['scoreTeam' + teamName] - match['scoreTeam' + teamName];
+    scoreDifference = (- scoreDifference);
 
   return scoreDifference;
 }
