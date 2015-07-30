@@ -97,9 +97,12 @@ $(function() {
   }
 
   function destroy() {
+    var text = 
+
     swal({
       title: 'Are you sure?',
-      text: 'You will not be able to recover this instance!',
+      text: 'You will not be able to recover this instance!\n' +
+             'All associated resources will also be destroyed.',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
