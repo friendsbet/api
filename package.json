@@ -1,7 +1,7 @@
 {
   "name": "FriendsBetAPI",
   "private": false,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Friends Bet is an application that allows you and your friends to bet on sport results",
   "keywords": [],
   "dependencies": {
