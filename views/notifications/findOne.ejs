@@ -1,0 +1,100 @@
+<%
+var paths = [
+    { name: 'Notifications', url: 'notifications' },
+    { name: data.notification.id, url: data.notification.id }
+]; %>
+<% var partialData = { paths: paths }; %>
+
+<%- partial('../partials/heading', { partialData: partialData}) %>
+
+<form id="update" class="form-horizontal">
+    <input id="_csrf" name="_csrf" 
+    type="hidden" value="<%= _csrf %>">
+
+    <div class="form-group">
+        <label for="id" class="col-sm-2 control-label">Id</label>
+        <div class="col-sm-10">
+            <input type="string" class="form-control" id="id" name="id" value="<%= data.notification.id %>" disabled>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="user" class="col-sm-2 control-label">
+            User
+        </label>
+        <div class="col-sm-10">
+            <select id="user" name="user" class="form-control">
+                <% _.each(data.users, function (user) { %>
+                <option value="<%= user.id %>"<% if(user.id === data.notification.user.id) { %> selected<% } %>>
+                    <%= user.name() %>
+                </option>
+                <% }); %>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="type" class="col-sm-2 control-label">
+            Type
+        </label>
+        <div class="col-sm-10">
+            <select id="type" name="type" class="form-control">
+                <%
+                  var types = [
+                    {
+                      name: 'Website',
+                      value: 'website'
+                    },
+                    {
+                      name: 'Group',
+                      value: 'group'
+                    },
+                    {
+                      name: 'Ranking',
+                      value: 'ranking'
+                    }
+                  ];
+                %>
+                <% _.each(types, function (type) { %>
+                <option value="<%= type.value %>"<% if(type.value === data.notification.type) { %> selected<% } %>>
+                    <%= type.name %>
+                </option>
+                <% }); %>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="description" class="col-sm-2 control-label">
+            Description
+        </label>
+        <div class="col-sm-10">
+            <textarea class="form-control" rows="3" id="description" name="description"><%= data.notification.description %></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="isRead" class="col-sm-2 control-label">
+            Is read?
+        </label>
+        <div class="col-sm-10">
+            <select id="isRead" name="isRead" class="form-control">
+                <option value="true"<% if(data.notification.isRead) { %> selected<% } %>>
+                    ✓
+                </option>
+                <option value="false"<% if(!data.notification.isRead) { %> selected<% } %>>
+                    ✗
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <button id="delete" type="button" class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+</form>
+
+<%- partial('../partials/footer') %>
