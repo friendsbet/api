@@ -135,12 +135,27 @@ Get a list of users.
 | description | Everything the User want you to know | string  | "King of the North" |         | No       | No     |
 | score       | The cumulative score of the User     | integer | 127                 | 0       | No       | No     |
 
+### Notification
+
+ - *GET /notifications*
+
+**Description**
+
+Get a list of notifications.
+
+**Attributes**
+
+| Name        | Description                                 | Type    | Example              | Default | Required | Unique |
+|-------------|---------------------------------------------|---------|----------------------|---------|----------|--------|
+| type        | The type of the notification                | string  | "ranking"            |         | Yes      | No     |
+| description | The notification's details                  | text    | "You won 217 points" |         | Yes      | No     |
+| isRead      | Has the notification been read by the user? | boolean | true                 | false   | No       | No     |
+
 **Associated resources**
 
-| Name        | Description                               | Type | Model      | Required |
-|-------------|-------------------------------------------|------|------------|----------|
-| bets        | The collection of the User Bets           | List | Bet        | No       |
-| memberships | The Groups in which the User participates | List | Membership | No       |
+| Name | Description        | Type     | Model | Required |
+|------|--------------------|----------|-------|----------|
+| user | The user concerned | Instance | User  | Yes      |
 
 ### Membership
 
