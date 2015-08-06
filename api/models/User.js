@@ -78,12 +78,17 @@ module.exports = {
 
   },
 
-  // Remove user's bets and memberships
+  // Remove user's bets, notifications and memberships
   afterDestroy: function destroyAssociations(instances, cb) {
     async.each(instances, function (instance, nextInstance) {
       async.parallel([
         function destroyBets(nextFn) {
           Bet
+            .destroy({ user: instance.id })
+            .exec(nextFn);
+        },
+        function destroyNotifications(nextFn) {
+          Notification
             .destroy({ user: instance.id })
             .exec(nextFn);
         },
