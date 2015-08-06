@@ -4,7 +4,7 @@
 // @help        :: See http://links.sailsjs.org/docs/controllers
 
 module.exports = {
-	
+
   boFind: function (req, res) {
     User
       .find()
