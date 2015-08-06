@@ -113,10 +113,19 @@ module.exports = {
   },
 
   // Update all the bets made on this match
-  afterUpdate: function updateScores(values, cb) {
+  beforeUpdate: function updateScores(values, cb) {
     if(!values.isEnded) return cb();
 
-    ScoreCalculator.computeAllScoresFromMatch(values.id, cb);
+    Match
+      .findOne(values.id)
+      .exec(function (err, instance) {
+        if(err) return cb(err);
+
+        if(instance.isEnded || !values.isEnded)
+          return cb();
+
+        return ScoreCalculator.computeAllScoresFromMatch(values.id, cb);
+    });
   },
 
   // Remove match's bets
