@@ -52,6 +52,10 @@ module.exports.routes = {
   'GET /users/new': 'UserController.boNew',
   'GET /users/:id': 'UserController.boFindOne',
 
+  'GET /notifications': 'NotificationController.boFind',
+  'GET /notifications/new': 'NotificationController.boNew',
+  'GET /notifications/:id': 'NotificationController.boFindOne',
+
   'GET /memberships': 'MembershipController.boFind',
   'GET /memberships/new': 'MembershipController.boNew',
   'GET /memberships/:id': 'MembershipController.boFindOne',

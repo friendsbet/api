@@ -1,0 +1,93 @@
+<% var paths = [{ name: 'Notifications', url: 'notifications' }, { name: 'Create', url: 'new' }]; %>
+<% var partialData = { paths: paths }; %>
+
+<%- partial('../partials/heading', { partialData: partialData}) %>
+
+<% if(data.somethingIsMissing) { %>
+    <% if(data.noUsers) { %>
+    Please <a href="/users/new">create a user</a> first.
+    <% } %>
+<% } else { %>
+<form id="create" class="form-horizontal">
+    <input id="_csrf" name="_csrf" type="hidden" value="<%= _csrf %>">
+
+    <div class="form-group">
+        <label for="user" class="col-sm-2 control-label">
+            User
+        </label>
+        <div class="col-sm-10">
+            <select id="user" name="user" class="form-control" required>
+                <% _.each(data.users, function (user) { %>
+                <option value="<%= user.id %>">
+                    <%= user.name() %>
+                </option>
+                <% }); %>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="type" class="col-sm-2 control-label">
+            Type
+        </label>
+        <div class="col-sm-10">
+            <select id="type" name="type" class="form-control" required>
+                <%
+                  var types = [
+                    {
+                      name: 'Website',
+                      value: 'website'
+                    },
+                    {
+                      name: 'Group',
+                      value: 'group'
+                    },
+                    {
+                      name: 'Ranking',
+                      value: 'ranking'
+                    }
+                  ];
+                %>
+                <% _.each(types, function (type) { %>
+                <option value="<%= type.value %>">
+                    <%= type.name %>
+                </option>
+                <% }); %>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="description" class="col-sm-2 control-label">
+            Description
+        </label>
+        <div class="col-sm-10">
+            <textarea class="form-control" rows="3" id="description" name="description"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="isRead" class="col-sm-2 control-label">
+            Is read?
+        </label>
+        <div class="col-sm-10">
+            <select id="isRead" name="isRead" class="form-control">
+                <option value="true">
+                    ✓
+                </option>
+                <option value="false" selected>
+                    ✗
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+</form>
+<% } %>
+
+<%- partial('../partials/footer') %>

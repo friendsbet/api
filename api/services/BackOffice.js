@@ -22,6 +22,10 @@ module.exports.getAUser = function (id, cb) {
   getAnInstance(User, id, cb);
 };
 
+module.exports.getANotification = function (id, cb) {
+  getAnInstance(Notification, id, cb);
+};
+
 module.exports.getAMembership = function (id, cb) {
   getAnInstance(Membership, id, cb);
 };

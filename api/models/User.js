@@ -63,6 +63,15 @@ module.exports = {
       via: 'user'
     },
 
+    // The Notifications the user has
+    // References to Notification objects
+    notifications: {
+      collection: 'notification',
+      via: 'user'
+    },
+
+    // The full name of the user
+    // e.g 'Yann Bertrand'
     name: function () {
       return this.firstName + ' ' + this.lastName;
     }
