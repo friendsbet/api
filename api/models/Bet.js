@@ -13,16 +13,16 @@ module.exports = {
     // The score bet on Team A
     // e.g 15
     scoreTeamA: {
-      type: 'int',
-      notEmpty: true,
+      type: 'integer',
+      min: 0,
       required: true
     },
 
     // The score bet on Team B
     // e.g 7
     scoreTeamB: {
-      type: 'int',
-      notEmpty: true,
+      type: 'integer',
+      min: 0,
       required: true
     },
 
@@ -30,6 +30,7 @@ module.exports = {
     // e.g 157
     score: {
       type: 'integer',
+      min: 0,
       defaultsTo: 0
     },
 
@@ -49,6 +50,16 @@ module.exports = {
       required: true
     }
 
+  },
+
+  // Convert strings to correct types
+  beforeValidate: function parseParameters(values, cb) {
+    values.scoreTeamA = parseInt(values.scoreTeamA);
+    values.scoreTeamB = parseInt(values.scoreTeamB);
+
+    values.score = values.score? parseInt(values.score): 0;
+
+    return cb();
   },
 
   // Check both Team scores after validating the values
