@@ -23,6 +23,7 @@ module.exports = {
     // e.g 1024
     score: {
       type: 'integer',
+      min: 0,
       defaultsTo: 0
     },
 
@@ -47,6 +48,13 @@ module.exports = {
       via: 'group'
     }
 
+  },
+
+  // Convert strings to correct types
+  beforeValidate: function parseParameters(values, cb) {
+    values.score = values.score? parseInt(values.score): 0;
+
+    return cb();
   },
 
   // Remove group's memberships

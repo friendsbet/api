@@ -41,7 +41,7 @@ module.exports = {
 
     // When the User can't bet anymore
     // It's also an UTC datetime object
-    // e.g '2015-09-18T20:00:00.000Z'
+    // e.g '2015-09-18T19:30:00.000Z'
     stopBetsAt: {
       type: 'datetime',
       notEmpty: true,
@@ -60,6 +60,8 @@ module.exports = {
     // e.g 1.5
     importance: {
       type: 'float',
+      min: 1.0,
+      max: 2.0,
       defaultsTo: 1.0
     },
 
@@ -69,6 +71,7 @@ module.exports = {
     // e.g 15
     scoreTeamA: {
       type: 'integer',
+      min: 0,
       defaultsTo: 0
     },
 
@@ -77,6 +80,7 @@ module.exports = {
     // e.g 7
     scoreTeamB: {
       type: 'integer',
+      min: 0,
       defaultsTo: 0
     },
 
@@ -110,6 +114,16 @@ module.exports = {
       return this.teamA + ' vs. ' + this.teamB;
     }
 
+  },
+
+  // Convert strings to correct types
+  beforeValidate: function parseParameters(values, cb) {
+    values.importance = values.importance? parseFloat(values.importance): 1.0;
+
+    values.scoreTeamA = values.scoreTeamA? parseInt(values.scoreTeamA): 0;
+    values.scoreTeamB = values.scoreTeamB? parseInt(values.scoreTeamB): 0;
+
+    return cb();
   },
 
   // Update all the bets made on this match
