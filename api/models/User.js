@@ -39,6 +39,7 @@ module.exports = {
     // Updated at the end of a Match    // e.g 256
     score: {
       type: 'integer',
+      min: 0,
       defaultsTo: 0
     },
 
@@ -76,6 +77,13 @@ module.exports = {
       return this.firstName + ' ' + this.lastName;
     }
 
+  },
+  
+  // Convert strings to correct types
+  beforeValidate: function parseParameters(values, cb) {
+    values.score = values.score? parseInt(values.score): 0;
+
+    return cb();
   },
 
   // Remove user's bets, notifications and memberships

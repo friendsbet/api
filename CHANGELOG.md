@@ -1,3 +1,13 @@
+# 0.2.2 (2015-08-07)
+
+Fix:
+ - Parse integer and float parameters before validate
+
+# 0.2.1 (2015-08-06)
+
+Fix:
+ - Repare Travis config file
+
 # 0.2.0 (2015-08-06)
 
 Features:
