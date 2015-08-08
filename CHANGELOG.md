@@ -1,3 +1,8 @@
+# 0.2.3 (2015-08-08)
+
+Feat:
+ - Add localhost 7000 and 7001 ports access to CSRF
+
 # 0.2.2 (2015-08-07)
 
 Fix:
