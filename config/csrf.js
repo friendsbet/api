@@ -60,5 +60,5 @@ module.exports.csrf = true;
 
 module.exports.csrf = {
   grantTokenViaAjax: true,
-  origin: ''
+  origin: 'http://localhost:7000,http://localhost:7001'
 }
