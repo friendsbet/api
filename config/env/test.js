@@ -12,6 +12,8 @@ module.exports = {
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
 
+  bootstrap: null,
+
   models: {
     connection: 'mongoTest',
     migrate: 'drop'
