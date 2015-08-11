@@ -1,0 +1,49 @@
+[
+  {
+    "email": "homer@simpson.com",
+    "firstName": "Homer",
+    "lastName": "Simpson",
+    "description": "What's the point of going out? We're just gonna wind up back here anyway."
+  },
+  {
+    "email": "marge@simpson.com",
+    "firstName": "Marge",
+    "lastName": "Simpson"
+  },
+  {
+    "email": "bart@simpson.com",
+    "firstName": "Bart",
+    "lastName": "Simpson"
+  },
+  {
+    "email": "lisa@simpson.com",
+    "firstName": "Lisa",
+    "lastName": "Simpson"
+  },
+  {
+    "email": "maggie@simpson.com",
+    "firstName": "Maggie",
+    "lastName": "Simpson"
+  },
+  {
+    "email": "charles.montgomery@burns.com",
+    "firstName": "Charles Montgomery",
+    "lastName": "Burns"
+  },
+  {
+    "email": "agnes@skinner.com",
+    "firstName": "Agnes",
+    "lastName": "Skinner"
+  },
+  {
+    "email": "seymour@skinner.com",
+    "firstName": "Seymour",
+    "lastName": "Skinner"
+  },
+  {
+    "email": "ned@flanders.com",
+    "firstName": "Ned",
+    "lastName": "Flanders",
+    "description": "Amen"
+  }
+]

@@ -1,0 +1,25 @@
+[
+  {
+    "name": "England",
+    "slug": "england",
+    "description": "The English national team"
+  },
+  {
+    "name": "France",
+    "slug": "france",
+    "description": "This is the French national team description"
+  },
+  {
+    "name": "Ireland",
+    "slug": "ireland"
+  },
+  {
+    "name": "New Zealand",
+    "slug": "new-zealand"
+  },
+  {
+    "name": "South Africa",
+    "slug": "south-africa",
+    "description": "Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus."
+  }
+]
