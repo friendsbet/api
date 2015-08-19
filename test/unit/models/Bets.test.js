@@ -4,6 +4,44 @@ describe('BetModel', function() {
   this.slow(75);
   this.timeout(2000);
 
+  it('should not be empty', function (done) {
+    Bet
+      .find()
+      .exec(function (err, bets) {
+        should(err).be.null;
+        should(bets).not.be.undefined;
+
+        bets.length.should.be.eql(fixtures['bet'].length);
+
+        return done();
+    });
+  });
+
+  describe('#beforeValidate()', function () {
+
+    it('should convert team scores to integers', function (done) {
+
+      Bet.beforeValidate({
+          scoreTeamA: '7',
+          scoreTeamB: '5'
+        }, function (err) {
+          should(err).be.null;
+      });
+
+    });
+
+    it('should convert score to integer if existing', function (done) {
+
+      Bet.beforeValidate({
+          score: '7',
+        }, function (err) {
+          should(err).be.null;
+      });
+
+    });
+
+  });
+
   describe('#afterValidate()', function () {
 
     it('should return a double error if each team score is not valid', function (done) {
@@ -62,36 +100,26 @@ describe('BetModel', function() {
           Bet.afterValidate({
               scoreTeamA: 0,
               scoreTeamB: 0
-            }, function (err) {
-              should(err).be.null;
-
-              return next();
-          });
+            }, next);
         },
 
         function (next) {
           Bet.afterValidate({
               scoreTeamA: 5,
               scoreTeamB: 0
-            }, function (err) {
-              should(err).be.null;
-
-              return next();
-          });
+            }, next);
         },
 
         function (next) {
           Bet.afterValidate({
               scoreTeamA: 7,
               scoreTeamB: 15
-            }, function (err) {
-              should(err).be.null;
-
-              return next();
-          });
+            }, next);
         },
 
-      ], function () {
+      ], function (err) {
+        should(err).be.null;
+
         return done();
       });
 

@@ -10,8 +10,6 @@ before(function(done) {
   }, function(err, sails) {
     if (err)
       return done(err);
-    
-    sails.log(sails.config.models);
 
     // Load fixtures
     var barrels = new Barrels();
@@ -20,8 +18,21 @@ before(function(done) {
     fixtures = barrels.data;
 
     // Populate the DB
-    barrels.populate(function(err) {
-      return done(err, sails);
+    barrels.populate(['team', 'user'], function(err) {
+      if (err)
+        return done(err);
+
+      barrels.populate(['group', 'match', 'notification'], function(err) {
+        if (err)
+          return done(err);
+
+        barrels.populate(['bet', 'membership'], function(err) {
+          if (err)
+            return done(err);
+
+          return done(null, sails);
+        });
+      });
     });
   });
 });

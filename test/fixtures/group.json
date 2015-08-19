@@ -1,0 +1,19 @@
+[
+  {
+    "name": "The Simpson Family",
+    "description": "This is the Simpson family group",
+    "technicalAdmin": 4
+  },
+  {
+    "name": "The Skinner Family",
+    "technicalAdmin": 7
+  },
+  {
+    "name": "Springfield Nuclear Power Plant",
+    "technicalAdmin": 6
+  },
+  {
+    "name": "Moe's",
+    "technicalAdmin": 10
+  }
+]
