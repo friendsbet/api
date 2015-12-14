@@ -20,12 +20,13 @@ describe('BetModel', function() {
   describe('#beforeValidate()', function () {
 
     it('should convert team scores to integers', function (done) {
-
       Bet.beforeValidate({
           scoreTeamA: '7',
           scoreTeamB: '5'
         }, function (err) {
-          should(err).be.null;
+          should(err).be.undefined;
+
+          return done();
       });
 
     });
@@ -35,7 +36,9 @@ describe('BetModel', function() {
       Bet.beforeValidate({
           score: '7',
         }, function (err) {
-          should(err).be.null;
+          should(err).be.undefined;
+
+          return done();
       });
 
     });
@@ -50,7 +53,7 @@ describe('BetModel', function() {
           scoreTeamA: -1,
           scoreTeamB: 2
         }, function (err) {
-          should(err).not.be.null;
+          should(err).not.be.undefined;
 
           err.should.be.an.Array;
           err.should.have.lengthOf(2);
@@ -118,7 +121,7 @@ describe('BetModel', function() {
         },
 
       ], function (err) {
-        should(err).be.null;
+        should(err).be.undefined;
 
         return done();
       });

@@ -6,6 +6,7 @@
 module.exports = {
 
   schema: true,
+  tableName: '_group',
 
   attributes: {
 
