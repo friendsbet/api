@@ -5,7 +5,7 @@ describe('sessionAuthPolicy', function() {
   this.slow(75);
   this.timeout(2000);
 
-  it('should call forbidden function if the user is not authenticated', function (done) {
+  it('should call the forbidden function if the user is not authenticated', function (done) {
 
     sessionAuth({
       session: { authenticated: false }
@@ -21,7 +21,7 @@ describe('sessionAuthPolicy', function() {
 
   });
 
-  it('should call next function if the user is authenticated', function (done) {
+  it('should call the next function if the user is authenticated', function (done) {
 
     sessionAuth({
       session: { authenticated: true }

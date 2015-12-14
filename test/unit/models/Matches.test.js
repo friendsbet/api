@@ -4,7 +4,7 @@ describe('MatchModel', function() {
   this.slow(75);
   this.timeout(2000);
 
-  it('should not be empty', function (done) {
+  it('should populate the DB with matches', function (done) {
     Match
       .find()
       .exec(function (err, matches) {

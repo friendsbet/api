@@ -4,7 +4,7 @@ describe('MembershipModel', function() {
   this.slow(75);
   this.timeout(2000);
 
-  it('should not be empty', function (done) {
+  it('should populate the DB with memberships', function (done) {
     Membership
       .find()
       .exec(function (err, memberships) {
