@@ -69,7 +69,7 @@ describe('BetModel', function() {
           scoreTeamA: 4,
           scoreTeamB: 0
         }, function (err) {
-          should(err).not.be.null;
+          should(err).not.be.undefined;
 
           err.should.be.an.Array;
           err.should.have.lengthOf(1);
@@ -85,7 +85,7 @@ describe('BetModel', function() {
           scoreTeamA: 0,
           scoreTeamB: -5
         }, function (err) {
-          should(err).not.be.null;
+          should(err).not.be.undefined;
 
           err.should.be.an.Array;
           err.should.have.lengthOf(1);

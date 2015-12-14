@@ -1,3 +1,58 @@
 [
-  
+  {
+    "group": 1,
+    "user": 1,
+    "isAdmin": true
+  },
+  {
+    "group": 1,
+    "user": 2,
+    "isAdmin": true
+  },
+  {
+    "group": 1,
+    "user": 3
+  },
+  {
+    "group": 1,
+    "user": 4
+  },
+  {
+    "group": 1,
+    "user": 5
+  },
+
+  {
+    "group": 2,
+    "user": 7,
+    "isAdmin": true
+  },
+  {
+    "group": 2,
+    "user": 8
+  },
+
+  {
+    "group": 3,
+    "user": 6,
+    "isAdmin": true
+  },
+  {
+    "group": 3,
+    "user": 1
+  },
+
+  {
+    "group": 4,
+    "user": 10,
+    "isAdmin": true
+  },
+  {
+    "group": 4,
+    "user": 1
+  },
+  {
+    "group": 4,
+    "user": 11
+  }
 ]

@@ -1,3 +1,8 @@
 [
-  
+  {
+    "match": 1,
+    "user": 1,
+    "scoreTeamA": 10,
+    "scoreTeamB": 7
+  }
 ]

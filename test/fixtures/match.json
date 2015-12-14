@@ -1,3 +1,9 @@
 [
-  
+  {
+    "teamA": 1,
+    "teamB": 2,
+    "kickOffAt": "2016-01-01T20:00:00.000Z",
+    "stopBetsAt": "2016-01-01T20:00:00.000Z",
+    "venue": "Paris, France"
+  }
 ]
