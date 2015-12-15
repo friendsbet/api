@@ -19,7 +19,7 @@ describe('MatchModel', function() {
 
   describe('#name()', function () {
 
-    it('should convert team scores to integers', function (done) {
+    it('should return a string', function (done) {
       Match
         .find()
         .limit(1)
