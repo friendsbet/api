@@ -17,7 +17,17 @@ describe('GroupModel', function() {
     });
   });
 
-  describe('#afterDestroy()', function () {
+  describe('#beforeValidate()', function () {
+
+    it('should convert score to integer', function (done) {
+      Group.beforeValidate({
+          score: '78'
+        }, function (err) {
+          should(err).be.undefined;
+
+          return done();
+      });
+    });
 
   });
 
