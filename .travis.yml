@@ -4,11 +4,11 @@ branches:
     - develop
 language: node_js
 node_js:
-- '0.12'
-- '0.11'
-- '0.10'
-- iojs-v2.1.0
-- iojs-v1.0.4
+- '5.2.0'
+- '5.1.1'
+- '5.1.0'
+- '5.0.0'
+- '4.2.3'
 services:
 - mongodb
 script: npm run test-travis
