@@ -58,6 +58,15 @@ module.exports = {
     return cb();
   },
 
+  // Create a membership between the technical admin and the new group
+  afterCreate: function (record, cb) {
+    Membership.create({
+      isAdmin: true,
+      user: record.technicalAdmin,
+      group: record.id
+    }).exec(cb);
+  },
+
   // Remove group's memberships
   afterDestroy: function destroyAssociations(instances, cb) {
     async.each(instances, function (instance, next) {
