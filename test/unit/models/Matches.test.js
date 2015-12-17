@@ -61,4 +61,122 @@ describe('MatchModel', function() {
 
   });
 
+  describe('#destroy()', function () {
+
+    var taylorId;
+    var teamFnaticId;
+    var teamEnVyUsId;
+    var matchId;
+    var betId;
+
+    before(function (done) {
+      async.auto({
+
+        createUserTaylor: function (next) {
+          User.create({
+            email: 'taylor@swift.com',
+            firstName: 'Taylor',
+            lastName: 'Swift',
+          }).exec(next);
+        },
+
+        createTeamFnatic: function (next) {
+          Team.create({
+            name: 'Fnatic',
+            slug: 'fnatic'
+          }).exec(next);
+        },
+
+        createTeamEnVyUs: function (next) {
+          Team.create({
+            name: 'EnVyUs',
+            slug: 'envyus'
+          }).exec(next);
+        },
+
+        createMatch: ['createTeamFnatic', 'createTeamEnVyUs', function (next, results) {
+          Match.create({
+            teamA: results['createTeamFnatic'].id,
+            teamB: results['createTeamEnVyUs'].id,
+            kickOffAt: new Date(),
+            stopBetsAt: new Date(),
+            venue: 'Cluj-Napoca, Romania'
+          }).exec(next);
+        }],
+
+        createBet: ['createUserTaylor', 'createMatch', function (next, results) {
+          Bet.create({
+            scoreTeamA: 3,
+            scoreTeamB: 0,
+            match: results['createMatch'].id,
+            user: results['createUserTaylor'].id
+          }).exec(next);
+        }],
+
+      }, function (err, results) {
+        should(err).be.null;
+
+        taylorId = results['createUserTaylor'].id;
+        teamFnaticId = results['createTeamFnatic'].id;
+        teamEnVyUsId = results['createTeamEnVyUs'].id;
+        matchId = results['createMatch'].id;
+        betId = results['createBet'].id;
+
+        return done();
+      });
+    });
+
+    after(function (done) {
+      async.auto({
+        destroyUserTaylor: function (next) {
+          User.destroy(taylorId).exec(next);
+        },
+        destroyTeamFnatic: function (next) {
+          Team.destroy(teamFnaticId).exec(next);
+        },
+        destroyTeamEnVyUs: function (next) {
+          Team.destroy(teamEnVyUsId).exec(next);
+        },
+        destroyMatch: function (next) {
+          Match.destroy(matchId).exec(next);
+        },
+        destroyBet: function (next) {
+          Bet.destroy(betId).exec(next);
+        }
+      }, done);
+    });
+
+    it('should destroy linked bets', function (done) {
+
+      async.auto({
+
+        countBetsBeforeDestruction: function (next) {
+          Bet.count().exec(next);
+        },
+
+        destroyMatch: ['countBetsBeforeDestruction', function (next) {
+          Match.destroy(matchId).exec(next);
+        }],
+
+        countBetsAfterDestruction: ['destroyMatch', function (next) {
+          Bet.count().exec(next);
+        }]
+
+      }, function (err, results) {
+        should(err).be.null;
+        should(results).not.be.undefined;
+
+        results.should.be.an.array;
+
+        results['countBetsBeforeDestruction'].should.be.a.Number;
+        results['countBetsAfterDestruction'].should.be.a.Number;
+        (results['countBetsBeforeDestruction'] - results['countBetsAfterDestruction'])
+          .should.equal(1);
+
+        return done();
+      });
+    });
+
+  });
+
 });
