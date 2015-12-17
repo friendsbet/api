@@ -61,6 +61,14 @@ describe('UserModel', function() {
 
     var chuckId;
     var bruceId;
+    var teamPlutoId;
+    var teamMarsId;
+    var groupKotWId;
+    var groupNinjasId;
+    var matchId;
+    var notificationId;
+    var kotWMembershipId;
+    var ninjasMembershipId;
 
     before(function (done) {
       async.auto({
@@ -155,9 +163,52 @@ describe('UserModel', function() {
 
         chuckId = results['createUserChuck'].id;
         bruceId = results['createUserBruce'].id;
+        teamPlutoId = results['createTeamPluto'].id;
+        teamMarsId = results['createTeamMars'].id;
+        groupKotWId = results['createGroupKotW'].id;
+        groupNinjasId = results['createGroupNinjas'].id;
+        matchId = results['createMatch'].id;
+        notificationId = results['createNotification'].id;
+        kotWMembershipId = results['createKotWMembership'].id;
+        ninjasMembershipId = results['createNinjasMembership'].id;
 
         return done();
       });
+    });
+
+    after(function (done) {
+      async.auto({
+        destroyUserChuck: function (next) {
+          User.destroy(chuckId).exec(next);
+        },
+        destroyUserBruce: function (next) {
+          User.destroy(bruceId).exec(next);
+        },
+        destroyTeamPluto: function (next) {
+          Team.destroy(teamPlutoId).exec(next);
+        },
+        destroyTeamMars: function (next) {
+          Team.destroy(teamMarsId).exec(next);
+        },
+        destroyGroupKotW: function (next) {
+          Team.destroy(groupKotWId).exec(next);
+        },
+        destroyGroupNinjas: function (next) {
+          Team.destroy(groupNinjasId).exec(next);
+        },
+        destroyMatch: function (next) {
+          Match.destroy(matchId).exec(next);
+        },
+        destroyNotification: function (next) {
+          Notification.destroy(notificationId).exec(next);
+        },
+        destroyKotWMembership: function (next) {
+          Membership.destroy(kotWMembershipId).exec(next);
+        },
+        destroyNinjasMembership: function (next) {
+          Membership.destroy(ninjasMembershipId).exec(next);
+        }
+      }, done);
     });
 
     it('should destroy linked entities', function (done) {
