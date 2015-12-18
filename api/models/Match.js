@@ -128,15 +128,15 @@ module.exports = {
 
   // Update all the bets made on this match
   beforeUpdate: function updateScores(values, cb) {
-    if(!values.isEnded) return cb();
+    if(!values.isEnded) return cb(new Error('The match is not ended'));
 
     Match
       .findOne(values.id)
       .exec(function (err, instance) {
         if(err) return cb(err);
 
-        if(instance.isEnded || !values.isEnded)
-          return cb();
+        if(instance.isEnded)
+          return cb(new Error('The match was already ended'));
 
         return ScoreCalculator.computeAllScoresFromMatch(values.id, cb);
     });

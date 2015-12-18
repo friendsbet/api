@@ -82,6 +82,187 @@ describe('MatchModel', function() {
 
   });
 
+  describe('#beforeUpdate({ isEnded: false })', function () {
+
+    it('should throw an error if the match is not ended', function (done) {
+      var match = { isEnded: false };
+
+      Match.beforeUpdate(match, function (err) {
+        should(err).not.be.undefined;
+        err.should.be.an.error;
+
+        return done();
+      });
+    });
+
+  });
+
+  describe('#beforeUpdate({ isEnded: true })', function () {
+
+    it('should throw an error if the match doesn\'t exist', function (done) {
+      var match = { isEnded: true };
+
+      Match.beforeUpdate(match, function (err) {
+        should(err).not.be.undefined;
+        err.should.be.an.error;
+
+        return done();
+      });
+    });
+
+  });
+
+  describe('#beforeUpdate(matchThatWasAlreadyEnded)', function () {
+
+    var teamSKTT1Id;
+    var teamOrigenId;
+    var matchId;
+
+    before(function (done) {
+      async.auto({
+
+        createTeamSKTT1: function (next) {
+          Team.create({
+            name: 'SKT T1',
+            slug: 'skt-t1'
+          }).exec(next);
+        },
+
+        createTeamOrigen: function (next) {
+          Team.create({
+            name: 'Origen',
+            slug: 'origen'
+          }).exec(next);
+        },
+
+        createMatch: ['createTeamSKTT1', 'createTeamOrigen', function (next, results) {
+          Match.create({
+            teamA: results['createTeamSKTT1'].id,
+            teamB: results['createTeamOrigen'].id,
+            kickOffAt: new Date(),
+            stopBetsAt: new Date(),
+            venue: 'Seoul, South Korea',
+            isEnded: true
+          }).exec(next);
+        }]
+
+      }, function (err, results) {
+        should(err).be.null;
+
+        teamSKTT1Id = results['createTeamSKTT1'].id;
+        teamOrigenId = results['createTeamOrigen'].id;
+        matchId = results['createMatch'].id;
+
+        return done();
+      });
+    });
+
+    after(function (done) {
+      async.auto({
+        destroyTeamSKTT1: function (next) {
+          Team.destroy(teamSKTT1Id).exec(next);
+        },
+        destroyTeamOrigen: function (next) {
+          Team.destroy(teamOrigenId).exec(next);
+        },
+        destroyMatch: function (next) {
+          Match.destroy(matchId).exec(next);
+        }
+      }, done);
+    });
+
+    it('should throw an error if the match was already ended', function (done) {
+      var match = {
+        id: matchId,
+        scoreTeamA: 3,
+        scoreTeamB: 0
+      };
+
+      Match.beforeUpdate(match, function (err) {
+        should(err).not.be.undefined;
+        err.should.be.an.error;
+
+        return done();
+      });
+    });
+
+  });
+
+  describe('#beforeUpdate(match)', function () {
+
+    var teamSKTT1Id;
+    var teamOrigenId;
+    var matchId;
+
+    before(function (done) {
+      async.auto({
+
+        createTeamOrigen: function (next) {
+          Team.create({
+            name: 'Origen',
+            slug: 'origen'
+          }).exec(next);
+        },
+
+        createTeamSKTT1: function (next) {
+          Team.create({
+            name: 'SKT T1',
+            slug: 'skt-t1'
+          }).exec(next);
+        },
+
+        createMatch: ['createTeamSKTT1', 'createTeamOrigen', function (next, results) {
+          Match.create({
+            teamA: results['createTeamOrigen'].id,
+            teamB: results['createTeamSKTT1'].id,
+            kickOffAt: new Date(),
+            stopBetsAt: new Date(),
+            venue: 'Madrid, Spain'
+          }).exec(next);
+        }]
+
+      }, function (err, results) {
+        should(err).be.null;
+
+        teamOrigenId = results['createTeamOrigen'].id;
+        teamSKTT1Id = results['createTeamSKTT1'].id;
+        matchId = results['createMatch'].id;
+
+        return done();
+      });
+    });
+
+    after(function (done) {
+      async.auto({
+        destroyTeamOrigen: function (next) {
+          Team.destroy(teamOrigenId).exec(next);
+        },
+        destroyTeamSKTT1: function (next) {
+          Team.destroy(teamSKTT1Id).exec(next);
+        },
+        destroyMatch: function (next) {
+          Match.destroy(matchId).exec(next);
+        }
+      }, done);
+    });
+
+    it('should not throw an error when everything is fine', function (done) {
+      var match = {
+        id: matchId,
+        scoreTeamA: 0,
+        scoreTeamB: 3,
+        isEnded: true
+      };
+
+      Match.beforeUpdate(match, function (err) {
+        should(err).be.undefined;
+
+        return done();
+      });
+    });
+
+  });
+
   describe('#destroy()', function () {
 
     var taylorId;
