@@ -111,7 +111,7 @@ module.exports = {
           return this.teamA.name + ' vs. ' + this.teamB.name;
       }
 
-      return this.teamA + ' vs. ' + this.teamB;
+      return new Error('The `teamA` and `teamB` attributes should be populated to call this method');
     }
 
   },

@@ -43,6 +43,27 @@ describe('MatchModel', function() {
       });
     });
 
+    it('should return an error if at least one of the teams is not populated', function (done) {
+      Match
+        .find()
+        .limit(1)
+        .populate('teamA')
+        .exec(function (err, matches) {
+          should(err).be.null;
+          should(matches).not.be.undefined;
+
+          matches.should.be.an.array;
+
+          var match = matches[0];
+          match.should.be.an.object;
+          match.should.have.property('name');
+          match.name.should.be.a.function;
+          match.name().should.be.an.error;
+
+          return done();
+      });
+    });
+
   });
 
   describe('#beforeValidate()', function () {
