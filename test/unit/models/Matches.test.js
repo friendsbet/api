@@ -82,7 +82,7 @@ describe('MatchModel', function() {
 
   });
 
-  describe('#beforeUpdate({ isEnded: false })', function () {
+  describe('#beforeUpdate(matchThatHasNotEnded)', function () {
 
     it('should throw an error if the match is not ended', function (done) {
       var match = { isEnded: false };
@@ -97,10 +97,10 @@ describe('MatchModel', function() {
 
   });
 
-  describe('#beforeUpdate({ isEnded: true })', function () {
+  describe('#beforeUpdate(matchThatDoesNotExist)', function () {
 
     it('should throw an error if the match doesn\'t exist', function (done) {
-      var match = { isEnded: true };
+      var match = { id: '', isEnded: true };
 
       Match.beforeUpdate(match, function (err) {
         should(err).not.be.undefined;
@@ -117,6 +117,7 @@ describe('MatchModel', function() {
     var teamSKTT1Id;
     var teamOrigenId;
     var matchId;
+    var match;
 
     before(function (done) {
       async.auto({
@@ -148,10 +149,11 @@ describe('MatchModel', function() {
 
       }, function (err, results) {
         should(err).be.null;
-
+        
         teamSKTT1Id = results['createTeamSKTT1'].id;
         teamOrigenId = results['createTeamOrigen'].id;
         matchId = results['createMatch'].id;
+        match = results['createMatch'];
 
         return done();
       });
@@ -172,11 +174,7 @@ describe('MatchModel', function() {
     });
 
     it('should throw an error if the match was already ended', function (done) {
-      var match = {
-        id: matchId,
-        scoreTeamA: 3,
-        scoreTeamB: 0
-      };
+      match.scoreTeamA = 3;
 
       Match.beforeUpdate(match, function (err) {
         should(err).not.be.undefined;

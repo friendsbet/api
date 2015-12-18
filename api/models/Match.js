@@ -134,6 +134,8 @@ module.exports = {
       .findOne(values.id)
       .exec(function (err, instance) {
         if(err) return cb(err);
+        if(!instance)
+          return cb(new Error('This match does not exist'));
 
         if(instance.isEnded)
           return cb(new Error('The match was already ended'));
