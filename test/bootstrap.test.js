@@ -11,6 +11,9 @@ before(function(done) {
     if (err)
       return done(err);
 
+    // Init the project sport
+    Sport.initCurrentSport();
+
     // Load fixtures
     var barrels = new Barrels();
 

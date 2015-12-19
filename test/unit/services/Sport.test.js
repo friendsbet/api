@@ -6,6 +6,31 @@ describe('SportService', function() {
   this.slow(5);
   this.timeout(100);
 
+  describe('#initCurrentSport()', function () {
+
+    before(function (done) {
+      sails.config.FriendsBet.currentSport = 'NonExistingSport';
+      return done();
+    });
+
+    after(function (done) {
+      sails.config.FriendsBet.currentSport = 'Rugby';
+      Sport.initCurrentSport();
+      return done();
+    });
+
+    it('should throw an error if the current sport does not exist', function (done) {
+      var Sport = require('../../../api/services/Sport.js');
+      
+      should(Sport).be.an.Object;
+      should(Sport.initCurrentSport).be.a.function;
+      Sport.initCurrentSport.should.throw();
+
+      return done();
+    });
+
+  });
+
   describe('Rugby', function () {
 
     describe('#checkTeamScore()', function () {

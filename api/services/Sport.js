@@ -4,20 +4,31 @@
 //                 simplify basic functionalities concerning
 //                 the sport
 
-var CurrentSport = require('./sports/' + sails.config.FriendsBet.currentSport);
+var CurrentSport;
 
-if(!CurrentSport) {
-  throw new Error(
-    'This sport ('
-    + sails.config.currentSport
-    + ') isn\'t implemented for the moment'
-  );
-}
+// ToDo
+module.exports.initCurrentSport = function () {
+  CurrentSport = require('./sports/' + sails.config.FriendsBet.currentSport);
+
+  if(!CurrentSport) {
+    CurrentSport = null;
+
+    throw new Error(
+      'This sport ('
+      + sails.config.FriendsBet.currentSport
+      + ') isn\'t implemented at the moment'
+    );
+  }
+};
 
 // Check if this score is possible
 //
 // @param score integer
 // @return boolean isScorePossible
 module.exports.checkTeamScore = function (score) {
+  if(!CurrentSport) {
+    throw new Error('Please init the sport before using this method (`initCurrentSport()`)');
+  }
+
   return CurrentSport.checkTeamScore(score);
 };
