@@ -6,21 +6,24 @@
 
 var CurrentSport;
 
-// Initialize the sport with
+// Set the current sport if it exists
+//
+// @param sport string
 module.exports.initCurrentSport = function (sport) {
-  CurrentSport = require('./sports/' + sport);
-
-  if(!CurrentSport) {
-    CurrentSport = null;
-
+  try {
+    CurrentSport = require('./sports/' + sport);
+    console.log('friendsbet: Set the current sport to ' + sport);
+  } catch (err) {
     throw new Error(
       'This sport ('
       + sport
-      + ') isn\'t implemented at the moment'
+      + ') isn\'t implemented at the moment. '
+      + 'Please change the name of the current sport '
+      + 'in the `config/friendsbet.js` file'
     );
   }
   
-  console.log('friendsbet: Set the current sport to ' + sport);
+  
 };
 
 // Check if this score is possible
