@@ -1,12 +1,13 @@
 var should = require('should'),
     Rugby = require('../../../api/services/sports/Rugby.js'),
     Football = require('../../../api/services/sports/Football.js');
+var Sport = require('../../../api/services/Sport.js');
 
 describe('SportService', function() {
   this.slow(5);
   this.timeout(100);
 
-  describe('#initCurrentSport()', function () {
+  describe('#initCurrentSport(NonExistingSport)', function () {
 
     after(function (done) {
       Sport.initCurrentSport(sails.config.FriendsBet.currentSport);
@@ -14,11 +15,31 @@ describe('SportService', function() {
     });
 
     it('should throw an error if the current sport does not exist', function (done) {
-      var Sport = require('../../../api/services/Sport.js');
-      
       should(Sport).be.an.Object;
       should(Sport.initCurrentSport).be.a.function;
       Sport.initCurrentSport.bind(null, 'Yolo').should.throw();
+
+      return done();
+    });
+
+  });
+
+  describe('#checkTeamScore()', function () {
+
+    before(function (done) {
+      Sport.initCurrentSport.bind(null, 'Swag').should.throw();
+      return done();
+    });
+
+    after(function (done) {
+      Sport.initCurrentSport(sails.config.FriendsBet.currentSport);
+      return done();
+    });
+
+    it('should throw an error if the current sport is not set', function (done) {
+      should(Sport).be.an.Object;
+      should(Sport.checkTeamScore).be.a.function;
+      Sport.checkTeamScore.bind().should.throw();
 
       return done();
     });

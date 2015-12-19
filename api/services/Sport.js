@@ -14,6 +14,7 @@ module.exports.initCurrentSport = function (sport) {
     CurrentSport = require('./sports/' + sport);
     console.log('friendsbet: Set the current sport to ' + sport);
   } catch (err) {
+    CurrentSport = null;
     throw new Error(
       'This sport ('
       + sport
@@ -32,6 +33,7 @@ module.exports.initCurrentSport = function (sport) {
 // @return boolean isScorePossible
 module.exports.checkTeamScore = function (score) {
   if(!CurrentSport) {
+    console.log('coucou');
     throw new Error('Please init the sport before using this method (`initCurrentSport()`)');
   }
 
