@@ -6,19 +6,21 @@
 
 var CurrentSport;
 
-// ToDo
-module.exports.initCurrentSport = function () {
-  CurrentSport = require('./sports/' + sails.config.FriendsBet.currentSport);
+// Initialize the sport with
+module.exports.initCurrentSport = function (sport) {
+  CurrentSport = require('./sports/' + sport);
 
   if(!CurrentSport) {
     CurrentSport = null;
 
     throw new Error(
       'This sport ('
-      + sails.config.FriendsBet.currentSport
+      + sport
       + ') isn\'t implemented at the moment'
     );
   }
+  
+  console.log('friendsbet: Set the current sport to ' + sport);
 };
 
 // Check if this score is possible

@@ -8,14 +8,8 @@ describe('SportService', function() {
 
   describe('#initCurrentSport()', function () {
 
-    before(function (done) {
-      sails.config.FriendsBet.currentSport = 'NonExistingSport';
-      return done();
-    });
-
     after(function (done) {
-      sails.config.FriendsBet.currentSport = 'Rugby';
-      Sport.initCurrentSport();
+      Sport.initCurrentSport(sails.config.FriendsBet.currentSport);
       return done();
     });
 
@@ -24,7 +18,7 @@ describe('SportService', function() {
       
       should(Sport).be.an.Object;
       should(Sport.initCurrentSport).be.a.function;
-      Sport.initCurrentSport.should.throw();
+      Sport.initCurrentSport.bind(null, 'Yolo').should.throw();
 
       return done();
     });

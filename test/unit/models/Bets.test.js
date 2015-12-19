@@ -4,6 +4,16 @@ describe('BetModel', function() {
   this.slow(75);
   this.timeout(2000);
 
+  before(function (done) {
+    Sport.initCurrentSport('Rugby');
+    return done();
+  });
+
+  after(function (done) {
+    Sport.initCurrentSport(sails.config.FriendsBet.currentSport);
+    return done();
+  });
+
   it('should populate the DB with bets', function (done) {
     Bet
       .find()

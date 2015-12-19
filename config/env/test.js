@@ -17,6 +17,10 @@ module.exports = {
   models: {
     connection: 'mongoTest',
     migrate: 'drop'
+  },
+
+  FriendsBet: {
+    currentSport: 'Football'
   }
 
 };

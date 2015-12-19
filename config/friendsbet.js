@@ -5,7 +5,7 @@
 module.exports.FriendsBet = {
 
   // What sport is currently in use?
-  currentSport: 'Rugby',
+  currentSport: 'Football',
 
   // Points given per bet
   score: {

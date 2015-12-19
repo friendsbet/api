@@ -12,7 +12,7 @@ before(function(done) {
       return done(err);
 
     // Init the project sport
-    Sport.initCurrentSport();
+    Sport.initCurrentSport(sails.config.FriendsBet.currentSport);
 
     // Load fixtures
     var barrels = new Barrels();
