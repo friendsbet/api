@@ -33,7 +33,6 @@ module.exports.initCurrentSport = function (sport) {
 // @return boolean isScorePossible
 module.exports.checkTeamScore = function (score) {
   if(!CurrentSport) {
-    console.log('coucou');
     throw new Error('Please init the sport before using this method (`initCurrentSport()`)');
   }
 
