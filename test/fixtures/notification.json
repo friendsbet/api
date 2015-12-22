@@ -1,3 +1,7 @@
 [
-  
+  {
+    "user": 1,
+    "type": "website",
+    "description": "Welcome to Friends Bet!"
+  }
 ]

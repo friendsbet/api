@@ -1,68 +1,57 @@
 [
   {
-    "id": 1,
     "email": "homer@simpson.com",
     "firstName": "Homer",
     "lastName": "Simpson",
     "description": "What's the point of going out? We're just gonna wind up back here anyway."
   },
   {
-    "id": 2,
     "email": "marge@simpson.com",
     "firstName": "Marge",
     "lastName": "Simpson"
   },
   {
-    "id": 3,
     "email": "bart@simpson.com",
     "firstName": "Bart",
     "lastName": "Simpson"
   },
   {
-    "id": 4,
     "email": "lisa@simpson.com",
     "firstName": "Lisa",
     "lastName": "Simpson"
   },
   {
-    "id": 5,
     "email": "maggie@simpson.com",
     "firstName": "Maggie",
     "lastName": "Simpson"
   },
   {
-    "id": 6,
     "email": "charles.montgomery@burns.com",
     "firstName": "Charles Montgomery",
     "lastName": "Burns"
   },
   {
-    "id": 7,
     "email": "agnes@skinner.com",
     "firstName": "Agnes",
     "lastName": "Skinner"
   },
   {
-    "id": 8,
     "email": "seymour@skinner.com",
     "firstName": "Seymour",
     "lastName": "Skinner"
   },
   {
-    "id": 9,
     "email": "ned@flanders.com",
     "firstName": "Ned",
     "lastName": "Flanders",
     "description": "Amen"
   },
   {
-    "id": 10,
     "email": "moe@szyslak.com",
     "firstName": "Moe",
     "lastName": "Szyslak"
   },
   {
-    "id": 11,
     "email": "barney@gumble.com",
     "firstName": "Barney",
     "lastName": "Gumble"
