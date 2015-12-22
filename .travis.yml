@@ -4,10 +4,7 @@ branches:
     - develop
 language: node_js
 node_js:
-- '5.2.0'
-- '5.1.1'
-- '5.1.0'
-- '5.0.0'
+- stable
 - '4.2.3'
 services:
 - mongodb
