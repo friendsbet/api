@@ -2,6 +2,10 @@ var should = require('should');
 
 describe('BackOffice', function() {
 
+  /**
+   * GET AN INSTANCE
+   */
+
   function checkResultIfUnnexistingId(method, cb) {
     method('1', function (err, team) {
       should(err).be.null;
@@ -205,6 +209,63 @@ describe('BackOffice', function() {
 
       it('should return an instance if it exists', function (done) {
         checkResultIfIdExists(BackOffice.getAGroup, instanceId, 'name', done);
+      });
+    });
+  });
+
+
+  /**
+   * GET ALL INSTANCES
+   */
+
+  describe('#getAllTeams(cb)', function () {
+    it('should return all existing teams', function (done) {
+      BackOffice.getAllTeams(function (err, teams) {
+        should(err).be.null;
+        should(teams).not.be.undefined;
+
+        teams.length.should.be.eql(fixtures['team'].length);
+
+        return done();
+      });
+    });
+  });
+
+  describe('#getAllMatches(cb)', function () {
+    it('should return all existing matches', function (done) {
+      BackOffice.getAllMatches(function (err, matches) {
+        should(err).be.null;
+        should(matches).not.be.undefined;
+
+        matches.length.should.be.eql(fixtures['match'].length);
+
+        return done();
+      });
+    });
+  });
+
+  describe('#getAllUsers(cb)', function () {
+    it('should return all existing users', function (done) {
+      BackOffice.getAllUsers(function (err, users) {
+        should(err).be.null;
+        should(users).not.be.undefined;
+
+        users.length.should.be.eql(fixtures['user'].length);
+
+        return done();
+      });
+    });
+  });
+
+  describe('#getAllGroups(cb)', function () {
+    it('should return all existing groups', function (done) {
+      BackOffice.getAllGroups(function (err, groups) {
+        should(err).be.null;
+        should(groups).not.be.undefined;
+
+        groups.length.should.be.eql(fixtures['group'].length);
+
+        return done();
       });
     });
   });
