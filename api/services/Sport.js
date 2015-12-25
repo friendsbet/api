@@ -34,7 +34,7 @@ module.exports.initCurrentSport = function (sport) {
 // @param score integer
 // @return boolean isScorePossible
 module.exports.checkTeamScore = function (score) {
-  if(!CurrentSport) {
+  if (!CurrentSport) {
     throw new Error('Please init the sport before using this method (`initCurrentSport()`)');
   }
 

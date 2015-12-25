@@ -12,7 +12,7 @@ module.exports = {
       .find()
       .populate('user')
       .exec(function (err, instances) {
-        if(err) return res.negotiate(err);
+        if (err) return res.negotiate(err);
 
         return res.ok({ notifications: instances }, 'notifications/find');
       });
@@ -27,7 +27,7 @@ module.exports = {
       function getNotification(next) {
         BackOffice
           .getANotification(req.param('id'), function (err, instance) {
-            if(err) return next(err);
+            if (err) return next(err);
 
             notification = instance;
 
@@ -38,7 +38,7 @@ module.exports = {
       function getUsers(next) {
         BackOffice
           .getAllUsers(function (err, instances) {
-            if(err) return next(err);
+            if (err) return next(err);
 
             users = instances;
 
@@ -47,8 +47,8 @@ module.exports = {
       }
 
     ], function (err) {
-      if(err) return res.negotiate(err);
-      if(!notification) return res.notFound(req.param('id'));
+      if (err) return res.negotiate(err);
+      if (!notification) return res.notFound(req.param('id'));
 
       return res.ok({ users: users, notification: notification }, 'notifications/findOne');
     });
@@ -57,13 +57,13 @@ module.exports = {
   boNew: function (req, res) {
     BackOffice
       .getAllUsers(function (err, users) {
-        if(err) return res.negotiate(err);
+        if (err) return res.negotiate(err);
 
         var data = {
           noUsers: true
         };
 
-        if(users.length > 1) {
+        if (users.length > 1) {
           data.users = users;
           data.noUsers = false;
         } else {

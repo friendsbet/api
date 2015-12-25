@@ -11,7 +11,7 @@ module.exports = {
     User
       .find()
       .exec(function (err, instances) {
-        if(err) return res.negotiate(err);
+        if (err) return res.negotiate(err);
 
         return res.ok({ users: instances }, 'users/find');
       });
@@ -20,8 +20,8 @@ module.exports = {
   boFindOne: function (req, res) {
     BackOffice
       .getAUser(req.param('id'), function (err, instance) {
-        if(err) return res.negotiate(err);
-        if(!instance) return res.notFound(req.param('id'));
+        if (err) return res.negotiate(err);
+        if (!instance) return res.notFound(req.param('id'));
 
         return res.ok({ user: instance }, 'users/findOne');
       });

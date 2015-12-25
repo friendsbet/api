@@ -16,11 +16,9 @@ function getMatch(matchId, cb, checkExistence) {
   Match
     .findOne(matchId)
     .exec(function (err, match) {
-      if(err) {
-        return cb(err);
-      }
+      if (err) return cb(err);
 
-      if(checkExistence && !match) {
+      if (checkExistence && !match) {
         return cb(new Error('No match for id "' + matchId + '"'));
       }
 
@@ -40,11 +38,9 @@ function getUser(userId, cb, checkExistence) {
   User
     .findOne(userId)
     .exec(function (err, user) {
-      if(err) {
-        return cb(err);
-      }
+      if (err) return cb(err);
       
-      if(checkExistence && !user) {
+      if (checkExistence && !user) {
         return cb(new Error('No user for id "' + userId + '"'));
       }
 
@@ -66,11 +62,9 @@ function getGroups(groupsIds, cb, checkExistence) {
     .find(groupsIds)
     .limit(0)
     .exec(function (err, groups) {
-      if(err) {
-        return cb(err);
-      }
+      if (err) return cb(err);
       
-      if(checkExistence && !groups) {
+      if (checkExistence && !groups) {
         return cb(new Error('No groups for ids "' + groupsIds + '"'));
       }
 
@@ -94,11 +88,9 @@ function getBetsFromMatch(matchId, cb, checkExistence) {
     .populate('user')
     .limit(0)
     .exec(function (err, bets) {
-      if(err) {
-        return cb(err);
-      }
+      if (err) return cb(err);
       
-      if(checkExistence && !bets) {
+      if (checkExistence && !bets) {
         return cb(new Error('No bets for match "' + matchId + '"'));
       }
 
@@ -122,11 +114,9 @@ function getUserGroups(userId, cb, checkExistence) {
     .populate('group')
     .limit(0)
     .exec(function (err, memberships) {
-      if(err) {
-        return cb(err);
-      }
+      if (err) return cb(err);
 
-      if(checkExistence && !memberships) {
+      if (checkExistence && !memberships) {
         return cb(new Error('No membership found for user "' + userId + '"'));
       }
       
@@ -160,7 +150,7 @@ function betWinnerIsMatchWinner(match, bet) {
 //                 match (required): the match instance
 //                 bet (require): the bet concerned
 function computeScoreDifference(teamName, match, bet) {
-  if(!match.hasOwnProperty('scoreTeam' + teamName) ||
+  if (!match.hasOwnProperty('scoreTeam' + teamName) ||
     !bet.hasOwnProperty('scoreTeam' + teamName)) {
     sails.log.error('ScoreCalculator.computeScoreDifference("' + teamName + '", ...)');
     sails.log.error('first parameter is incorrect');
@@ -168,7 +158,7 @@ function computeScoreDifference(teamName, match, bet) {
   }
 
   var scoreDifference = match['scoreTeam' + teamName] - bet['scoreTeam' + teamName];
-  if(scoreDifference < 0)
+  if (scoreDifference < 0)
     scoreDifference = (- scoreDifference);
 
   return scoreDifference;
@@ -185,7 +175,7 @@ function computeBetScore(match, bet) {
   var score = 0;
 
   // 1. 
-  if(betWinnerIsMatchWinner(match, bet)) {
+  if (betWinnerIsMatchWinner(match, bet)) {
     score += sails.config.FriendsBet.score.betWinnerIsMatchWinner;
   }
 
@@ -259,9 +249,7 @@ function increaseGroupsScore(group, betScore, cb) {
 //                 error occured
 function updateUserScoreFromBet(userId, betScore, cb) {
   getUser(userId, function (err, user) {
-    if(err) {
-      return cb(err);
-    }
+    if (err) return cb(err);
 
     increaseUserScore(user, betScore, cb);
   });
@@ -292,9 +280,7 @@ function updateGroupsScores(groups, betScore, cb) {
 //                 error occured
 function updateGroupsScoresFromBet(userId, betScore, cb) {
   getUserGroups(userId, function (err, groups) {
-    if(err) {
-      return cb(err);
-    }
+    if (err) return cb(err);
 
     updateGroupsScores(groups, betScore, cb);
   });
@@ -330,7 +316,7 @@ function updateUsersAndGroupsScoresFromBet(bet, cb) {
 function updateScores(match, bets, cb) {
   async.each(bets, function (bet, next) {
     updateBetScore(match, bet, function (err, newBet) {
-      if(err || !newBet) {
+      if (err || !newBet) {
         return next(err);
       }
 
@@ -349,7 +335,7 @@ module.exports = {
   //                 error occured
   computeAllScoresFromMatch: function (matchId, cb) {
     // Check params
-    if(!matchId || !cb) {
+    if (!matchId || !cb) {
       sails.log.error('ScoreCalculator.computeAllScoresFromMatch');
       sails.log.error('need 2 params: ');
       sails.log.error('* matchId: the match concerned');
@@ -358,7 +344,7 @@ module.exports = {
       return cb(new Error('Missing param'));
     }
 
-    if(typeof cb !== 'function') {
+    if (typeof cb !== 'function') {
       sails.log.error('ScoreCalculator.computeAllScoresFromMatch');
       sails.log.error('2nd argument must be a function');
 
@@ -388,7 +374,7 @@ module.exports = {
 };
 
 
-if(process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV === 'test') {
   module.exports.betWinnerIsMatchWinner = betWinnerIsMatchWinner;
   module.exports.computeScoreDifference = computeScoreDifference;
   module.exports.computeBetScore = computeBetScore;

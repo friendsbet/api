@@ -69,7 +69,7 @@ module.exports = {
     var err = [];
 
     _.forEach(['A', 'B'], function checkTeamScore(teamKey) {
-      if(!Sport.checkTeamScore(values['scoreTeam' + teamKey])) {
+      if (!Sport.checkTeamScore(values['scoreTeam' + teamKey])) {
         err.push(
           new Error('Team ' + teamKey + ' score ('
             + values['scoreTeam'+ teamKey]

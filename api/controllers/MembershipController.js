@@ -13,7 +13,7 @@ module.exports = {
       .populate('user')
       .populate('group')
       .exec(function (err, instances) {
-        if(err) return res.negotiate(err);
+        if (err) return res.negotiate(err);
 
         return res.ok({ memberships: instances }, 'memberships/find');
       });
@@ -29,7 +29,7 @@ module.exports = {
       function getMembership(next) {
         BackOffice
           .getAMembership(req.param('id'), function (err, instance) {
-            if(err) return next(err);
+            if (err) return next(err);
 
             membership = instance;
 
@@ -40,7 +40,7 @@ module.exports = {
       function getUsers(next) {
         BackOffice
           .getAllUsers(function (err, instances) {
-            if(err) return next(err);
+            if (err) return next(err);
 
             users = instances;
 
@@ -51,7 +51,7 @@ module.exports = {
       function getGroups(next) {
         BackOffice
           .getAllGroups(function (err, instances) {
-            if(err) return next(err);
+            if (err) return next(err);
 
             groups = instances;
 
@@ -60,8 +60,8 @@ module.exports = {
       }
 
     ], function (err) {
-      if(err) return res.negotiate(err);
-      if(!membership) return res.notFound(req.param('id'));
+      if (err) return res.negotiate(err);
+      if (!membership) return res.notFound(req.param('id'));
 
       return res.ok({ users: users, groups: groups, membership: membership }, 'memberships/findOne');
     });
@@ -76,7 +76,7 @@ module.exports = {
       function getUsers(next) {
         BackOffice
           .getAllUsers(function (err, instances) {
-            if(err) return next(err);
+            if (err) return next(err);
 
             users = instances;
 
@@ -87,7 +87,7 @@ module.exports = {
       function getGroups(next) {
         BackOffice
           .getAllGroups(function (err, instances) {
-            if(err) return next(err);
+            if (err) return next(err);
 
             groups = instances;
 
@@ -96,27 +96,27 @@ module.exports = {
       }
 
     ], function (err) {
-      if(err) return res.negotiate(err);
+      if (err) return res.negotiate(err);
 
       var data = {
         noUsers: true,
         noGroups: true
       };
 
-      if(users.length) {
+      if (users.length) {
         data.users = users;
         data.noUsers = false;
       }
 
-      if(groups.length) {
+      if (groups.length) {
         data.groups = groups;
         data.noGroups = false;
       }
 
-      if(data.noUsers || data.noGroups)
+      if (data.noUsers || data.noGroups)
         data.somethingIsMissing = true;
 
-      if(data.noUsers && data.noGroups)
+      if (data.noUsers && data.noGroups)
         data.everythingIsMissing = true;
 
       return res.ok(data, 'memberships/new');

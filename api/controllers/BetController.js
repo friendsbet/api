@@ -13,9 +13,9 @@ module.exports = {
       .find()
       .populate('user')
       .exec(function (err, instances) {
-        if(err) return res.negotiate(err);
+        if (err) return res.negotiate(err);
 
-        if(!instances.length)
+        if (!instances.length)
           return res.ok({ bets: [] }, 'bets/find');
 
         // Populate the match teams
@@ -24,7 +24,7 @@ module.exports = {
           .populate('teamA')
           .populate('teamB')
           .exec(function (err, matches) {
-            if(err) return res.negotiate(err);
+            if (err) return res.negotiate(err);
 
             // Map the teams to the bets matches
             _.forEach(instances, function (bet) {
@@ -48,7 +48,7 @@ module.exports = {
       function getBet(next) {
         BackOffice
           .getABet(req.param('id'), function (err, instance) {
-            if(err) return next(err);
+            if (err) return next(err);
 
             bet = instance;
 
@@ -59,7 +59,7 @@ module.exports = {
       function getUsers(next) {
         BackOffice
           .getAllUsers(function (err, instances) {
-            if(err) return next(err);
+            if (err) return next(err);
 
             users = instances;
 
@@ -70,7 +70,7 @@ module.exports = {
       function getMatches(next) {
         BackOffice
           .getAllMatches(function (err, instances) {
-            if(err) return next(err);
+            if (err) return next(err);
 
             matches = instances;
 
@@ -79,8 +79,8 @@ module.exports = {
       }
 
     ], function (err) {
-      if(err) return res.negotiate(err);
-      if(!bet) return res.notFound(req.param('id'));
+      if (err) return res.negotiate(err);
+      if (!bet) return res.notFound(req.param('id'));
 
       return res.ok({ bet: bet, users: users, matches: matches }, 'bets/findOne');
     });
@@ -95,7 +95,7 @@ module.exports = {
       function getUsers(next) {
         BackOffice
           .getAllUsers(function (err, instances) {
-            if(err) return next(err);
+            if (err) return next(err);
 
             users = instances;
 
@@ -106,7 +106,7 @@ module.exports = {
       function getMatches(next) {
         BackOffice
           .getAllMatches(function (err, instances) {
-            if(err) return next(err);
+            if (err) return next(err);
 
             matches = instances;
 
@@ -115,27 +115,27 @@ module.exports = {
       }
 
     ], function (err) {
-      if(err) return res.negotiate(err);
+      if (err) return res.negotiate(err);
 
       var data = {
         noUsers: true,
         noMatches: true
       };
 
-      if(users.length) {
+      if (users.length) {
         data.users = users;
         data.noUsers = false;
       }
 
-      if(matches.length) {
+      if (matches.length) {
         data.matches = matches;
         data.noMatches = false;
       }
 
-      if(data.noUsers || data.noMatches)
+      if (data.noUsers || data.noMatches)
         data.somethingIsMissing = true;
 
-      if(data.noUsers && data.noMatches)
+      if (data.noUsers && data.noMatches)
         data.everythingIsMissing = true;
 
       return res.ok(data, 'bets/new');

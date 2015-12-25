@@ -108,7 +108,7 @@ module.exports = {
     },
 
     name: function () {
-      if(typeof this.teamA === 'object' &&
+      if (typeof this.teamA === 'object' &&
          typeof this.teamB === 'object') {
         return this.teamA.name + ' vs. ' + this.teamB.name;
       }
@@ -130,16 +130,16 @@ module.exports = {
 
   // Update all the bets made on this match
   beforeUpdate: function updateScores(values, cb) {
-    if(!values.isEnded) return cb(new Error('The match is not ended'));
+    if (!values.isEnded) return cb(new Error('The match is not ended'));
 
     Match
       .findOne(values.id)
       .exec(function (err, instance) {
-        if(err) return cb(err);
-        if(!instance)
+        if (err) return cb(err);
+        if (!instance)
           return cb(new Error('This match does not exist'));
 
-        if(instance.isEnded)
+        if (instance.isEnded)
           return cb(new Error('The match was already ended'));
 
         return ScoreCalculator.computeAllScoresFromMatch(values.id, cb);
