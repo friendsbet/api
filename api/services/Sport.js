@@ -12,7 +12,7 @@ var CurrentSport;
 module.exports.initCurrentSport = function (sport) {
   try {
     CurrentSport = require('./sports/' + sport);
-    console.log('friendsbet: Set the current sport to ' + sport);
+    sails.config.FriendsBet.log('Set the current sport to ' + sport);
   } catch (err) {
     CurrentSport = null;
     throw new Error(

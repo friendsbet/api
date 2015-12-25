@@ -7,6 +7,11 @@ module.exports.FriendsBet = {
   // What sport is currently in use?
   currentSport: 'Football',
 
+  // The Friends Bet log method
+  log: function (str) {
+    sails.log.info('[FriendsBet] ' + str);
+  },
+
   // Points given per bet
   score: {
     betWinnerIsMatchWinner: 100,
