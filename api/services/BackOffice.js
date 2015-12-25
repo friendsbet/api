@@ -1,3 +1,6 @@
+
+/* global Team, Match, Bet, User, Notification, Membership, Group */
+
 // Data instance
 function getAnInstance(Model, id, cb) {
   Model

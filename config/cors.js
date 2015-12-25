@@ -47,7 +47,7 @@ module.exports.cors = {
   *                                                                          *
   ***************************************************************************/
 
-  origin: 'http://localhost,http://localhost:7000,http://localhost:7001',
+  origin: 'http://localhost,http://localhost:7000,http://localhost:7001'
 
   /***************************************************************************
   *                                                                          *

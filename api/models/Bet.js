@@ -4,6 +4,8 @@
 //                 It requires a score (a number) for each team.
 // @docs        :: http://sailsjs.org/#!documentation/models
 
+/* global _, Sport */
+
 module.exports = {
 
   schema: true,

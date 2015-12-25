@@ -3,6 +3,8 @@
 // @description :: Server-side logic for managing groups
 // @help        :: See http://links.sailsjs.org/docs/controllers
 
+/* global Group, async, BackOffice */
+
 module.exports = {
 	
   boFind: function (req, res) {
@@ -13,7 +15,7 @@ module.exports = {
         if(err) return res.negotiate(err);
 
         return res.ok({ groups: instances }, 'groups/find');
-    });
+      });
   },
 
   boFindOne: function (req, res) {
@@ -30,18 +32,18 @@ module.exports = {
             group = instance;
 
             return next();
-        });
+          });
       },
 
       function getUsers(next) {
         BackOffice
-          .getAllUsers(function (err, instances) {
+          .getAllUsers(function (err, instances) {
             if(err) return next(err);
 
             users = instances;
 
             return next();
-        });
+          });
       }
 
     ], function (err) {
@@ -54,7 +56,7 @@ module.exports = {
 
   boNew: function (req, res) {
     BackOffice
-      .getAllUsers(function (err, users) {
+      .getAllUsers(function (err, users) {
         if(err) return res.negotiate(err);
 
         var data = {
@@ -69,7 +71,7 @@ module.exports = {
         }
 
         return res.ok(data, 'groups/new');
-    });
+      });
   }
 
 };

@@ -1,0 +1,5 @@
+node_modules/**
+.tmp/**
+assets/js/dependencies
+assets/js/datetimepicker-init.js
+coverage

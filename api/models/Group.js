@@ -3,6 +3,8 @@
 // @description :: A Group of Users
 // @docs        :: http://sailsjs.org/#!documentation/models
 
+/* global Membership, async */
+
 module.exports = {
 
   schema: true,
@@ -16,7 +18,7 @@ module.exports = {
       type: 'text',
       notEmpty: true,
       required: true,
-      unique: true,
+      unique: true
     },
 
     // The cumulative score of this Group
@@ -30,7 +32,7 @@ module.exports = {
 
     // Everything you need to know about this group
     // e.g 'The group of Friends Bet developers'
-    description: {
+    description: {
       type: 'text',
       defaultsTo: ''
     },

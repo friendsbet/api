@@ -3,6 +3,8 @@
 // @description :: Server-side logic for managing teams
 // @help        :: See http://links.sailsjs.org/docs/controllers
 
+/* global Team, BackOffice */
+
 module.exports = {
 
   boFind: function (req, res) {
@@ -12,7 +14,7 @@ module.exports = {
         if(err) return res.negotiate(err);
 
         return res.ok({ teams: instances }, 'teams/find');
-    });
+      });
   },
 
   boFindOne: function (req, res) {
@@ -22,7 +24,7 @@ module.exports = {
         if(!instance) return res.notFound(req.param('id'));
 
         return res.ok({ team: instance }, 'teams/findOne');
-    });
+      });
   },
 
   boNew: function (req, res) {

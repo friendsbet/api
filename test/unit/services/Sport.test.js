@@ -1,6 +1,9 @@
-var should = require('should'),
-    Rugby = require('../../../api/services/sports/Rugby.js'),
-    Football = require('../../../api/services/sports/Football.js');
+/* global describe, before, after, it, sails */
+
+var should = require('should');
+
+var Rugby = require('../../../api/services/sports/Rugby.js');
+var Football = require('../../../api/services/sports/Football.js');
 var Sport = require('../../../api/services/Sport.js');
 
 describe('SportService', function() {

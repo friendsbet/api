@@ -1,3 +1,5 @@
+/* global describe, it, Notification, fixtures */
+
 var should = require('should');
 
 describe('NotificationModel', function() {
@@ -14,7 +16,7 @@ describe('NotificationModel', function() {
         notifications.length.should.be.eql(fixtures['notification'].length);
 
         return done();
-    });
+      });
   });
 
 });

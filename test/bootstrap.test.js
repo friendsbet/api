@@ -1,3 +1,5 @@
+/* global before, Sport, after, sails */
+
 var Sails = require('sails');
 var Barrels = require('barrels');
 
@@ -18,7 +20,9 @@ before(function(done) {
     var barrels = new Barrels();
 
     // Save original objects in `fixtures` variable
+    /* eslint-disable no-undef */
     fixtures = barrels.data;
+    /* eslint-enable no-undef */
 
     // Populate the DB
     barrels.populate(['team', 'user'], function(err) {

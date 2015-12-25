@@ -1,3 +1,5 @@
+/* global describe, it, Match, fixtures, before, async, after, Team, Bet, User */
+
 var should = require('should');
 
 describe('MatchModel', function() {
@@ -14,12 +16,12 @@ describe('MatchModel', function() {
         matches.length.should.be.eql(fixtures['match'].length);
 
         return done();
-    });
+      });
   });
 
   describe('#name()', function () {
 
-    it('should return a string', function (done) {
+    it('should return a string', function (done) {
       Match
         .find()
         .limit(1)
@@ -40,10 +42,10 @@ describe('MatchModel', function() {
           // No need to check what's inside that string I hope :-)
 
           return done();
-      });
+        });
     });
 
-    it('should return an error if at least one of the teams is not populated', function (done) {
+    it('should return an error if at least one of the teams is not populated', function (done) {
       Match
         .find()
         .limit(1)
@@ -61,22 +63,22 @@ describe('MatchModel', function() {
           match.name().should.be.an.error;
 
           return done();
-      });
+        });
     });
 
   });
 
   describe('#beforeValidate()', function () {
 
-    it('should convert importance to float and teams scores to integer', function (done) {
+    it('should convert importance to float and teams scores to integer', function (done) {
       Match.beforeValidate({
-          importance: '2.0',
-          scoreTeamA: '12',
-          scoreTeamB: '24'
-        }, function (err) {
-          should(err).be.undefined;
+        importance: '2.0',
+        scoreTeamA: '12',
+        scoreTeamB: '24'
+      }, function (err) {
+        should(err).be.undefined;
 
-          return done();
+        return done();
       });
     });
 
@@ -276,7 +278,7 @@ describe('MatchModel', function() {
           User.create({
             email: 'taylor@swift.com',
             firstName: 'Taylor',
-            lastName: 'Swift',
+            lastName: 'Swift'
           }).exec(next);
         },
 
@@ -311,7 +313,7 @@ describe('MatchModel', function() {
             match: results['createMatch'].id,
             user: results['createUserTaylor'].id
           }).exec(next);
-        }],
+        }]
 
       }, function (err, results) {
         should(err).be.null;

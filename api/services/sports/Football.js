@@ -8,4 +8,4 @@
 // @return boolean isScorePossible
 module.exports.checkTeamScore = function (score) {
   return score > -1;
-}
+};

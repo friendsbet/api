@@ -1,3 +1,5 @@
+/* global describe, it, BackOffice, before, Team, fixtures, Match, Bet, User, Notification, Membership, Group */
+
 var should = require('should');
 
 describe('BackOffice', function() {
@@ -30,7 +32,7 @@ describe('BackOffice', function() {
         instance.should.property('id').not.be.null;
 
         return cb(instance.id);
-    });
+      });
   }
 
   function checkResultIfIdExists(method, instanceId, requiredProperty, cb) {

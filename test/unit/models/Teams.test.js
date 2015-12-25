@@ -1,3 +1,5 @@
+/* global describe, it, Team, fixtures, async, before, Match, after */
+
 var should = require('should');
 
 describe('TeamModel', function() {
@@ -14,7 +16,7 @@ describe('TeamModel', function() {
         teams.length.should.be.eql(fixtures['team'].length);
 
         return done();
-    });
+      });
   });
 
   describe('#destroy()', function () {
@@ -126,8 +128,8 @@ describe('TeamModel', function() {
         results['countMatchesBeforeDestruction'].should.be.a.Number;
         results['countMatchesAfterDestruction'].should.be.a.Number;
 
-        numberOfMatchesBeforeDestruction = results['countMatchesBeforeDestruction'];
-        numberOfMatchesAfterDestruction = results['countMatchesAfterDestruction'];
+        var numberOfMatchesBeforeDestruction = results['countMatchesBeforeDestruction'];
+        var numberOfMatchesAfterDestruction = results['countMatchesAfterDestruction'];
 
         (numberOfMatchesBeforeDestruction - numberOfMatchesAfterDestruction)
           .should.equal(2);

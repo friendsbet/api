@@ -6,6 +6,8 @@
 //                 importance coefficient.
 // @docs        :: http://sailsjs.org/#!documentation/models
 
+/* global Match, ScoreCalculator, async, Bet */
+
 module.exports = {
 
   schema: true,
@@ -108,7 +110,7 @@ module.exports = {
     name: function () {
       if(typeof this.teamA === 'object' &&
          typeof this.teamB === 'object') {
-          return this.teamA.name + ' vs. ' + this.teamB.name;
+        return this.teamA.name + ' vs. ' + this.teamB.name;
       }
 
       return new Error('The `teamA` and `teamB` attributes should be populated to call this method');
@@ -141,7 +143,7 @@ module.exports = {
           return cb(new Error('The match was already ended'));
 
         return ScoreCalculator.computeAllScoresFromMatch(values.id, cb);
-    });
+      });
   },
 
   // Remove match's bets

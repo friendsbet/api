@@ -1,3 +1,5 @@
+/* global describe, it, User, fixtures, before, after, async, Team, Group, Match, Notification, Bet, Membership */
+
 var should = require('should');
 
 describe('UserModel', function() {
@@ -14,12 +16,12 @@ describe('UserModel', function() {
         users.length.should.be.eql(fixtures['user'].length);
 
         return done();
-    });
+      });
   });
 
   describe('#name()', function () {
 
-    it('should return a string', function (done) {
+    it('should return a string', function (done) {
       User
         .find()
         .limit(1)
@@ -38,20 +40,20 @@ describe('UserModel', function() {
           // No need to check what's inside that string I hope :-)
 
           return done();
-      });
+        });
     });
 
   });
 
   describe('#beforeValidate()', function () {
 
-    it('should convert score to integer', function (done) {
+    it('should convert score to integer', function (done) {
       User.beforeValidate({
-          score: '98',
-        }, function (err) {
-          should(err).be.undefined;
+        score: '98'
+      }, function (err) {
+        should(err).be.undefined;
 
-          return done();
+        return done();
       });
     });
 
@@ -77,7 +79,7 @@ describe('UserModel', function() {
           User.create({
             email: 'chuck@norris.com',
             firstName: 'Chuck',
-            lastName: 'Norris',
+            lastName: 'Norris'
           }).exec(next);
         },
 
@@ -85,7 +87,7 @@ describe('UserModel', function() {
           User.create({
             email: 'bruce@lee.com',
             firstName: 'Bruce',
-            lastName: 'Lee',
+            lastName: 'Lee'
           }).exec(next);
         },
 
@@ -156,7 +158,7 @@ describe('UserModel', function() {
             user: results['createUserChuck'].id,
             group: results['createGroupNinjas'].id
           }).exec(next);
-        }],
+        }]
 
       }, function (err, results) {
         should(err).be.null;
@@ -236,9 +238,10 @@ describe('UserModel', function() {
           'countNotificationsBeforeDestructions',
           'countMembershipsBeforeDestructions',
           'countGroupsBeforeDestructions',
-            function (next) {
-              User.destroy(chuckId).exec(next);
-        }],
+          function (next) {
+            User.destroy(chuckId).exec(next);
+          }
+        ],
 
         countBetsAfterChuckDestruction: ['destroyUserChuck', function (next) {
           Bet.count().exec(next);
@@ -261,9 +264,10 @@ describe('UserModel', function() {
           'countNotificationsAfterChuckDestruction',
           'countMembershipsAfterChuckDestruction',
           'countGroupsAfterChuckDestruction',
-            function (next) {
-              User.destroy(bruceId).exec(next);
-        }],
+          function (next) {
+            User.destroy(bruceId).exec(next);
+          }
+        ],
 
         countBetsAfterBruceDestruction: ['destroyUserBruce', function (next) {
           Bet.count().exec(next);

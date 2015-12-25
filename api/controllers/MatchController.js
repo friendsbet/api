@@ -3,6 +3,8 @@
 // @description :: Server-side logic for managing matches
 // @help        :: See http://links.sailsjs.org/docs/controllers
 
+/* global Match, async, BackOffice */
+
 module.exports = {
 
   boFind: function (req, res) {
@@ -14,7 +16,7 @@ module.exports = {
         if(err) return res.negotiate(err);
 
         return res.ok({ matches: instances }, 'matches/find');
-    });
+      });
   },
 
   boFindOne: function (req, res) {
@@ -31,7 +33,7 @@ module.exports = {
             match = instance;
 
             return next();
-        });
+          });
       },
 
       function getTeams(next) {
@@ -42,8 +44,8 @@ module.exports = {
             teams = instances;
 
             return next();
-        });
-      },
+          });
+      }
 
     ], function (err) {
       if(err) return res.negotiate(err);
@@ -70,7 +72,7 @@ module.exports = {
         }
 
         return res.ok(data, 'matches/new');
-    });
+      });
   }
 
 };

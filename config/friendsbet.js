@@ -2,6 +2,8 @@
 //
 // Configuration of this instance of Friends Bet
 
+/* global sails */
+
 module.exports.FriendsBet = {
 
   // What sport is currently in use?

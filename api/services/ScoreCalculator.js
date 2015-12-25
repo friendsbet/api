@@ -2,6 +2,8 @@
 //
 // @description :: A service to manage scores of Bet, User and Group models
 
+/* global Match, User, Group, Bet, Membership, _, sails, intval, async */
+
 // getMatch
 // 
 // @description :: Get a match from its id
@@ -23,7 +25,7 @@ function getMatch(matchId, cb, checkExistence) {
       }
 
       return cb(null, match);
-  });
+    });
 }
 
 // getUser
@@ -47,7 +49,7 @@ function getUser(userId, cb, checkExistence) {
       }
 
       return cb(null, user);
-  });
+    });
 }
 
 
@@ -73,7 +75,7 @@ function getGroups(groupsIds, cb, checkExistence) {
       }
 
       return cb(null, groups);
-  });
+    });
 }
 
 
@@ -101,7 +103,7 @@ function getBetsFromMatch(matchId, cb, checkExistence) {
       }
 
       return cb(null, bets);
-  });
+    });
 }
 
 
@@ -114,12 +116,12 @@ function getBetsFromMatch(matchId, cb, checkExistence) {
 //                 error occured
 //                 checkExistence: does it need to throw an error if no instance
 //                 found
-function getUserGroups(userId, cb, checkExistence) {
+function getUserGroups(userId, cb, checkExistence) {
   Membership
     .find({ user: userId })
     .populate('group')
     .limit(0)
-    .exec(function (err, memberships) {
+    .exec(function (err, memberships) {
       if(err) {
         return cb(err);
       }
@@ -129,7 +131,7 @@ function getUserGroups(userId, cb, checkExistence) {
       }
       
       getGroups(_.pluck(_.pluck(memberships, 'group'), 'id'), cb);
-  });
+    });
 }
 
 
@@ -160,9 +162,9 @@ function betWinnerIsMatchWinner(match, bet) {
 function computeScoreDifference(teamName, match, bet) {
   if(!match.hasOwnProperty('scoreTeam' + teamName) ||
     !bet.hasOwnProperty('scoreTeam' + teamName)) {
-      sails.log.error('ScoreCalculator.computeScoreDifference("' + teamName + '", ...)');
-      sails.log.error('first parameter is incorrect');
-      throw new Error('This team doesn\'t exist');
+    sails.log.error('ScoreCalculator.computeScoreDifference("' + teamName + '", ...)');
+    sails.log.error('first parameter is incorrect');
+    throw new Error('This team doesn\'t exist');
   }
 
   var scoreDifference = match['scoreTeam' + teamName] - bet['scoreTeam' + teamName];
@@ -213,7 +215,7 @@ function computeBetScore(match, bet) {
 //                 bet (required): the single bet concerned
 //                 cb (required): the function called when it's done or an
 //                 error occured
-function updateBetScore(match, bet, cb) {
+function updateBetScore(match, bet, cb) {
   bet.score = computeBetScore(match, bet);
 
   bet.save(cb);
@@ -255,9 +257,9 @@ function increaseGroupsScore(group, betScore, cb) {
 //                 betScore (required): the single bet score value
 //                 cb (required): the function called when it's done or an
 //                 error occured
-function updateUserScoreFromBet(userId, betScore, cb) {
-  getUser(userId, function (err, user) {
-    if(err) {
+function updateUserScoreFromBet(userId, betScore, cb) {
+  getUser(userId, function (err, user) {
+    if(err) {
       return cb(err);
     }
 
@@ -275,7 +277,7 @@ function updateUserScoreFromBet(userId, betScore, cb) {
 //                 cb (required): the function called when it's done or an
 //                 error occured
 function updateGroupsScores(groups, betScore, cb) {
-  async.each(groups, function (group, next) {
+  async.each(groups, function (group, next) {
     increaseGroupsScore(group, betScore, next);
   }, cb);
 }
@@ -288,8 +290,8 @@ function updateGroupsScores(groups, betScore, cb) {
 //                 betScore (required): the single bet score value
 //                 cb (required): the function called when it's done or an
 //                 error occured
-function updateGroupsScoresFromBet(userId, betScore, cb) {
-  getUserGroups(userId, function (err, groups) {
+function updateGroupsScoresFromBet(userId, betScore, cb) {
+  getUserGroups(userId, function (err, groups) {
     if(err) {
       return cb(err);
     }
@@ -309,12 +311,12 @@ function updateGroupsScoresFromBet(userId, betScore, cb) {
 //                 error occured
 function updateUsersAndGroupsScoresFromBet(bet, cb) {
   async.parallel([
-    function (next) {
+    function (next) {
       updateUserScoreFromBet(bet.user.id, bet.score, next);
     },
-    function (next) {
+    function (next) {
       updateGroupsScoresFromBet(bet.user.id, bet.score, next);
-    },
+    }
   ], cb);
 }
 
@@ -325,9 +327,9 @@ function updateUsersAndGroupsScoresFromBet(bet, cb) {
 //                 bets (required): the list of bets to update
 //                 cb (required): the function called when it's done or an
 //                 error occured
-function updateScores(match, bets, cb) {
-  async.each(bets, function (bet, next) {
-    updateBetScore(match, bet, function (err, newBet) {
+function updateScores(match, bets, cb) {
+  async.each(bets, function (bet, next) {
+    updateBetScore(match, bet, function (err, newBet) {
       if(err || !newBet) {
         return next(err);
       }
@@ -348,7 +350,7 @@ module.exports = {
   computeAllScoresFromMatch: function (matchId, cb) {
     // Check params
     if(!matchId || !cb) {
-      sails.log.error('ScoreCalculator.computeAllScoresFromMatch')
+      sails.log.error('ScoreCalculator.computeAllScoresFromMatch');
       sails.log.error('need 2 params: ');
       sails.log.error('* matchId: the match concerned');
       sails.log.error('* cb: the callback');
@@ -357,7 +359,7 @@ module.exports = {
     }
 
     if(typeof cb !== 'function') {
-      sails.log.error('ScoreCalculator.computeAllScoresFromMatch')
+      sails.log.error('ScoreCalculator.computeAllScoresFromMatch');
       sails.log.error('2nd argument must be a function');
 
       return cb(new Error('Invalid param'));
@@ -373,7 +375,7 @@ module.exports = {
         getMatch(matchId, next);
       },
       function (match, next) {
-        getBetsFromMatch(matchId, function (err, bets) {
+        getBetsFromMatch(matchId, function (err, bets) {
           return next(err, match, bets);
         });
       },

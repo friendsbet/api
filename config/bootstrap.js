@@ -9,6 +9,8 @@
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.bootstrap.html
  */
 
+/* global Sport, sails */
+
 /* istanbul ignore next */
 module.exports.bootstrap = function(cb) {
   Sport.initCurrentSport(sails.config.FriendsBet.currentSport);

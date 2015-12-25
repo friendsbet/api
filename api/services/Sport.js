@@ -4,6 +4,8 @@
 //                 simplify basic functionalities concerning
 //                 the sport
 
+/* global sails */
+
 var CurrentSport;
 
 // Set the current sport if it exists

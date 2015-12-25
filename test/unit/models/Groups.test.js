@@ -1,3 +1,5 @@
+/* global describe, it, Group, fixtures */
+
 var should = require('should');
 
 describe('GroupModel', function() {
@@ -14,18 +16,18 @@ describe('GroupModel', function() {
         groups.length.should.be.eql(fixtures['group'].length);
 
         return done();
-    });
+      });
   });
 
   describe('#beforeValidate()', function () {
 
-    it('should convert score to integer', function (done) {
+    it('should convert score to integer', function (done) {
       Group.beforeValidate({
-          score: '78'
-        }, function (err) {
-          should(err).be.undefined;
+        score: '78'
+      }, function (err) {
+        should(err).be.undefined;
 
-          return done();
+        return done();
       });
     });
 

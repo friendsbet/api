@@ -3,6 +3,8 @@
 // @description :: Contains informations about a User
 // @docs        :: http://sailsjs.org/#!documentation/models
 
+/* global async, Bet, Notification, Membership, Group */
+
 module.exports = {
 
   schema: true,
@@ -12,7 +14,7 @@ module.exports = {
     // The email adress of the User
     // Each User has an unique information
     // e.g 'yann@example.com'
-    email: {
+    email: {
       type: 'email',
       notEmpty: true,
       required: true,
@@ -109,7 +111,7 @@ module.exports = {
           Group
             .destroy({ technicalAdmin: instance.id })
             .exec(nextFn);
-        },
+        }
       ], nextInstance);
     }, cb);
   }

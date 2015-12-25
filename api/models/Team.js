@@ -4,6 +4,8 @@
 //                 a sport squad
 // @docs        :: http://sailsjs.org/#!documentation/models
 
+/* global async, Match */
+
 module.exports = {
 
   schema: true,

@@ -1,3 +1,5 @@
+/* global describe, it, Membership, fixtures */
+
 var should = require('should');
 
 describe('MembershipModel', function() {
@@ -14,7 +16,7 @@ describe('MembershipModel', function() {
         memberships.length.should.be.eql(fixtures['membership'].length);
 
         return done();
-    });
+      });
   });
 
 });

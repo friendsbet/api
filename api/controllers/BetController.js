@@ -3,6 +3,8 @@
 // @description :: Server-side logic for managing bets
 // @help        :: See http://links.sailsjs.org/docs/controllers
 
+/* global Bet, Match, _, async, BackOffice */
+
 module.exports = {
 	
   boFind: function (req, res) {
@@ -32,8 +34,8 @@ module.exports = {
             });
 
             return res.ok({ bets: instances }, 'bets/find');
-        });
-    });
+          });
+      });
   },
 
   boFindOne: function (req, res) {
@@ -51,7 +53,7 @@ module.exports = {
             bet = instance;
 
             return next();
-        });
+          });
       },
 
       function getUsers(next) {
@@ -62,7 +64,7 @@ module.exports = {
             users = instances;
 
             return next();
-        });
+          });
       },
 
       function getMatches(next) {
@@ -73,7 +75,7 @@ module.exports = {
             matches = instances;
 
             return next();
-        });
+          });
       }
 
     ], function (err) {
@@ -98,7 +100,7 @@ module.exports = {
             users = instances;
 
             return next();
-        });
+          });
       },
 
       function getMatches(next) {
@@ -109,7 +111,7 @@ module.exports = {
             matches = instances;
 
             return next();
-        });
+          });
       }
 
     ], function (err) {

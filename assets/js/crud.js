@@ -1,3 +1,5 @@
+/* global $, window, _, swal */
+
 $(function() {
   var url = window.location.pathname;
   var baseUrl = window.location.origin;
@@ -40,7 +42,7 @@ $(function() {
       });
     });
 
-    request.fail(function (message) {
+    request.fail(function () {
       var title = 'Fail';
       var text = 'The instance coulnd\'t be created';
       var type = 'error';
@@ -72,7 +74,7 @@ $(function() {
       data: values
     });
 
-    request.done(function (message) {
+    request.done(function () {
       var title = 'Success!';
       var text = 'The instance has been updated!\n' + 
                   'You will be redirected as soon as you click "OK"';
@@ -87,7 +89,7 @@ $(function() {
       });
     });
 
-    request.fail(function (message) {
+    request.fail(function () {
       var title = 'Fail';
       var text = 'The instance coulnd\'t be updated';
       var type = 'error';
@@ -97,8 +99,6 @@ $(function() {
   }
 
   function destroy() {
-    var text = 
-
     swal({
       title: 'Are you sure?',
       text: 'You will not be able to recover this instance!\n' +
@@ -112,7 +112,6 @@ $(function() {
     }, function(isConfirm) {
       if (isConfirm) {
         var $form = $('form#update');
-        var id = $form.find('input#id')[0].value;
         var data = {
           _csrf: $form.find('input#_csrf')[0].value
         };
@@ -127,7 +126,7 @@ $(function() {
           data: data
         });
 
-        request.done(function (message) {
+        request.done(function () {
           var title = 'Deleted!';
           var text = 'This instance has been deleted.\n' + 
                       'You will be redirected as soon as you click "OK"';
@@ -142,7 +141,7 @@ $(function() {
           });
         });
 
-        request.fail(function (message) {
+        request.fail(function () {
           var title = 'Fail';
           var text = 'The instance coulnd\'t be destroyed';
           var type = 'error';

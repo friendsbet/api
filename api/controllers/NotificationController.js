@@ -3,6 +3,8 @@
 // @description :: Server-side logic for managing notifications
 // @help        :: See http://links.sailsjs.org/docs/controllers
 
+/* global Notification, async, BackOffice */
+
 module.exports = {
 
   boFind: function (req, res) {
@@ -13,7 +15,7 @@ module.exports = {
         if(err) return res.negotiate(err);
 
         return res.ok({ notifications: instances }, 'notifications/find');
-    });
+      });
   },
 
   boFindOne: function (req, res) {
@@ -30,7 +32,7 @@ module.exports = {
             notification = instance;
 
             return next();
-        });
+          });
       },
 
       function getUsers(next) {
@@ -41,7 +43,7 @@ module.exports = {
             users = instances;
 
             return next();
-        });
+          });
       }
 
     ], function (err) {
@@ -69,7 +71,7 @@ module.exports = {
         }
 
         return res.ok(data, 'notifications/new');
-    });
+      });
   }
 
 };

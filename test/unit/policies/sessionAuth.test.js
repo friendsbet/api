@@ -1,5 +1,7 @@
-var should = require('should'),
-    sessionAuth = require('../../../api/policies/sessionAuth');
+/* global describe, it */
+
+var should = require('should');
+var sessionAuth = require('../../../api/policies/sessionAuth');
 
 describe('sessionAuthPolicy', function() {
   this.slow(75);

@@ -3,6 +3,8 @@
 // @description :: Server-side logic for managing memberships
 // @help        :: See http://links.sailsjs.org/docs/controllers
 
+/* global Membership, async, BackOffice */
+
 module.exports = {
 
   boFind: function (req, res) {
@@ -14,7 +16,7 @@ module.exports = {
         if(err) return res.negotiate(err);
 
         return res.ok({ memberships: instances }, 'memberships/find');
-    });
+      });
   },
 
   boFindOne: function (req, res) {
@@ -24,7 +26,7 @@ module.exports = {
 
     async.parallel([
 
-      function getMembership(next) {
+      function getMembership(next) {
         BackOffice
           .getAMembership(req.param('id'), function (err, instance) {
             if(err) return next(err);
@@ -32,7 +34,7 @@ module.exports = {
             membership = instance;
 
             return next();
-        });
+          });
       },
 
       function getUsers(next) {
@@ -43,7 +45,7 @@ module.exports = {
             users = instances;
 
             return next();
-        });
+          });
       },
 
       function getGroups(next) {
@@ -54,7 +56,7 @@ module.exports = {
             groups = instances;
 
             return next();
-        });
+          });
       }
 
     ], function (err) {
@@ -79,7 +81,7 @@ module.exports = {
             users = instances;
 
             return next();
-        });
+          });
       },
 
       function getGroups(next) {
@@ -90,7 +92,7 @@ module.exports = {
             groups = instances;
 
             return next();
-        });
+          });
       }
 
     ], function (err) {
@@ -119,6 +121,6 @@ module.exports = {
 
       return res.ok(data, 'memberships/new');
     });
-  },
+  }
 
 };
