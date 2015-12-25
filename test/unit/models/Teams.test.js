@@ -20,6 +20,10 @@ describe('TeamModel', function() {
   describe('#destroy()', function () {
 
     var teamAId;
+    var teamBId;
+    var teamCId;
+    var firstMatchId;
+    var secondMatchId;
 
     before(function (done) {
       async.auto({
@@ -69,9 +73,33 @@ describe('TeamModel', function() {
         should(err).be.null;
 
         teamAId = results['createTeamA'].id;
+        teamBId = results['createTeamB'].id;
+        teamCId = results['createTeamC'].id;
+        firstMatchId = results['createFirstMatch'].id;
+        secondMatchId = results['createSecondMatch'].id;
 
         return done();
       });
+    });
+
+    after(function (done) {
+      async.auto({
+        destroyTeamA: function (next) {
+          Team.destroy(teamAId).exec(next);
+        },
+        destroyTeamB: function (next) {
+          Team.destroy(teamBId).exec(next);
+        },
+        destroyTeamC: function (next) {
+          Team.destroy(teamCId).exec(next);
+        },
+        destroyFirstMatch: function (next) {
+          Match.destroy(firstMatchId).exec(next);
+        },
+        destroySecondMatch: function (next) {
+          Match.destroy(secondMatchId).exec(next);
+        }
+      }, done);
     });
 
     it('should destroy linked matches', function (done) {
